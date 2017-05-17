@@ -6,3 +6,8 @@ using namespace std;
 SingleNode::SingleNode() : testData(0) //initialize data members here
 {
 }
+
+//Default destructor
+SingleNode::~SingleNode()
+{
+}

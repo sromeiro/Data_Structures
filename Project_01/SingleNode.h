@@ -3,12 +3,17 @@
 
 #include <iostream>
 
+typedef int ElementType; //Change type of data here
+
 class SingleNode
 {
   private:
-    int testData;
+    ElementType testData; //Programmer defined variable type
+    SingleNode * nextPtr;
   public:
     SingleNode();
+
+    ~SingleNode();
 };
 
 #endif
