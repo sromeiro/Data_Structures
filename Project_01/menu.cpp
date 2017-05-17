@@ -1,11 +1,14 @@
-#include <iostream>
+#include "SingleNode.h"
+#include "CyclicLinkedList.h"
+#include "DoubleNode.h"
+#include "DoublyLinkedList.h"
 
 using namespace std;
 
 int main()
 {
-  cout << "Quick compile test" << endl;
+  cout << "\nQuick compile test" << endl;
 
-  cout << "Succesfull program termination. GGEZ" << endl;
+  cout << "Succesfull program termination. GGEZ!\n" << endl;
   return 0;
 }
