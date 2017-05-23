@@ -7,9 +7,6 @@ using namespace std;
 
 int main()
 {
-  cout << "\nQuick compile test" << endl;
-  cout << "Test if my github upload works\n" << endl;
-  cout << "TESTING GITHUB COMMIT/PUSH\n" << endl;
-  cout << "Succesfull program termination. GGEZ!\n" << endl;
+  cout << "Still need to implement menu to test functions\n" << endl;
   return 0;
 }
