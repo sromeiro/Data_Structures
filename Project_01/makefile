@@ -1,7 +1,7 @@
-all: menu
+all: list
 
-menu: CyclicLinkedList.o DoubleNode.o DoublyLinkedList.o SingleNode.o menu.o
-	g++ -Wall CyclicLinkedList.o DoubleNode.o DoublyLinkedList.o SingleNode.o menu.o -o menu
+list: CyclicLinkedList.o DoubleNode.o DoublyLinkedList.o SingleNode.o menu.o
+	g++ -Wall CyclicLinkedList.o DoubleNode.o DoublyLinkedList.o SingleNode.o menu.o -o list
 
 menu.o: menu.cpp
 	g++ -Wall -c menu.cpp
@@ -19,4 +19,4 @@ CyclicLinkedList.o: CyclicLinkedList.cpp CyclicLinkedList.h
 	g++ -Wall -c CyclicLinkedList.cpp
 
 clean:
-	rm -rf *o menu
+	rm -rf *o list

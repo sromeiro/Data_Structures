@@ -13,14 +13,14 @@ CyclicLinkedList<Type>::CyclicLinkedList() : mySize(0),head_ptr(NULL),tail_ptr(N
 template <class Type>
 int CyclicLinkedList<Type>::size() const
 {
-
+  return 0; //Temporary return to get rid of warnings
 }
 //EMPTY
 //Returns true if list empty (otherwise return false)
 template <class Type>
 bool CyclicLinkedList<Type>::empty() const //
 {
-
+  return 0; //Temporary return to get rid of warnings
 }
 //FRONT
 //Retrieves the object store in the node pointed to by head pointer
@@ -55,7 +55,7 @@ SingleNode<Type> * CyclicLinkedList<Type>::tail() const
 template <class Type>
 int CyclicLinkedList<Type>::count(Type const &) const
 {
-
+  return 0; //Temporary return to get rid of warnings
 }
 //PUSH_FRONT
 //Creates a new SingleNode< Type > storing the argument, the next pointer of which is set to the current head pointer.
@@ -89,8 +89,5 @@ Type CyclicLinkedList<Type>::pop_front()
 template <class Type>
 int CyclicLinkedList<Type>::erase(Type const &)
 {
-
+  return 0; //Temporary return to get rid of warnings
 }
-
-
-
