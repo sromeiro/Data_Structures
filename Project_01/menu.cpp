@@ -1,8 +1,8 @@
 #include "SingleNode.h"
 #include "CyclicLinkedList.h"
-#include "DoubleNode.h"
-#include "DoublyLinkedList.h"
-#include <cstdlib>
+//#include "DoubleNode.h"
+//#include "DoublyLinkedList.h"
+//#include <cstdlib>
 #include <ctime>
 
 using namespace std;
@@ -152,7 +152,7 @@ int main()
     }
   }
 
-    //Block that will handle the menu selection for Double Linked Lists
+    //Block that will handle the menu selection for Double` Linked Lists
   else
   {
     int option; //Used to select from the menu options below

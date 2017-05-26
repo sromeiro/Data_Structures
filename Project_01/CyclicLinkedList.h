@@ -68,22 +68,11 @@ public:
         temp = head_ptr;
         for (int i = 0; i < mySize; i++)
         {
-            if(i==0)
-            {
-                if(head_ptr->data == value)
-                {
-                    item_count++;
-                }
-                temp = head_ptr->next;
-            }
-            else
-            {
-                if((temp->data)== value)
+            if((temp->data)== value)
                 {
                     item_count++;
                 }
                 temp=temp->next;
-            }
         }
         return item_count;
     }
@@ -93,12 +82,14 @@ public:
     // If the list was originally empty,the tail pointer is set to point to the new node
     void push_front(Type const & value)
     {
-        SingleNode<Type> * create_node;
-        SingleNode<Type> * our_node = new SingleNode<Type>(value, create_node);         //create new singlenode and set data value
-
-        if(mySize==0)                                             //is list empty?
+        //SingleNode<Type> * create_node;
+        SingleNode<Type> * our_node = new SingleNode<Type>(value, NULL);         //create new singlenode and set data value
+//        SingleNode<Type> * our_node = new SingleNode<Type>(value, head_ptr);
+//        head_ptr = our_node;
+//        tail_ptr->next = head_ptr;
+        if(mySize==0)                                                //is list empty?
         {
-            our_node -> next = our_node;                        //points to itself
+            our_node -> next = our_node;                             //points to itself
             tail_ptr = our_node->next;                               //tail and head ptr point to same (just one node in list)
             head_ptr = our_node->next;
             mySize++;
@@ -107,6 +98,7 @@ public:
         {
             our_node->next = head_ptr;                          //head now front
             head_ptr = our_node;                                //head_ptr is our node;
+            tail_ptr->next = head_ptr;                          //LAST NODE POINTS TO FIRST NODE
             mySize++;
         }
     }
@@ -114,11 +106,10 @@ public:
     //Similar to push front but places a new node at the back of list
     void push_back(Type const & value)
     {
-        //SingleNode<Type> * our_node = new SingleNode<Type>(value, NULL);         //create new singlenode and set data value
-        SingleNode<Type> * create_node;
-        SingleNode<Type> * our_node = new SingleNode<Type>(value, create_node);
-
-        if(mySize==0)                                             //is list empty?
+        SingleNode<Type> * our_node = new SingleNode<Type>(value, NULL);         //create new singlenode and set data value
+//        SingleNode<Type> * create_node;
+//        SingleNode<Type> * our_node = new SingleNode<Type>(value, create_node);
+        if(mySize==0)                                           //is list empty?
         {
             our_node -> next = our_node;                        //points to itself
             tail_ptr = our_node->next;                          //tail and head ptr point to same (just one node in list)
@@ -156,8 +147,9 @@ public:
             Type stored_value;
             SingleNode<Type> *old_node;         //use to make copy of node
             old_node = head_ptr;                 //copy of head pointer
-            head_ptr = NULL;           //head pointer now points to the next node
-            tail_ptr->next = head_ptr;           //the last node now points to the head
+            head_ptr = NULL;                     //head pointer now points to the next node
+            //tail_ptr->next = head_ptr;           //the last node now points to the head
+            tail_ptr = NULL;
             stored_value = old_node->getData();  //getting data before we delete
             delete old_node;                     //delete the head node
             mySize--;
@@ -169,16 +161,18 @@ public:
     //Return the object stored in the node being popped
     Type pop_back()
     {
-        if(mySize>=1) {
+        if(mySize>=1)
+        {
             Type stored_value;                           //use to return value
             stored_value = tail_ptr->data;
-            SingleNode<Type> *old_node;                 //use to make copy of old node
+            SingleNode<Type> *old_node;                  //use to make copy of old node
             old_node = tail_ptr;                         //copy of tail node
 
-            SingleNode<Type> *temp;                     //create temp and start at head
+            SingleNode<Type> *temp;                      //create temp and start at head
             temp = head_ptr;
             for (int i = 0; i < mySize; i++) {
-                if (temp->next == tail_ptr) {
+                if (temp->next == tail_ptr)
+                {
                     temp->next = head_ptr;               //seting the tail node to point to head
                     tail_ptr = temp;                     //set tail to other node
                     delete old_node;                     //delte the old tail
@@ -188,7 +182,6 @@ public:
                 temp = temp->next;
             }
         }
-
     }
     //ERASE
     //Delete the node(s) (from the front) in the linked list that contains the element equal to the argument
@@ -238,7 +231,7 @@ public:
     }
     void print_list()
     {
-        SingleNode<Type> * temp;
+        SingleNode<Type> *temp = nullptr;
         cout<<"Head ---> ";
         for(int i = 0 ;i<mySize;i++)
         {
@@ -252,18 +245,6 @@ public:
             }
         }
         cout<<"<---Tail"<<endl;
-//        for(int i = 0; i<mySize;i++)
-//        {
-//            if(i==0) {
-//                cout << head_ptr->getData() << endl;
-//                next = head_ptr->getNext();
-//            }
-//            else
-//            {
-//                cout << next->getData() << endl;
-//                next = next->getNext();
-//            }
-//        }
     }
 };
 
