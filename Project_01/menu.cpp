@@ -1,8 +1,8 @@
 #include "SingleNode.h"
 #include "CyclicLinkedList.h"
-//#include "DoubleNode.h"
-//#include "DoublyLinkedList.h"
-//#include <cstdlib>
+#include "DoubleNode.h"
+#include "DoublyLinkedList.h"
+#include <cstdlib>
 #include <ctime>
 
 using namespace std;

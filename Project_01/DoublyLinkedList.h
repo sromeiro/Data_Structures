@@ -3,6 +3,7 @@
 
 #include <iostream>
 
+template <class Type>
 class DoublyLinkedList
 {
   private:
