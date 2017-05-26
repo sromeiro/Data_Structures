@@ -9,18 +9,37 @@ class CyclicLinkedList; //(without this will generate compiler error)
 template <class Type>
 class SingleNode
 {
-  private:
-
-  public:
-    SingleNode(Type const &,SingleNode *);                        //Constructor
-    //I believe these must be public (can change later if needed)
+private:
     //VARIABLES
     Type data;                                                    //Contains data of (Type)
     SingleNode * next;                                            //Pointer to a SingleNode object, referred to as next
+public:
+
     //FUNCTIONS
-    Type getData() const;                                         //get data
-    SingleNode *getNext() const;                                  //return the next pointer
-    ~SingleNode();
+    //Default constructor
+    SingleNode(): data(0),next(NULL){};
+    SingleNode(Type const & our_data,SingleNode * ptr) : data(0),next(NULL) //data by default int, next by default NULL
+    {
+        data = our_data;
+        next = ptr;
+    }
+    //GETDATA
+    //get our data
+    Type getData() const
+    {
+        return data;
+    }
+    //GETNEXT
+    //returns next pointer
+    SingleNode<Type>* getNext() const
+    {
+        return next;
+    }
+    //Default destructor
+    ~SingleNode()
+    {
+
+    }
     //FRIEND
     friend class CyclicLinkedList<Type>;                          //friend of CyclicLinkedList
 };
