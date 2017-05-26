@@ -3,6 +3,8 @@
 
 #include <iostream>
 
+using namespace std;
+
 template <class Type>
 class DoublyLinkedList
 {
@@ -106,7 +108,7 @@ class DoublyLinkedList
     Type pop_front()
     {
         Type value_return = head_ptr->data;                                              //storing so we can return value
-        
+
             if (mySize == 1)                                                                    //only 1 item in list
             {
                 delete head_ptr;

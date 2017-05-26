@@ -9,9 +9,10 @@ template <class Type>
 class CyclicLinkedList
 {
 private:
+    int mySize;                                                 //Size of linked list
     SingleNode<Type> * head_ptr;                                //head pointer
     SingleNode<Type> * tail_ptr;                                //tail pointer
-    int mySize;                                                 //Size of linked list
+
 public:
     //Default constructor
     CyclicLinkedList() : mySize(0),head_ptr(NULL),tail_ptr(NULL)  //default size=0, both head and tail NULL pointers
