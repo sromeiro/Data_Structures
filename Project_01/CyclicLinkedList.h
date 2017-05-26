@@ -231,7 +231,7 @@ public:
     }
     void print_list()
     {
-        SingleNode<Type> *temp = nullptr;
+        SingleNode<Type> *temp;
         cout<<"Head ---> ";
         for(int i = 0 ;i<mySize;i++)
         {
