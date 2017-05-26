@@ -17,6 +17,14 @@ int main()
     singleList.push_front(num);
   }
 
+  DoublyLinkedList<int> doubleList;
+  for(int i=0;i<3;i++)
+  {
+    int num = (rand() %3 +1);
+    doubleList.push_front(num);
+  }
+
+
   char option; //Used to select between Single 's' or Doubly 'd' lists
   int run_menu = 1;
   cout << "Welcome!\nPlease select from the following options which type of list";
@@ -54,7 +62,7 @@ int main()
   //Block that will handle the menu selection for Singly Linked Lists
   if(option == 's')
   {
-    int option; //Used to select from the menu options below
+    int num_select; //Used to select from the menu options below
     cout << "\nEntered first IF block" << endl;
 
     cout << "For your new list, please select from the following options\n" << endl;
@@ -80,10 +88,10 @@ int main()
     while(run_menu)
     {
       cout << "Selection: ";
-      cin >> option;
+      cin >> num_select;
       cout<<endl;
 
-      switch (option) {
+      switch (num_select) {
         case 1:
           cout << "List has already been generated randomly" << endl;
               break;
@@ -155,7 +163,7 @@ int main()
     //Block that will handle the menu selection for Double` Linked Lists
   else
   {
-    int option; //Used to select from the menu options below
+    int num_select; //Used to select from the menu options below
     cout << "\nEntered ELSE block" << endl;
 
     cout << "For your new list, please select from the following options\n" << endl;
@@ -180,10 +188,10 @@ int main()
     cout << endl;
     while(run_menu) {
       cout << "Selection: ";
-      cin >> option;
+      cin >> num_select;
       cout << "\nYou selected: " << option << endl;
 
-      switch (option) {
+      switch (num_select) {
         case 1:
           cout << "We are in CASE 1" << endl;
               //Call appropriate function here
@@ -225,8 +233,7 @@ int main()
               //Call appropriate function here
               break;
         case 11:
-          cout << "We are in CASE 11" << endl;
-              //Call appropriate function here
+              doubleList.print();
               break;
         case 12:
           cout << "We are in CASE 12" << endl;

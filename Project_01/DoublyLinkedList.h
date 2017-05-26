@@ -22,31 +22,37 @@ class DoublyLinkedList
     //returns 1 or 0 depending if list empty or not
     bool empty() const
     {
-
+        return head_ptr==NULL;                                                  //if head pointer is NULL then list is empty
     }
     //FRONT
     //returns object pointed to by head pointer
     Type front() const
     {
-
+        if(mySize>=1)                                                           //check if item is in list
+        {
+            return head_ptr->data;
+        }
     }
     //BACK
     //returns object pointed to by tail pointer
     Type back() const
     {
-
+        if(mySize>=1)
+        {
+            return tail_ptr->data;
+        }
     }
     //HEAD
     //returns head pointer
     DoubleNode<Type> *head() const
     {
-
+        return head_ptr;
     }
     //TAIL
     //returns tail pointer
     DoubleNode<Type> *tail() const
     {
-
+        return tail_ptr;
     }
     //COUNT
     //returns number of nodes in list storing the same value in argument
@@ -60,7 +66,20 @@ class DoublyLinkedList
     // If the list was originally empty,the tail pointer is set to point to the new node
     void push_front(Type const & value)
     {
-
+        DoubleNode<Type> * our_node = new DoubleNode<Type>(value,NULL,NULL);             //create a new node to push to front
+        if(empty())                                                                //if empty list
+        {
+            head_ptr = our_node;                                                   //our nodes previous and next our initialized as NULL already
+            tail_ptr = our_node;
+            mySize++;
+        }
+        else                                                                       //more than one item in list
+        {
+            our_node->next = head_ptr;                                             //our node points to the previous first node
+            head_ptr->previous = our_node;                                         //the last heads previous points to our node now
+            head_ptr = our_node;                                                   //head ptr is now our node
+            mySize++;
+        }
     }
     //PUSH_BACK
     //Similar to push front but places a new node at the back of list
@@ -90,6 +109,23 @@ class DoublyLinkedList
     int erase(Type const &)
     {
 
+    }
+    void print()
+    {
+        DoubleNode<Type> *temp;
+        cout<<"Head ---> ";
+        for(int i = 0 ;i<mySize;i++)
+        {
+            if (i == 0) {
+                cout << head_ptr->data <<" ";
+                temp = head_ptr->next;
+            }
+            else {
+                cout << temp->data << " ";
+                temp = temp->next;
+            }
+        }
+        cout<<"<---Tail"<<endl;
     }
     ~DoublyLinkedList()
     {
