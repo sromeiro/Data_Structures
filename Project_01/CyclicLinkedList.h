@@ -246,6 +246,7 @@ public:
         }
         cout<<"<---Tail"<<endl;
     }
+    ~CyclicLinkedList(){}; //NEED TO MAKE DESTRUCTOR STILL
 };
 
 #endif
