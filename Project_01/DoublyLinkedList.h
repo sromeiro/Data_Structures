@@ -67,17 +67,17 @@ class DoublyLinkedList
     void push_front(Type const & value)
     {
         DoubleNode<Type> * our_node = new DoubleNode<Type>(value,NULL,NULL);             //create a new node to push to front
-        if(empty())                                                                //if empty list
+        if(empty())                                                                      //if empty list
         {
-            head_ptr = our_node;                                                   //our nodes previous and next our initialized as NULL already
+            head_ptr = our_node;                                                         //our nodes previous and next our initialized as NULL already
             tail_ptr = our_node;
             mySize++;
         }
-        else                                                                       //more than one item in list
+        else                                                                             //more than one item in list
         {
-            our_node->next = head_ptr;                                             //our node points to the previous first node
-            head_ptr->previous = our_node;                                         //the last heads previous points to our node now
-            head_ptr = our_node;                                                   //head ptr is now our node
+            our_node->next = head_ptr;                                                   //our node points to the previous first node
+            head_ptr->previous = our_node;                                               //the last heads previous points to our node now
+            head_ptr = our_node;                                                         //head ptr is now our node
             mySize++;
         }
     }
@@ -85,7 +85,20 @@ class DoublyLinkedList
     //Similar to push front but places a new node at the back of list
     void push_back(Type const & value)
     {
-
+        DoubleNode<Type> * our_node = new DoubleNode<Type>(value,NULL,NULL);             //create a new node to push to front
+        if(empty())                                                                      //if empty list
+        {
+            head_ptr = our_node;                                                         //our nodes previous and next our initialized as NULL already
+            tail_ptr = our_node;
+            mySize++;
+        }
+        else
+        {
+            our_node->previous = tail_ptr;                                               //our nodes previous points to the last tail node
+            tail_ptr->next = our_node;                                                   //the last tail node now points to our new node
+            tail_ptr = our_node;                                                         //tail pointer now points to our new node
+            mySize++;
+        }
     }
     //POP FRONT
     //Deletes the node at the front of the linked list and, as necessary, update the head and tail pointers.

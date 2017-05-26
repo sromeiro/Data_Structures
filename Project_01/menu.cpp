@@ -189,7 +189,7 @@ int main()
     while(run_menu) {
       cout << "Selection: ";
       cin >> num_select;
-      cout << "\nYou selected: " << option << endl;
+      cout<<endl;
 
       switch (num_select) {
         case 1:
@@ -213,12 +213,18 @@ int main()
               //Call appropriate function here
               break;
         case 6:
-          cout << "We are in CASE 6" << endl;
-              //Call appropriate function here
+          int num_to_push;
+              cout << "Enter item to push to front : ";
+              cin >> num_to_push;
+              doubleList.push_front(num_to_push);
+              cout << "Pushed : "<<num_to_push<<" to front" << endl;
               break;
         case 7:
-          cout << "We are in CASE 7" << endl;
-              //Call appropriate function here
+          int num_to_back;
+              cout << "Enter item to push back : ";
+              cin >> num_to_back;
+              doubleList.push_back(num_to_back);
+              cout << "Pushed back : "<<num_to_back<<" to back" << endl;
               break;
         case 8:
           cout << "We are in CASE 8" << endl;
