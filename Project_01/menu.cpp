@@ -227,12 +227,10 @@ int main()
               cout << "Pushed back : "<<num_to_back<<" to back" << endl;
               break;
         case 8:
-          cout << "We are in CASE 8" << endl;
-              //Call appropriate function here
+              cout << "Popped front! Item Popped : " << doubleList.pop_front() <<endl;
               break;
         case 9:
-          cout << "We are in CASE 9" << endl;
-              //Call appropriate function here
+              cout << "Popped back! Item Popped : " << doubleList.pop_back() <<endl;
               break;
         case 10:
           cout << "We are in CASE 10" << endl;

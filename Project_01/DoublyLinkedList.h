@@ -105,6 +105,35 @@ class DoublyLinkedList
     //Return the object stored in the node being popped.
     Type pop_front()
     {
+        Type value_return = head_ptr->data;                                              //storing so we can return value
+        
+            if (mySize == 1)                                                                    //only 1 item in list
+            {
+                delete head_ptr;
+                head_ptr = NULL;
+                tail_ptr = NULL;
+                mySize--;
+                return value_return;
+            }
+            if (mySize == 2)                                                               //if only two items in list
+            {
+                DoubleNode<Type> *temp = head_ptr;                                          //need to copy to delete
+                head_ptr = head_ptr->next;                                                   //head pointer now points to next node
+                head_ptr->previous = NULL;                                                   //previous set to null of new head node
+                head_ptr->next = NULL;                                                       //because there were only two items in list this is now only node
+                mySize--;
+                delete temp;
+                return value_return;
+            }
+            if(mySize >= 2)                                                                          //more than two items in list
+            {
+                DoubleNode<Type> *temp = head_ptr;                                          //need to copy to delete
+                head_ptr = head_ptr->next;                                                   //head pointer now points to next node
+                head_ptr->previous = NULL;                                                   //previous set to null of new head node
+                mySize--;
+                delete temp;
+                return value_return;
+            }
         //NEED UNDERFLOW EXCEPTION
     }
     //POP BACK
@@ -112,6 +141,28 @@ class DoublyLinkedList
     //Return the object stored in the node being popped
     Type pop_back()
     {
+        Type value_return = tail_ptr->data;                                                //Store of data to return at end
+        if(mySize==1)
+        {
+            pop_front();                                                                   //if only one item we can just call pop front since it will be same
+        }
+        else if(mySize==2)                                                                 //only two items in list
+        {
+            DoubleNode<Type> * temp = tail_ptr;
+            tail_ptr = tail_ptr->previous;                                                 //tail pointer now points to previous node
+            tail_ptr->previous = NULL;                                                     //previous now NULL because only one in list
+            tail_ptr->next = NULL;                                                         //next is now NULL since its last node
+            delete temp;
+            return value_return;
+        }
+        else                                                                               //more than two items in list
+        {
+            DoubleNode<Type> * temp = tail_ptr;
+            tail_ptr = tail_ptr->previous;                                                 //tail now points to previous node
+            tail_ptr->next = NULL;                                                         //tails next points to NULL
+            delete temp;
+            return value_return;
+        }
         //NEEED UNDERFLOW EXCEPTION
     }
     //ERASE

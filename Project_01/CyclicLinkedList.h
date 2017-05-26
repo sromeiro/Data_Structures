@@ -133,7 +133,7 @@ public:
         if(mySize>=2)
         {
             Type stored_value;
-            SingleNode<Type> *old_node;         //use to make copy of node
+            SingleNode<Type> *old_node;          //use to make copy of node
             old_node = head_ptr;                 //copy of head pointer
             head_ptr = old_node->next;           //head pointer now points to the next node
             tail_ptr->next = head_ptr;           //the last node now points to the head
@@ -145,7 +145,7 @@ public:
         if(mySize == 1)
         {
             Type stored_value;
-            SingleNode<Type> *old_node;         //use to make copy of node
+            SingleNode<Type> *old_node;          //use to make copy of node
             old_node = head_ptr;                 //copy of head pointer
             head_ptr = NULL;                     //head pointer now points to the next node
             //tail_ptr->next = head_ptr;           //the last node now points to the head
