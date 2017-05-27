@@ -178,12 +178,13 @@ class DoublyLinkedList
 
       else
       {
+        cout << "mySize is: " << mySize << endl;
         if(mySize==1)
         {
             return pop_front();                                                            //if only one item we can just call pop front since it will be same
         }
 
-        else if(mySize==2)                                                                 //only two items in list
+        else if(mySize>=2)                                                                 //only two items in list
         {
             Type value_return = tail_ptr->data;                                            //Store of data to return at end
             DoubleNode<Type> * temp = tail_ptr;
@@ -195,6 +196,13 @@ class DoublyLinkedList
             return value_return;
         }
 
+        else                                                                               //more than two items in list
+        {
+            Type value_return = tail_ptr->data;                                            //Store of data to return at end
+            DoubleNode<Type> * temp = tail_ptr;
+            tail_ptr = tail_ptr->previous;                                                 //tail now points to previous node
+            tail_ptr->next = NULL;
+        }
         return 0; //Eliminates warning of reaching end of function and not returning. Will never reach this line
       }
     }
