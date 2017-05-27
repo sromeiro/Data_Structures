@@ -9,7 +9,7 @@ template <class Type>
 class DoublyLinkedList
 {
   private:
-    int mySize;                                //size of the list
+    int mySize;                                    //size of the list
     DoubleNode<Type> * head_ptr;                   //head pointer
     DoubleNode<Type> * tail_ptr;                   //tail pointer
   public:
@@ -60,7 +60,18 @@ class DoublyLinkedList
     //returns number of nodes in list storing the same value in argument
     int count(Type const & value) const
     {
-      return 0; //Temporary return statement
+        int item_count=0;
+        DoubleNode<Type> *temp;
+        temp = head_ptr;                                                        //temp points to head pointer
+        for (int i = 0; i < mySize; i++)
+        {
+            if((temp->data)== value)                                            //if temps value equals data we count+1
+            {
+                item_count++;
+            }
+            temp=temp->next;                                                    //temp points to next node
+        }
+        return item_count;
     }
     //PUSH_FRONT
     //Creates a new DoubleNode< Type > storing the argument, the next pointer of which is set to the current head pointer.
@@ -108,32 +119,32 @@ class DoublyLinkedList
     Type pop_front()
     {
 
-            if (mySize == 1)                                                                    //only 1 item in list
+            if (mySize == 1)                                                                //only 1 item in list
             {
-                Type value_return = head_ptr->data;                                              //storing so we can return value
+                Type value_return = head_ptr->data;                                         //storing so we can return value
                 delete head_ptr;
                 head_ptr = NULL;
                 tail_ptr = NULL;
                 mySize--;
                 return value_return;
             }
-            if (mySize == 2)                                                               //if only two items in list
+            if (mySize == 2)                                                                //if only two items in list
             {
-                Type value_return = head_ptr->data;                                              //storing so we can return value
+                Type value_return = head_ptr->data;                                         //storing so we can return value
                 DoubleNode<Type> *temp = head_ptr;                                          //need to copy to delete
-                head_ptr = head_ptr->next;                                                   //head pointer now points to next node
-                head_ptr->previous = NULL;                                                   //previous set to null of new head node
-                head_ptr->next = NULL;                                                       //because there were only two items in list this is now only node
+                head_ptr = head_ptr->next;                                                  //head pointer now points to next node
+                head_ptr->previous = NULL;                                                  //previous set to null of new head node
+                head_ptr->next = NULL;                                                      //because there were only two items in list this is now only node
                 mySize--;
                 delete temp;
                 return value_return;
             }
-            if(mySize >= 2)                                                                          //more than two items in list
+            if(mySize >= 2)                                                                 //more than two items in list
             {
-                Type value_return = head_ptr->data;                                              //storing so we can return value
+                Type value_return = head_ptr->data;                                         //storing so we can return value
                 DoubleNode<Type> *temp = head_ptr;                                          //need to copy to delete
-                head_ptr = head_ptr->next;                                                   //head pointer now points to next node
-                head_ptr->previous = NULL;                                                   //previous set to null of new head node
+                head_ptr = head_ptr->next;                                                  //head pointer now points to next node
+                head_ptr->previous = NULL;                                                  //previous set to null of new head node
                 mySize--;
                 delete temp;
                 return value_return;
@@ -154,14 +165,13 @@ class DoublyLinkedList
     //Return the object stored in the node being popped
     Type pop_back()
     {
-      cout << "\nInside pop_back, mySize is: " << mySize << endl;
         if(mySize==1)
         {
-            return pop_front();                                                                   //if only one item we can just call pop front since it will be same
+            return pop_front();                                                            //if only one item we can just call pop front since it will be same
         }
         else if(mySize==2)                                                                 //only two items in list
         {
-            Type value_return = tail_ptr->data;                                                //Store of data to return at end
+            Type value_return = tail_ptr->data;                                            //Store of data to return at end
             DoubleNode<Type> * temp = tail_ptr;
             tail_ptr = tail_ptr->previous;                                                 //tail pointer now points to previous node
             tail_ptr->previous = NULL;                                                     //previous now NULL because only one in list
@@ -172,7 +182,7 @@ class DoublyLinkedList
         }
         else                                                                               //more than two items in list
         {
-            Type value_return = tail_ptr->data;                                                //Store of data to return at end
+            Type value_return = tail_ptr->data;                                            //Store of data to return at end
             DoubleNode<Type> * temp = tail_ptr;
             tail_ptr = tail_ptr->previous;                                                 //tail now points to previous node
             tail_ptr->next = NULL;                                                         //tails next points to NULL
@@ -187,10 +197,47 @@ class DoublyLinkedList
     //(use == to to test for equality with the retrieved element).
     //As necessary, update the head and tail pointers and the next pointer of any other node within the list.
     //Return the number of nodes that were deleted
-    int erase(Type const &)
+    int erase(Type const & value)
     {
-      return 0; //Temporary return statement
+        int erase_count=0;
+        DoubleNode<Type> * temp;
+        temp = head_ptr;
+        while(head_ptr->data==value)                   //CASE 1 : head pointer and equals value
+        {
+            if(mySize==1){if(head_ptr->data==value) { pop_front();return erase_count+1; } else { return erase_count; }} //IN CASE WHOLE LIST IS SAME VALUE ,will immediately return value
+            pop_front();                               //we call pop front to delete
+            erase_count++;
+        }
+        while(tail_ptr->data==value)                   //CASE 2 : tail pointer and equals value
+        {
+            pop_back();                                //we call pop tail to delete
+            erase_count++;
+        }
+        if(mySize>=3)                                  //CASE 3 : in the middle (only possible with three or more nodes)
+        {
+            int list_size = mySize;                    //because we change mySize in our loop we use this in for loop
+            temp = head_ptr;
+            for (int i = 0; i < (list_size-1); i++)    //LIST SIZE - 1 , since the tail is already handled and the next of tail points to NULL
+            {
+                if(temp->next->data == value)          //if the next nodes value is equal to value to delete
+                {
+                    DoubleNode<Type> * old;            //keeping track of old node to be deleted
+                    old = temp->next;
+                    temp->next = old->next;            //skipping over node to be deleted
+                    old->next->previous = temp;        //the node after the skipped node , its previous now goes to temp
+                    delete old;
+                    erase_count++;
+                    mySize--;                          //adjusts size of list
+                }
+                else
+                {
+                    temp = temp->next;
+                }
+            }
+        }
+        return erase_count;
     }
+    //PRINT
     void print()
     {
         DoubleNode<Type> *temp;                           //create temp to go through nodes
@@ -203,9 +250,13 @@ class DoublyLinkedList
         }
         cout<<"<---Tail"<<endl;
     }
+    //DESTRUCTOR
     ~DoublyLinkedList()
     {
-        //NEED TO IMPLEMENT
+        while(!empty())                                   //while the list is not empty we call pop front to delete
+        {
+            pop_front();
+        }
     };
 };
 

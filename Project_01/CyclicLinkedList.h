@@ -255,7 +255,13 @@ public:
         }
         cout<<"<---Tail"<<endl;
     }
-    ~CyclicLinkedList(){}; //NEED TO MAKE DESTRUCTOR STILL
+    ~CyclicLinkedList()
+    {
+        while(!empty())                                   //while the list is not empty we call pop front to delete
+        {
+            pop_front();
+        }
+    };
 };
 
 #endif

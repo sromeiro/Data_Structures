@@ -9,7 +9,7 @@ int main()
 {
   srand(time(NULL));
   CyclicLinkedList<int> singleList;
-  for(int i=0;i<30;i++)
+  for(int i=0;i<3;i++)
   {
     int num = (rand() %3 +1);
     singleList.push_front(num);
@@ -246,20 +246,19 @@ int main()
               //Call appropriate function here
               break;
         case 2:
-          cout << "We are in CASE 2" << endl;
-              //Call appropriate function here
+          cout << "Number of items in list : " << doubleList.size() << endl;
               break;
         case 3:
-          cout << "We are in CASE 3" << endl;
-              //Call appropriate function here
+          cout << "First item: "<< doubleList.front() << endl;
               break;
         case 4:
-          cout << "We are in CASE 4" << endl;
-              //Call appropriate function here
+          cout << "Last item: " << doubleList.back() << endl;
               break;
         case 5:
-          cout << "We are in CASE 5" << endl;
-              //Call appropriate function here
+          int num_to_count;
+              cout << "Enter item to count : ";
+              cin >> num_to_count;
+              cout <<"Item : "<<num_to_count<<" appears : "<< doubleList.count(num_to_count) << " times." <<endl;
               break;
         case 6:
           int num_to_push;
@@ -303,8 +302,19 @@ int main()
 
           break;
         case 10:
-          cout << "We are in CASE 10" << endl;
-              //Call appropriate function here
+          int to_delete;
+              cout << "Enter item to delete : ";
+              cin >> to_delete;
+              if(doubleList.count(to_delete) == 0)
+              {
+                cout << "Item does not exist in list." << endl;
+                break;
+              }
+
+              int num_deleted;
+              num_deleted = doubleList.erase(to_delete);
+              cout << "All instances of item : " << to_delete <<" have been deleted"<<endl;
+              cout << "Deleted : " <<num_deleted << " times" <<endl;
               break;
         case 11:
               doubleList.print();
