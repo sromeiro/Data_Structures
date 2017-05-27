@@ -9,19 +9,7 @@ int main()
 {
   srand(time(NULL));
   CyclicLinkedList<double> singleList;
-  for(int i=0;i<5;i++)
-  {
-    double num = (rand() %3 +1);
-    singleList.push_front(num);
-  }
-
   DoublyLinkedList<double> doubleList;
-  for(int i=0;i<5;i++)
-  {
-    double num = (rand() %3 +1);
-    doubleList.push_front(num);
-  }
-
 
   char option; //Used to select between Single 's' or Doubly 'd' lists
   int run_menu = 1;
@@ -43,12 +31,18 @@ int main()
   switch(option)
   {
     case 's':
-      cout << "We're in CASE \'s\'" << endl;
-          //Instantiate Singly Linked List here
+          for(int i=0;i<5;i++)
+          {
+            double num = (rand() %3 +1);
+            singleList.push_front(num);
+          }
           break;
     case 'd':
-      cout << "We're in CASE \'d\'" << endl;
-          //Instantiate Doubly Linked List here
+          for(int i=0;i<5;i++)
+          {
+            double num = (rand() %3 +1);
+            doubleList.push_front(num);
+          }
           break;
 
     default:
@@ -189,12 +183,10 @@ int main()
           cout << "Deleted : " <<num_deleted << " times" <<endl;
           break;
         case 11:
-          cout<<"PRINTING LIST"<<endl;
-              cout<<endl;
               singleList.print_list();
+              cout<<endl;
               break;
         case 12:
-          cout << "We are in CASE 12" << endl;
               cout << "\nExiting program" << endl;
               run_menu = 0; //Successful termination of program
               break;
@@ -240,7 +232,6 @@ int main()
 
       switch (num_select) {
         case 1:
-          cout << "We are in CASE 1" << endl;
           if(doubleList.size() >= 1)
           {
             cout << "List has already been generated randomly." << endl;
@@ -341,9 +332,9 @@ int main()
               break;
         case 11:
               doubleList.print();
+              cout<<endl;
               break;
         case 12:
-          cout << "We are in CASE 12" << endl;
               cout << "\nExiting program" << endl;
               run_menu = 0; //Successful termination of program
               break;
@@ -355,7 +346,6 @@ int main()
       }
     }
   }
-
   cout << "\nSuccessful termination of program" << endl;
   return 0;
 }
