@@ -17,7 +17,6 @@ public:
 
     //FUNCTIONS
     //Default constructor
-    SingleNode(): data(0),next(NULL){};
     SingleNode(Type const & our_data,SingleNode * ptr) : data(0),next(NULL) //data by default int, next by default NULL
     {
         data = our_data;

@@ -15,7 +15,7 @@ private:
 
 public:
     //Default constructor
-    CyclicLinkedList() : mySize(0),head_ptr(NULL),tail_ptr(NULL)  //default size=0, both head and tail NULL pointers
+    CyclicLinkedList() : mySize(0),head_ptr(NULL),tail_ptr(NULL)//default size=0, both head and tail NULL pointers
     {
 
     }
@@ -27,7 +27,7 @@ public:
     }
     //EMPTY
     //Returns true if list empty (otherwise return false)
-    bool empty() const //
+    bool empty() const
     {
         return head_ptr==NULL;
     }
@@ -50,28 +50,33 @@ public:
     SingleNode<Type> * head() const
     {
         if(mySize>=1)
+        {
             return head_ptr;
+        }
     }
     //TAIL
     //Returns tail pointer
     SingleNode<Type> * tail() const
     {
         if(mySize>=1)
+        {
             return tail_ptr;
+        }
     }
     //COUNT
     //Returns # of nodes in linked list storing a value equal to argument
-    int count(Type const & value) const {
+    int count(Type const & value) const
+    {
         int item_count=0;
         SingleNode<Type> *temp;
-        temp = head_ptr;
+        temp = head_ptr;                                                        //temp points to head pointer
         for (int i = 0; i < mySize; i++)
         {
-            if((temp->data)== value)
+            if((temp->data)== value)                                            //if temps value equals data we count+1
                 {
                     item_count++;
                 }
-                temp=temp->next;
+                temp=temp->next;                                                //temp points to next node
         }
         return item_count;
     }
@@ -81,23 +86,20 @@ public:
     // If the list was originally empty,the tail pointer is set to point to the new node
     void push_front(Type const & value)
     {
-        //SingleNode<Type> * create_node;
-        SingleNode<Type> * our_node = new SingleNode<Type>(value, NULL);         //create new singlenode and set data value
-//        SingleNode<Type> * our_node = new SingleNode<Type>(value, head_ptr);
-//        head_ptr = our_node;
-//        tail_ptr->next = head_ptr;
-        if(mySize==0)                                                //is list empty?
+        SingleNode<Type> * our_node = new SingleNode<Type>(value, NULL);         //create new singlenode and set data value , NULL for next
+
+        if(mySize==0)                                                            //is list empty?
         {
-            our_node -> next = our_node;                             //points to itself
-            tail_ptr = our_node->next;                               //tail and head ptr point to same (just one node in list)
-            head_ptr = our_node->next;
+            our_node -> next = our_node;                                         //points to itself
+            tail_ptr = our_node;                                                 //tail and head ptr point to same (just one node in list)
+            head_ptr = our_node;
             mySize++;
         }
-        else                                                    //list not empty
+        else                                                                     //list not empty
         {
-            our_node->next = head_ptr;                          //head now front
-            head_ptr = our_node;                                //head_ptr is our node;
-            tail_ptr->next = head_ptr;                          //LAST NODE POINTS TO FIRST NODE
+            our_node->next = head_ptr;                                           //new nodes next points to the head pointer
+            head_ptr = our_node;                                                 //head_ptr is our node;
+            tail_ptr->next = head_ptr;                                           //last node points to first node (loop)
             mySize++;
         }
     }
@@ -106,20 +108,19 @@ public:
     void push_back(Type const & value)
     {
         SingleNode<Type> * our_node = new SingleNode<Type>(value, NULL);         //create new singlenode and set data value
-//        SingleNode<Type> * create_node;
-//        SingleNode<Type> * our_node = new SingleNode<Type>(value, create_node);
-        if(mySize==0)                                           //is list empty?
+
+        if(mySize==0)                                                            //is list empty?
         {
-            our_node -> next = our_node;                        //points to itself
-            tail_ptr = our_node->next;                          //tail and head ptr point to same (just one node in list)
-            head_ptr = our_node->next;
+            our_node -> next = our_node;                                         //points to itself
+            tail_ptr = our_node;                                                 //tail and head pointer point to same (just one node in list)
+            head_ptr = our_node;
             mySize++;
         }
-        else
+        else                                                                     //more than one node in list
         {
-            tail_ptr->next = our_node;
-            tail_ptr = our_node;
-            our_node -> next = head_ptr;                        //end points to head
+            tail_ptr->next = our_node;                                           //old tails nodes next now points to new node
+            tail_ptr = our_node;                                                 //tail now points to our node
+            our_node -> next = head_ptr;                                         //last node now points to head
             mySize++;
         }
 
@@ -129,28 +130,27 @@ public:
     //Return the object stored in the node being popped
     Type pop_front()
     {
-        if(mySize>=2)
+        if(mySize>=2)                                      //two or more nodes in list
         {
             Type stored_value;
-            SingleNode<Type> *old_node;          //use to make copy of node
-            old_node = head_ptr;                 //copy of head pointer
-            head_ptr = old_node->next;           //head pointer now points to the next node
-            tail_ptr->next = head_ptr;           //the last node now points to the head
-            stored_value = old_node->getData();  //getting data before we delete
-            delete old_node;                     //delete the head node
+            SingleNode<Type> *old_node;                    //use to make copy of node
+            old_node = head_ptr;                           //copy of head pointer
+            head_ptr = old_node->next;                     //head pointer now points to the next node
+            tail_ptr->next = head_ptr;                     //the last node now points to the new head
+            stored_value = old_node->data;                 //getting data before we delete
+            delete old_node;                               //delete the original head node
             mySize--;
             return stored_value;
         }
-        if(mySize == 1)
+        if(mySize == 1)                                    //only one item in list
         {
             Type stored_value;
-            SingleNode<Type> *old_node;          //use to make copy of node
-            old_node = head_ptr;                 //copy of head pointer
-            head_ptr = NULL;                     //head pointer now points to the next node
-            //tail_ptr->next = head_ptr;           //the last node now points to the head
+            SingleNode<Type> *old_node;                    //use to make copy of node
+            old_node = head_ptr;                           //copy of head pointer
+            head_ptr = NULL;                               //head and tail pointer now points to NULL
             tail_ptr = NULL;
-            stored_value = old_node->getData();  //getting data before we delete
-            delete old_node;                     //delete the head node
+            stored_value = old_node->getData();            //getting data before we delete
+            delete old_node;                               //delete the head node
             mySize--;
             return stored_value;
         }
@@ -168,27 +168,31 @@ public:
     //Return the object stored in the node being popped
     Type pop_back()
     {
-        if(mySize>=1)
+        if(mySize==1)                                    //only one item in list
+        {
+            return pop_front();                          //we can call pop front since it already does this
+        }
+        if(mySize>=2)                                    //one or more items in list
         {
             Type stored_value;                           //use to return value
             stored_value = tail_ptr->data;
-            SingleNode<Type> *old_node;                  //use to make copy of old node
-            old_node = tail_ptr;                         //copy of tail node
+            SingleNode<Type> *old_node;                  //use to delete the old tail
+            old_node = tail_ptr;
 
             SingleNode<Type> *temp;                      //create temp and start at head
             temp = head_ptr;
 
-            for (int i = 0; i < mySize; i++)
+            for (int i = 0; i < mySize; i++)             //need to go through list the to find node just before tail
             {
               if (temp->next == tail_ptr)
               {
-                  temp->next = head_ptr;               //seting the tail node to point to head
-                  tail_ptr = temp;                     //set tail to other node
-                  delete old_node;                     //delte the old tail
-                  mySize--;                            //change size
-                  return stored_value;                 //return type
+                  temp->next = head_ptr;                 //setting the new tail node to point to head
+                  tail_ptr = temp;                       //set tail to other node
+                  delete old_node;                       //delete the old tail
+                  mySize--;                              //change size
+                  return stored_value;                   //return type
               }
-               temp = temp->next;
+               temp = temp->next;                        //go to next node
             }
         }
 
