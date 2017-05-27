@@ -9,7 +9,7 @@ int main()
 {
   srand(time(NULL));
   CyclicLinkedList<int> singleList;
-  for(int i=0;i<3;i++)
+  for(int i=0;i<30;i++)
   {
     int num = (rand() %3 +1);
     singleList.push_front(num);

@@ -193,18 +193,13 @@ class DoublyLinkedList
     }
     void print()
     {
-        DoubleNode<Type> *temp;
+        DoubleNode<Type> *temp;                           //create temp to go through nodes
+        temp = head_ptr;                                  //start at head node
         cout<<"Head ---> ";
-        for(int i = 0 ;i<mySize;i++)
+        for(int i = 0 ;i<mySize;i++)                      //loop through size of list
         {
-            if (i == 0) {
-                cout << head_ptr->data <<" ";
-                temp = head_ptr->next;
-            }
-            else {
-                cout << temp->data << " ";
-                temp = temp->next;
-            }
+            cout << temp->data << " ";
+            temp = temp->next;                            //go to next node
         }
         cout<<"<---Tail"<<endl;
     }

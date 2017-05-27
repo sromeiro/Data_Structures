@@ -204,60 +204,54 @@ public:
     //As necessary, update the head and tail pointers and the next pointer of any other node within the list.
     //Return the number of nodes that were deleted
     int erase(Type const & value) {
-        int erase_count = 0;
-        int total_size = mySize;                  //make a copy of our size so we can adjust mysize in loop and not affect it
-        SingleNode<Type> *temp;
-        if(mySize==1){if(head_ptr->data==value) { pop_front();return erase_count+1; } else { return erase_count; }} //check if size is 1 and use popfront to delete
+
+        int erase_count=0;
+        SingleNode<Type> * temp;
         temp = head_ptr;
-        while(head_ptr->data==value)
+        while(head_ptr->data==value)                   //CASE 1 : head pointer and equals value
         {
-            if(mySize==1){if(head_ptr->data==value) { pop_front();return erase_count+1; } else { return erase_count; }}//check if size is 1 and use popfront to delete
-            temp = temp->next;
-            pop_front();
+            if(mySize==1){if(head_ptr->data==value) { pop_front();return erase_count+1; } else { return erase_count; }} //IN CASE WHOLE LIST IS SAME VALUE ,will immediately return value
+            pop_front();                               //we call pop front to delete
             erase_count++;
         }
-        while(tail_ptr->data==value)
+        while(tail_ptr->data==value)                   //CASE 2 : tail pointer and equals value
         {
-            if(mySize==1){if(head_ptr->data==value) { pop_front();return erase_count+1; } else { return erase_count; }}//check if size is 1 and use popfront to delete
-            pop_back();
-            erase_count++;
+                pop_back();                            //we call pop tail to delete
+                erase_count++;
         }
-        temp=head_ptr;
-        for (int i = 0; i < total_size; i++)
+        if(mySize>=3)                                  //CASE 3 : in the middle (only possible with three or more nodes)
         {
-            if(mySize==1){if(head_ptr->data==value) { pop_front();return erase_count+1; } else { return erase_count; }}//check if size is 1 and use popfront to delete
-            if(temp->next->data==value)
+            int list_size = mySize;                    //because we change mySize in our loop we use this in for loop
+            temp = head_ptr;
+            for (int i = 0; i < list_size; i++)
             {
-                if(temp->next != tail_ptr) {
-                    SingleNode<Type> *old;
-                    old = temp->next;               //copy so we can delete
-                    temp->next = old->next;         //skipped the node with the value;
+                if(temp->next->data == value)          //if the next nodes value is equal to value to delete
+                {
+                    SingleNode<Type> * old;            //keeping track of old node to be deleted
+                    old = temp->next;
+                    temp->next = old->next;            //skipping over node to be deleted
                     delete old;
-                    mySize--;
                     erase_count++;
+                    mySize--;                          //adjusts size of list
                 }
-            }
-            else
-            {
-                temp=temp->next;
+                else
+                {
+                    temp = temp->next;
+                }
             }
         }
         return erase_count;
     }
+    //PRINT LIST
     void print_list()
     {
-        SingleNode<Type> *temp;
+        SingleNode<Type> *temp;                           //create temp to go through nodes
+        temp = head_ptr;                                  //start at head node
         cout<<"Head ---> ";
-        for(int i = 0 ;i<mySize;i++)
+        for(int i = 0 ;i<mySize;i++)                      //loop through size of list
         {
-            if (i == 0) {
-                cout << head_ptr->data <<" ";
-                temp = head_ptr->next;
-            }
-            else {
-                cout << temp->data << " ";
-                temp = temp->next;
-            }
+            cout << temp->data << " ";
+            temp = temp->next;                            //go to next node
         }
         cout<<"<---Tail"<<endl;
     }

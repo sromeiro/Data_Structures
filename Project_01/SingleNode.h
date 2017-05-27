@@ -14,7 +14,6 @@ private:
     Type data;                                                    //Contains data of (Type)
     SingleNode * next;                                            //Pointer to a SingleNode object, referred to as next
 public:
-
     //FUNCTIONS
     //Default constructor
     SingleNode(Type const & our_data,SingleNode * ptr) : data(0),next(NULL) //data by default int, next by default NULL
