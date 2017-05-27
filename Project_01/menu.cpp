@@ -163,13 +163,19 @@ int main()
           break;
         case 10:
           int to_delete;
-              int num_deleted;
-              cout << "Enter item to delete : ";
-              cin >> to_delete;
-              num_deleted = singleList.erase(to_delete);
-              cout << "All instances of item : " << to_delete <<" have been deleted"<<endl;
-              cout << "Deleted : " <<num_deleted << " times" <<endl;
-              break;
+          cout << "Enter item to delete : ";
+          cin >> to_delete;
+          if(singleList.count(to_delete) == 0)
+          {
+            cout << "Item does not exist in list." << endl;
+            break;
+          }
+
+          int num_deleted;
+          num_deleted = singleList.erase(to_delete);
+          cout << "All instances of item : " << to_delete <<" have been deleted"<<endl;
+          cout << "Deleted : " <<num_deleted << " times" <<endl;
+          break;
         case 11:
           cout<<"PRINTING LIST"<<endl;
               cout<<endl;
