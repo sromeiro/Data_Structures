@@ -62,19 +62,13 @@ public:
     //Returns head pointer
     SingleNode<Type> * head() const
     {
-        if(mySize>=1)
-        {
-            return head_ptr;
-        }
+      return head_ptr;
     }
     //TAIL
     //Returns tail pointer
     SingleNode<Type> * tail() const
     {
-        if(mySize>=1)
-        {
-            return tail_ptr;
-        }
+      return tail_ptr;
     }
     //COUNT
     //Returns # of nodes in linked list storing a value equal to argument
@@ -148,32 +142,35 @@ public:
         throw out_of_range("List is empty!");
       }
 
-      if(mySize>=2)                                      //two or more nodes in list
+      else
       {
-          Type stored_value;
-          SingleNode<Type> *old_node;                    //use to make copy of node
-          old_node = head_ptr;                           //copy of head pointer
-          head_ptr = old_node->next;                     //head pointer now points to the next node
-          tail_ptr->next = head_ptr;                     //the last node now points to the new head
-          stored_value = old_node->data;                 //getting data before we delete
-          delete old_node;                               //delete the original head node
-          mySize--;
-          return stored_value;
-      }
-      if(mySize == 1)                                    //only one item in list
-      {
-          Type stored_value;
-          SingleNode<Type> *old_node;                    //use to make copy of node
-          old_node = head_ptr;                           //copy of head pointer
-          head_ptr = NULL;                               //head and tail pointer now points to NULL
-          tail_ptr = NULL;
-          stored_value = old_node->getData();            //getting data before we delete
-          delete old_node;                               //delete the head node
-          mySize--;
-          return stored_value;
-      }
+        if(mySize>=2)                                      //two or more nodes in list
+        {
+            Type stored_value;
+            SingleNode<Type> *old_node;                    //use to make copy of node
+            old_node = head_ptr;                           //copy of head pointer
+            head_ptr = old_node->next;                     //head pointer now points to the next node
+            tail_ptr->next = head_ptr;                     //the last node now points to the new head
+            stored_value = old_node->data;                 //getting data before we delete
+            delete old_node;                               //delete the original head node
+            mySize--;
+            return stored_value;
+        }
+        if(mySize == 1)                                    //only one item in list
+        {
+            Type stored_value;
+            SingleNode<Type> *old_node;                    //use to make copy of node
+            old_node = head_ptr;                           //copy of head pointer
+            head_ptr = NULL;                               //head and tail pointer now points to NULL
+            tail_ptr = NULL;
+            stored_value = old_node->getData();            //getting data before we delete
+            delete old_node;                               //delete the head node
+            mySize--;
+            return stored_value;
+        }
 
-      return 0; //Eliminates warning of reaching end of function and not returning. Will never reach this line
+        return 0; //Eliminates warning of reaching end of function and not returning. Will never reach this line
+      }
     }
     //POP BACK
     //delete node at the end of the linked list and, as necessary, update the head and tail pointers.
@@ -190,31 +187,34 @@ public:
           return pop_front();                          //we can call pop front since it already does this
       }
 
-      if(mySize>=2)                                    //one or more items in list
+      else
       {
-        Type stored_value;                           //use to return value
-        stored_value = tail_ptr->data;
-        SingleNode<Type> *old_node;                  //use to delete the old tail
-        old_node = tail_ptr;
-
-        SingleNode<Type> *temp;                      //create temp and start at head
-        temp = head_ptr;
-
-        for (int i = 0; i < mySize; i++)             //need to go through list the to find node just before tail
+        if(mySize>=2)                                    //one or more items in list
         {
-          if (temp->next == tail_ptr)
-          {
-              temp->next = head_ptr;                 //setting the new tail node to point to head
-              tail_ptr = temp;                       //set tail to other node
-              delete old_node;                       //delete the old tail
-              mySize--;                              //change size
-              return stored_value;                   //return type
-          }
-           temp = temp->next;                        //go to next node
-        }
-      }
+          Type stored_value;                           //use to return value
+          stored_value = tail_ptr->data;
+          SingleNode<Type> *old_node;                  //use to delete the old tail
+          old_node = tail_ptr;
 
-      return 0; //Eliminates warning of reaching end of function and not returning. Will never reach this line
+          SingleNode<Type> *temp;                      //create temp and start at head
+          temp = head_ptr;
+
+          for (int i = 0; i < mySize; i++)             //need to go through list the to find node just before tail
+          {
+            if (temp->next == tail_ptr)
+            {
+                temp->next = head_ptr;                 //setting the new tail node to point to head
+                tail_ptr = temp;                       //set tail to other node
+                delete old_node;                       //delete the old tail
+                mySize--;                              //change size
+                return stored_value;                   //return type
+            }
+             temp = temp->next;                        //go to next node
+          }
+        }
+
+        return 0; //Eliminates warning of reaching end of function and not returning. Will never reach this line
+      }
     }
     //ERASE
     //Delete the node(s) (from the front) in the linked list that contains the element equal to the argument
@@ -263,6 +263,13 @@ public:
     //PRINT LIST
     void print_list()
     {
+      if(empty())
+      {
+        cout << "List is empty!" << endl;
+      }
+
+      else
+      {
         SingleNode<Type> *temp;                           //create temp to go through nodes
         temp = head_ptr;                                  //start at head node
         cout<<"Head ---> ";
@@ -272,6 +279,7 @@ public:
             temp = temp->next;                            //go to next node
         }
         cout<<"<---Tail"<<endl;
+      }
     }
     ~CyclicLinkedList()
     {

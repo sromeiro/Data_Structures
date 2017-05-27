@@ -120,8 +120,15 @@ int main()
           }
           break;
         case 4:
-          cout << "Last item: " << singleList.back() << endl;
-              break;
+          try
+          {
+            cout << "Last item: " << singleList.back() << endl;
+          }
+          catch (const out_of_range& underflow_error)
+          {
+            cerr << underflow_error.what() << endl;
+          }
+          break;
         case 5:
           int num_to_count;
               cout << "Enter item to count : ";

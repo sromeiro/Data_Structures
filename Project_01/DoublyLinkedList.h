@@ -130,38 +130,41 @@ class DoublyLinkedList
         throw out_of_range("List is empty!");
       }
 
-      if (mySize == 1)                                                                //only 1 item in list
+      else
       {
-          Type value_return = head_ptr->data;                                         //storing so we can return value
-          delete head_ptr;
-          head_ptr = NULL;
-          tail_ptr = NULL;
-          mySize--;
-          return value_return;
-      }
-      if (mySize == 2)                                                                //if only two items in list
-      {
-          Type value_return = head_ptr->data;                                         //storing so we can return value
-          DoubleNode<Type> *temp = head_ptr;                                          //need to copy to delete
-          head_ptr = head_ptr->next;                                                  //head pointer now points to next node
-          head_ptr->previous = NULL;                                                  //previous set to null of new head node
-          head_ptr->next = NULL;                                                      //because there were only two items in list this is now only node
-          mySize--;
-          delete temp;
-          return value_return;
-      }
-      if(mySize >= 2)                                                                 //more than two items in list
-      {
-          Type value_return = head_ptr->data;                                         //storing so we can return value
-          DoubleNode<Type> *temp = head_ptr;                                          //need to copy to delete
-          head_ptr = head_ptr->next;                                                  //head pointer now points to next node
-          head_ptr->previous = NULL;                                                  //previous set to null of new head node
-          mySize--;
-          delete temp;
-          return value_return;
-      }
+        if (mySize == 1)                                                                //only 1 item in list
+        {
+            Type value_return = head_ptr->data;                                         //storing so we can return value
+            delete head_ptr;
+            head_ptr = NULL;
+            tail_ptr = NULL;
+            mySize--;
+            return value_return;
+        }
+        if (mySize == 2)                                                                //if only two items in list
+        {
+            Type value_return = head_ptr->data;                                         //storing so we can return value
+            DoubleNode<Type> *temp = head_ptr;                                          //need to copy to delete
+            head_ptr = head_ptr->next;                                                  //head pointer now points to next node
+            head_ptr->previous = NULL;                                                  //previous set to null of new head node
+            head_ptr->next = NULL;                                                      //because there were only two items in list this is now only node
+            mySize--;
+            delete temp;
+            return value_return;
+        }
+        if(mySize >= 2)                                                                 //more than two items in list
+        {
+            Type value_return = head_ptr->data;                                         //storing so we can return value
+            DoubleNode<Type> *temp = head_ptr;                                          //need to copy to delete
+            head_ptr = head_ptr->next;                                                  //head pointer now points to next node
+            head_ptr->previous = NULL;                                                  //previous set to null of new head node
+            mySize--;
+            delete temp;
+            return value_return;
+        }
 
-      return 0; //Eliminates warning of reaching end of function and not returning. Will never reach this line
+        return 0; //Eliminates warning of reaching end of function and not returning. Will never reach this line
+      }
     }
     //POP BACK
     //delete node at the end of the linked list and, as necessary, update the head and tail pointers.
@@ -173,24 +176,27 @@ class DoublyLinkedList
         throw out_of_range("List is empty!");
       }
 
-      if(mySize==1)
+      else
       {
-          return pop_front();                                                            //if only one item we can just call pop front since it will be same
-      }
+        if(mySize==1)
+        {
+            return pop_front();                                                            //if only one item we can just call pop front since it will be same
+        }
 
-      else if(mySize==2)                                                                 //only two items in list
-      {
-          Type value_return = tail_ptr->data;                                            //Store of data to return at end
-          DoubleNode<Type> * temp = tail_ptr;
-          tail_ptr = tail_ptr->previous;                                                 //tail pointer now points to previous node
-          tail_ptr->previous = NULL;                                                     //previous now NULL because only one in list
-          tail_ptr->next = NULL;                                                         //next is now NULL since its last node
-          mySize--;
-          delete temp;
-          return value_return;
-      }
+        else if(mySize==2)                                                                 //only two items in list
+        {
+            Type value_return = tail_ptr->data;                                            //Store of data to return at end
+            DoubleNode<Type> * temp = tail_ptr;
+            tail_ptr = tail_ptr->previous;                                                 //tail pointer now points to previous node
+            tail_ptr->previous = NULL;                                                     //previous now NULL because only one in list
+            tail_ptr->next = NULL;                                                         //next is now NULL since its last node
+            mySize--;
+            delete temp;
+            return value_return;
+        }
 
-      return 0; //Eliminates warning of reaching end of function and not returning. Will never reach this line
+        return 0; //Eliminates warning of reaching end of function and not returning. Will never reach this line
+      }
     }
     //ERASE
     //Delete the node(s) (from the front) in the linked list that contains the element equal to the argument
@@ -240,6 +246,13 @@ class DoublyLinkedList
     //PRINT
     void print()
     {
+      if(empty())
+      {
+        cout << "List is empty!" << endl;
+      }
+
+      else
+      {
         DoubleNode<Type> *temp;                           //create temp to go through nodes
         temp = head_ptr;                                  //start at head node
         cout<<"Head ---> ";
@@ -249,6 +262,7 @@ class DoublyLinkedList
             temp = temp->next;                            //go to next node
         }
         cout<<"<---Tail"<<endl;
+      }
     }
     //DESTRUCTOR
     ~DoublyLinkedList()
