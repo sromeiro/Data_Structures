@@ -106,10 +106,12 @@ int main()
         case 3:
           try
           {
+            //If singleList.front throws an error here the catch block will get it
             cout << "First item: "<< singleList.front() << endl;
           }
           catch (const out_of_range& underflow_error)
           {
+            //Caught error defined in single.front function
             cerr << underflow_error.what() << endl;
           }
           break;
@@ -127,14 +129,14 @@ int main()
           double num_to_count;
               cout << "Enter item to count : ";
               cin >> num_to_count;
-              if(cin.fail()) { cin.clear();break; }
+              if(cin.fail()) { cin.clear();break; } //Inline that handles inputs that aren't of requested type
               cout <<"Item : "<<num_to_count<<" appears : "<< singleList.count(num_to_count) << " times." <<endl;
               break;
         case 6:
           double num_to_push;
               cout << "Enter item to push to front : ";
               cin >> num_to_push;
-              if(cin.fail()) { cin.clear();break; }
+              if(cin.fail()) { cin.clear();break; } //Inline that handles inputs that aren't of requested type
               singleList.push_front(num_to_push);
               cout << "Pushed : "<<num_to_push<<" to front" << endl;
               break;
@@ -142,7 +144,7 @@ int main()
           double num_to_back;
               cout << "Enter item to push back : ";
               cin >> num_to_back;
-              if(cin.fail()) { cin.clear();break; }
+              if(cin.fail()) { cin.clear();break; } //Inline that handles inputs that aren't of requested type
               singleList.push_back(num_to_back);
               cout << "Pushed back : "<<num_to_back<<" to back" << endl;
               break;
@@ -170,7 +172,7 @@ int main()
           double to_delete;
           cout << "Enter item to delete : ";
           cin >> to_delete;
-              if(cin.fail()) { cin.clear();break; }
+              if(cin.fail()) { cin.clear();break; } //Inline that handles inputs that aren't of requested type
           if(singleList.count(to_delete) == 0)
           {
             cout << "Item does not exist in list." << endl;
@@ -246,7 +248,6 @@ int main()
             }
             cout << "New list created!" << endl;
           }
-              //Call appropriate function here
               break;
         case 2:
           cout << "Number of items in list : " << doubleList.size() << endl;
@@ -275,14 +276,14 @@ int main()
           double num_to_count;
               cout << "Enter item to count : ";
               cin >> num_to_count;
-              if(cin.fail()) { cin.clear();break; }
+              if(cin.fail()) { cin.clear();break; } //Inline that handles inputs that aren't of requested type
               cout <<"Item : "<<num_to_count<<" appears : "<< doubleList.count(num_to_count) << " times." <<endl;
               break;
         case 6:
           double num_to_push;
               cout << "Enter item to push to front : ";
               cin >> num_to_push;
-              if(cin.fail()) { cin.clear();break; }
+              if(cin.fail()) { cin.clear();break; } //Inline that handles inputs that aren't of requested type
               doubleList.push_front(num_to_push);
               cout << "Pushed : "<<num_to_push<<" to front" << endl;
               break;
@@ -290,7 +291,7 @@ int main()
           double num_to_back;
           cout << "Enter item to push back : ";
           cin >> num_to_back;
-              if(cin.fail()) { cin.clear();break; }
+              if(cin.fail()) { cin.clear();break; } //Inline that handles inputs that aren't of requested type
           doubleList.push_back(num_to_back);
           cout << "Pushed back : "<<num_to_back<<" to back" << endl;
           break;
