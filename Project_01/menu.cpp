@@ -133,12 +133,14 @@ int main()
           double num_to_count;
               cout << "Enter item to count : ";
               cin >> num_to_count;
+              if(cin.fail()) { cin.clear();break; }
               cout <<"Item : "<<num_to_count<<" appears : "<< singleList.count(num_to_count) << " times." <<endl;
               break;
         case 6:
           double num_to_push;
               cout << "Enter item to push to front : ";
               cin >> num_to_push;
+              if(cin.fail()) { cin.clear();break; }
               singleList.push_front(num_to_push);
               cout << "Pushed : "<<num_to_push<<" to front" << endl;
               break;
@@ -146,12 +148,7 @@ int main()
           double num_to_back;
               cout << "Enter item to push back : ";
               cin >> num_to_back;
-              if(cin.fail())
-              {
-                cout<<"WRONG ENTRY"<<endl;
-                cin.clear();
-                break;
-              }
+              if(cin.fail()) { cin.clear();break; }
               singleList.push_back(num_to_back);
               cout << "Pushed back : "<<num_to_back<<" to back" << endl;
               break;
@@ -179,6 +176,7 @@ int main()
           double to_delete;
           cout << "Enter item to delete : ";
           cin >> to_delete;
+              if(cin.fail()) { cin.clear();break; }
           if(singleList.count(to_delete) == 0)
           {
             cout << "Item does not exist in list." << endl;
@@ -286,12 +284,14 @@ int main()
           double num_to_count;
               cout << "Enter item to count : ";
               cin >> num_to_count;
+              if(cin.fail()) { cin.clear();break; }
               cout <<"Item : "<<num_to_count<<" appears : "<< doubleList.count(num_to_count) << " times." <<endl;
               break;
         case 6:
           double num_to_push;
               cout << "Enter item to push to front : ";
               cin >> num_to_push;
+              if(cin.fail()) { cin.clear();break; }
               doubleList.push_front(num_to_push);
               cout << "Pushed : "<<num_to_push<<" to front" << endl;
               break;
@@ -299,6 +299,7 @@ int main()
           double num_to_back;
           cout << "Enter item to push back : ";
           cin >> num_to_back;
+              if(cin.fail()) { cin.clear();break; }
           doubleList.push_back(num_to_back);
           cout << "Pushed back : "<<num_to_back<<" to back" << endl;
           break;
@@ -326,6 +327,7 @@ int main()
           double to_delete;
               cout << "Enter item to delete : ";
               cin >> to_delete;
+              if(cin.fail()) { cin.clear();break; }
               if(doubleList.count(to_delete) == 0)
               {
                 cout << "Item does not exist in list." << endl;
