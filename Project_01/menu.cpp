@@ -110,8 +110,15 @@ int main()
           cout << "Number of items in list : " << singleList.size() << endl;
               break;
         case 3:
-          cout << "First item: "<< singleList.front() << endl;
-              break;
+          try
+          {
+            cout << "First item: "<< singleList.front() << endl;
+          }
+          catch (const out_of_range& underflow_error)
+          {
+            cerr << underflow_error.what() << endl;
+          }
+          break;
         case 4:
           cout << "Last item: " << singleList.back() << endl;
               break;
@@ -136,30 +143,24 @@ int main()
               cout << "Pushed back : "<<num_to_back<<" to back" << endl;
               break;
         case 8:
-          if(singleList.size() >= 1)
+          try
           {
-            cout << "Popped front! Item Popped : ";
-            cout << singleList.pop_front() <<endl;
+            cout << "Popped front! Item Popped : " << singleList.pop_front() <<endl;
           }
-
-          else
+          catch (const out_of_range& underflow_error)
           {
-            cout << "List is empty, no items to pop." << endl;
+            cerr << underflow_error.what() << endl;
           }
-
           break;
         case 9:
-          if(singleList.size() >= 1)
+          try
           {
-            cout << "Popped back! Item Popped : ";
-            cout << singleList.pop_back() <<endl;
+            cout << "Popped back! Item Popped : " << singleList.pop_back() <<endl;
           }
-
-          else
+          catch (const out_of_range& underflow_error)
           {
-            cout << "List is empty, no items to pop." << endl;
+            cerr << underflow_error.what() << endl;
           }
-
           break;
         case 10:
           int to_delete;
@@ -249,8 +250,15 @@ int main()
           cout << "Number of items in list : " << doubleList.size() << endl;
               break;
         case 3:
-          cout << "First item: "<< doubleList.front() << endl;
-              break;
+          try
+          {
+            cout << "First item: "<< doubleList.front() << endl;
+          }
+          catch (const out_of_range& underflow_error)
+          {
+            cerr << underflow_error.what() << endl;
+          }
+          break;
         case 4:
           cout << "Last item: " << doubleList.back() << endl;
               break;
@@ -269,37 +277,30 @@ int main()
               break;
         case 7:
           int num_to_back;
-              cout << "Enter item to push back : ";
-              cin >> num_to_back;
-              doubleList.push_back(num_to_back);
-              cout << "Pushed back : "<<num_to_back<<" to back" << endl;
-              break;
-        case 8:
-          if(doubleList.size() >= 1)
-          {
-            cout << "Popped front! Item Popped : ";
-            cout << doubleList.pop_front() <<endl;
-          }
-
-          else
-          {
-            cout << "List is empty, no items to pop." << endl;
-          }
-
+          cout << "Enter item to push back : ";
+          cin >> num_to_back;
+          doubleList.push_back(num_to_back);
+          cout << "Pushed back : "<<num_to_back<<" to back" << endl;
           break;
-
+        case 8:
+          try
+          {
+            cout << "Popped front! Item Popped : " << doubleList.pop_front() <<endl;
+          }
+          catch (const out_of_range& underflow_error)
+          {
+            cerr << underflow_error.what() << endl;
+          }
+          break;
         case 9:
-          if(doubleList.size() >= 1)
+          try
           {
-            cout << "Popped back! Item Popped : ";
-            cout << doubleList.pop_back() <<endl;
+            cout << "Popped back! Item Popped : " << doubleList.pop_back() <<endl;
           }
-
-          else
+          catch (const out_of_range& underflow_error)
           {
-            cout << "List is empty, no items to pop." << endl;
+            cerr << underflow_error.what() << endl;
           }
-
           break;
         case 10:
           int to_delete;
