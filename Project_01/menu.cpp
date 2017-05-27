@@ -146,6 +146,12 @@ int main()
           double num_to_back;
               cout << "Enter item to push back : ";
               cin >> num_to_back;
+              if(cin.fail())
+              {
+                cout<<"WRONG ENTRY"<<endl;
+                cin.clear();
+                break;
+              }
               singleList.push_back(num_to_back);
               cout << "Pushed back : "<<num_to_back<<" to back" << endl;
               break;
