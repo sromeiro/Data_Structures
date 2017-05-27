@@ -8,17 +8,17 @@
 int main()
 {
   srand(time(NULL));
-  CyclicLinkedList<int> singleList;
+  CyclicLinkedList<double> singleList;
   for(int i=0;i<3;i++)
   {
-    int num = (rand() %3 +1);
+    double num = (rand() %3 +1);
     singleList.push_front(num);
   }
 
-  DoublyLinkedList<int> doubleList;
+  DoublyLinkedList<double> doubleList;
   for(int i=0;i<3;i++)
   {
-    int num = (rand() %3 +1);
+    double num = (rand() %3 +1);
     doubleList.push_front(num);
   }
 
@@ -100,7 +100,7 @@ int main()
         {
           for(int i=0;i<3;i++)
           {
-            int num = (rand() %3 +1);
+            double num = (rand() %3 +1);
             singleList.push_front(num);
           }
           cout << "New list created!" << endl;
@@ -130,20 +130,20 @@ int main()
           }
           break;
         case 5:
-          int num_to_count;
+          double num_to_count;
               cout << "Enter item to count : ";
               cin >> num_to_count;
               cout <<"Item : "<<num_to_count<<" appears : "<< singleList.count(num_to_count) << " times." <<endl;
               break;
         case 6:
-          int num_to_push;
+          double num_to_push;
               cout << "Enter item to push to front : ";
               cin >> num_to_push;
               singleList.push_front(num_to_push);
               cout << "Pushed : "<<num_to_push<<" to front" << endl;
               break;
         case 7:
-          int num_to_back;
+          double num_to_back;
               cout << "Enter item to push back : ";
               cin >> num_to_back;
               singleList.push_back(num_to_back);
@@ -170,7 +170,7 @@ int main()
           }
           break;
         case 10:
-          int to_delete;
+          double to_delete;
           cout << "Enter item to delete : ";
           cin >> to_delete;
           if(singleList.count(to_delete) == 0)
@@ -179,7 +179,7 @@ int main()
             break;
           }
 
-          int num_deleted;
+          double num_deleted;
           num_deleted = singleList.erase(to_delete);
           cout << "All instances of item : " << to_delete <<" have been deleted"<<endl;
           cout << "Deleted : " <<num_deleted << " times" <<endl;
@@ -246,7 +246,7 @@ int main()
           {
             for(int i=0;i<3;i++)
             {
-              int num = (rand() %3 +1);
+              double num = (rand() %3 +1);
               doubleList.push_front(num);
             }
             cout << "New list created!" << endl;
@@ -277,20 +277,20 @@ int main()
           }
           break;
         case 5:
-          int num_to_count;
+          double num_to_count;
               cout << "Enter item to count : ";
               cin >> num_to_count;
               cout <<"Item : "<<num_to_count<<" appears : "<< doubleList.count(num_to_count) << " times." <<endl;
               break;
         case 6:
-          int num_to_push;
+          double num_to_push;
               cout << "Enter item to push to front : ";
               cin >> num_to_push;
               doubleList.push_front(num_to_push);
               cout << "Pushed : "<<num_to_push<<" to front" << endl;
               break;
         case 7:
-          int num_to_back;
+          double num_to_back;
           cout << "Enter item to push back : ";
           cin >> num_to_back;
           doubleList.push_back(num_to_back);
@@ -317,7 +317,7 @@ int main()
           }
           break;
         case 10:
-          int to_delete;
+          double to_delete;
               cout << "Enter item to delete : ";
               cin >> to_delete;
               if(doubleList.count(to_delete) == 0)
