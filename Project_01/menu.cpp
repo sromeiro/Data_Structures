@@ -9,14 +9,14 @@ int main()
 {
   srand(time(NULL));
   CyclicLinkedList<double> singleList;
-  for(int i=0;i<3;i++)
+  for(int i=0;i<5;i++)
   {
     double num = (rand() %3 +1);
     singleList.push_front(num);
   }
 
   DoublyLinkedList<double> doubleList;
-  for(int i=0;i<3;i++)
+  for(int i=0;i<5;i++)
   {
     double num = (rand() %3 +1);
     doubleList.push_front(num);
@@ -98,7 +98,7 @@ int main()
         }
         else
         {
-          for(int i=0;i<3;i++)
+          for(int i=0;i<5;i++)
           {
             double num = (rand() %3 +1);
             singleList.push_front(num);
@@ -244,7 +244,7 @@ int main()
           }
           else
           {
-            for(int i=0;i<3;i++)
+            for(int i=0;i<5;i++)
             {
               double num = (rand() %3 +1);
               doubleList.push_front(num);
