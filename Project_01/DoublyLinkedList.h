@@ -177,7 +177,6 @@ class DoublyLinkedList
       }
       else
       {
-        cout << "mySize is: " << mySize << endl;
         if(mySize==1)
         {
             return pop_front();                                                            //if only one item we can just call pop front since it will be same
