@@ -258,7 +258,7 @@ class DoublyLinkedList
         cout<<"Head ---> ";
         for(int i = 0 ;i<mySize;i++)                      //loop through size of list
         {
-            cout << temp->data << " ";
+            cout <<"["<< temp->data << "] ";
             temp = temp->next;                            //go to next node
         }
         cout<<"<---Tail"<<endl;
