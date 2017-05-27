@@ -35,16 +35,14 @@ public:
     //Retrieves the object store in the node pointed to by head pointer
     Type front() const
     {
-        if(mySize>=1)
-            return head_ptr->data;
+        return head_ptr->data;
         //NEED UNDERFLOW ERROR DETECTION HERE
     }
     //BACK
     //Retrieves the object store in the node pointed to by tail pointer
     Type back() const
     {
-        if(mySize>=1)
-            return tail_ptr->data;
+        return tail_ptr->data;
         //NEED UNDERFLOW ERROR DETECTION HERE
     }
     //HEAD
@@ -156,6 +154,14 @@ public:
             mySize--;
             return stored_value;
         }
+        else
+        {
+          //Block that will take care of returning a dummy value to clear warnings
+          Type dummy_value;   //Dummy value of Type for returning puposes
+          int dummy_int = 0;
+          dummy_value = dummy_int;
+          return dummy_value;
+        }
     }
     //POP BACK
     //delete node at the end of the linked list and, as necessary, update the head and tail pointers.
@@ -171,18 +177,22 @@ public:
 
             SingleNode<Type> *temp;                      //create temp and start at head
             temp = head_ptr;
-            for (int i = 0; i < mySize; i++) {
-                if (temp->next == tail_ptr)
-                {
-                    temp->next = head_ptr;               //seting the tail node to point to head
-                    tail_ptr = temp;                     //set tail to other node
-                    delete old_node;                     //delte the old tail
-                    mySize--;                            //change size
-                    return stored_value;                 //return type
-                }
-                temp = temp->next;
+
+            for (int i = 0; i < mySize; i++)
+            {
+              if (temp->next == tail_ptr)
+              {
+                  temp->next = head_ptr;               //seting the tail node to point to head
+                  tail_ptr = temp;                     //set tail to other node
+                  delete old_node;                     //delte the old tail
+                  mySize--;                            //change size
+                  return stored_value;                 //return type
+              }
+               temp = temp->next;
             }
         }
+
+        return 0; //Need this here in case we don't enter IF block. Clears warnings
     }
     //ERASE
     //Delete the node(s) (from the front) in the linked list that contains the element equal to the argument

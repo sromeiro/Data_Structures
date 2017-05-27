@@ -91,7 +91,20 @@ int main()
 
       switch (num_select) {
         case 1:
-          cout << "List has already been generated randomly" << endl;
+        if(singleList.size() >= 1)
+        {
+          cout << "List has already been generated randomly." << endl;
+          cout << "Please pop all items from the current list to generate a new one" << endl;
+        }
+        else
+        {
+          for(int i=0;i<3;i++)
+          {
+            int num = (rand() %3 +1);
+            singleList.push_front(num);
+          }
+          cout << "New list created!" << endl;
+        }
               break;
         case 2:
           cout << "Number of items in list : " << singleList.size() << endl;
@@ -123,13 +136,31 @@ int main()
               cout << "Pushed back : "<<num_to_back<<" to back" << endl;
               break;
         case 8:
-          singleList.pop_front();
-              cout << "Popped front!" << endl;
-              break;
+          if(singleList.size() >= 1)
+          {
+            cout << "Popped front! Item Popped : ";
+            cout << singleList.pop_front() <<endl;
+          }
+
+          else
+          {
+            cout << "List is empty, no items to pop." << endl;
+          }
+
+          break;
         case 9:
-          singleList.pop_back();
-              cout << "Popped back!" << endl;
-              break;
+          if(singleList.size() >= 1)
+          {
+            cout << "Popped back! Item Popped : ";
+            cout << singleList.pop_back() <<endl;
+          }
+
+          else
+          {
+            cout << "List is empty, no items to pop." << endl;
+          }
+
+          break;
         case 10:
           int to_delete;
               int num_deleted;
@@ -192,6 +223,20 @@ int main()
       switch (num_select) {
         case 1:
           cout << "We are in CASE 1" << endl;
+          if(doubleList.size() >= 1)
+          {
+            cout << "List has already been generated randomly." << endl;
+            cout << "Please pop all items from the current list to generate a new one" << endl;
+          }
+          else
+          {
+            for(int i=0;i<3;i++)
+            {
+              int num = (rand() %3 +1);
+              doubleList.push_front(num);
+            }
+            cout << "New list created!" << endl;
+          }
               //Call appropriate function here
               break;
         case 2:
@@ -225,11 +270,32 @@ int main()
               cout << "Pushed back : "<<num_to_back<<" to back" << endl;
               break;
         case 8:
-              cout << "Popped front! Item Popped : " << doubleList.pop_front() <<endl;
-              break;
+          if(doubleList.size() >= 1)
+          {
+            cout << "Popped front! Item Popped : ";
+            cout << doubleList.pop_front() <<endl;
+          }
+
+          else
+          {
+            cout << "List is empty, no items to pop." << endl;
+          }
+
+          break;
+
         case 9:
-              cout << "Popped back! Item Popped : " << doubleList.pop_back() <<endl;
-              break;
+          if(doubleList.size() >= 1)
+          {
+            cout << "Popped back! Item Popped : ";
+            cout << doubleList.pop_back() <<endl;
+          }
+
+          else
+          {
+            cout << "List is empty, no items to pop." << endl;
+          }
+
+          break;
         case 10:
           cout << "We are in CASE 10" << endl;
               //Call appropriate function here

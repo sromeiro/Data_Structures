@@ -60,7 +60,7 @@ class DoublyLinkedList
     //returns number of nodes in list storing the same value in argument
     int count(Type const & value) const
     {
-
+      return 0; //Temporary return statement
     }
     //PUSH_FRONT
     //Creates a new DoubleNode< Type > storing the argument, the next pointer of which is set to the current head pointer.
@@ -107,10 +107,10 @@ class DoublyLinkedList
     //Return the object stored in the node being popped.
     Type pop_front()
     {
-        Type value_return = head_ptr->data;                                              //storing so we can return value
 
             if (mySize == 1)                                                                    //only 1 item in list
             {
+                Type value_return = head_ptr->data;                                              //storing so we can return value
                 delete head_ptr;
                 head_ptr = NULL;
                 tail_ptr = NULL;
@@ -119,6 +119,7 @@ class DoublyLinkedList
             }
             if (mySize == 2)                                                               //if only two items in list
             {
+                Type value_return = head_ptr->data;                                              //storing so we can return value
                 DoubleNode<Type> *temp = head_ptr;                                          //need to copy to delete
                 head_ptr = head_ptr->next;                                                   //head pointer now points to next node
                 head_ptr->previous = NULL;                                                   //previous set to null of new head node
@@ -129,6 +130,7 @@ class DoublyLinkedList
             }
             if(mySize >= 2)                                                                          //more than two items in list
             {
+                Type value_return = head_ptr->data;                                              //storing so we can return value
                 DoubleNode<Type> *temp = head_ptr;                                          //need to copy to delete
                 head_ptr = head_ptr->next;                                                   //head pointer now points to next node
                 head_ptr->previous = NULL;                                                   //previous set to null of new head node
@@ -137,31 +139,44 @@ class DoublyLinkedList
                 return value_return;
             }
         //NEED UNDERFLOW EXCEPTION
+            else
+            {
+              cout << "mySize is: " << mySize << endl;
+              cout << "List is empty" << endl;
+              Type dummy_value;   //Dummy value of Type for returning puposes
+              int dummy_int = 0;
+              dummy_value = dummy_int;
+              return dummy_value;
+            }
     }
     //POP BACK
     //delete node at the end of the linked list and, as necessary, update the head and tail pointers.
     //Return the object stored in the node being popped
     Type pop_back()
     {
-        Type value_return = tail_ptr->data;                                                //Store of data to return at end
+      cout << "\nInside pop_back, mySize is: " << mySize << endl;
         if(mySize==1)
         {
-            pop_front();                                                                   //if only one item we can just call pop front since it will be same
+            return pop_front();                                                                   //if only one item we can just call pop front since it will be same
         }
         else if(mySize==2)                                                                 //only two items in list
         {
+            Type value_return = tail_ptr->data;                                                //Store of data to return at end
             DoubleNode<Type> * temp = tail_ptr;
             tail_ptr = tail_ptr->previous;                                                 //tail pointer now points to previous node
             tail_ptr->previous = NULL;                                                     //previous now NULL because only one in list
             tail_ptr->next = NULL;                                                         //next is now NULL since its last node
+            mySize--;
             delete temp;
             return value_return;
         }
         else                                                                               //more than two items in list
         {
+            Type value_return = tail_ptr->data;                                                //Store of data to return at end
             DoubleNode<Type> * temp = tail_ptr;
             tail_ptr = tail_ptr->previous;                                                 //tail now points to previous node
             tail_ptr->next = NULL;                                                         //tails next points to NULL
+            mySize--;
             delete temp;
             return value_return;
         }
@@ -174,7 +189,7 @@ class DoublyLinkedList
     //Return the number of nodes that were deleted
     int erase(Type const &)
     {
-
+      return 0; //Temporary return statement
     }
     void print()
     {
