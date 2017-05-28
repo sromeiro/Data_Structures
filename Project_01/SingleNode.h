@@ -29,7 +29,7 @@ public:
     }
     //GETNEXT
     //returns next pointer
-    SingleNode<Type>* getNext() const
+    SingleNode * getNext() const
     {
         return next;
     }
