@@ -119,12 +119,9 @@ class Stack
         array = newArray; //array now contains the copied elements and double the size
       }
 
-      else
-      {
-        //Push new item onto the Stack
-        myTop++; //Increments top to new vacant index
-        array[myTop] = data;
-      }
+      //Push new item onto the Stack
+      myTop++; //Increments top to new vacant index
+      array[myTop] = data;
     }
 
     //Pops a value from the top of the Stack
@@ -150,11 +147,12 @@ class Stack
     //Removes all the elements in the stack
     void clear()
     {
-
+      while(!empty())
+      {
+        pop();
+      }
     }
-
-
-
+    
 };
 
 #endif

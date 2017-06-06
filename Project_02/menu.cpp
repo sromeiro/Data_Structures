@@ -7,9 +7,6 @@ typedef int dataType; //Change the data type here if needed
 
 int main()
 {
-  Stack<dataType> myStack;
-
-
   char option; //Used to select between Stacks 's' or 'q' Queues
   int run_menu = 1;
   cout << "Welcome!\nPlease select from the following options which type of";
@@ -30,11 +27,17 @@ int main()
   switch(option)
   {
     case 's':
-      //Code
+    {
+      //Instantiate a Stack
+      Stack<dataType> myStack;
       break;
+    }
     case 'q':
-      //Code
+    {
+      //Instantiate a Queue
+      Queue<dataType> myQueue;
       break;
+    }
     default:
       cout << "This is an invalid option. Please restart the program";
       cout << " and try again." << endl;
@@ -45,25 +48,19 @@ int main()
   if(option == 's')
   {
     int num_select; //Used to select from the menu options below
-    cout << "\nEntered first IF block" << endl;
-
-    cout << "For your new container, please select from the following options\n" << endl;
+    cout << "For your new Stack, please select from the following options\n" << endl;
 
     cout << "******************************************" << endl;
     cout << "*                                        *" << endl;
     cout << "*    Enter the desired number            *" << endl;
-    cout << "*    1.  Create List                     *" << endl;
-    cout << "*    2.  Count number of items           *" << endl;
-    cout << "*    3.  Retrieve first item             *" << endl;
-    cout << "*    4.  Retrieve last item              *" << endl;
-    cout << "*    5.  Count instances of an item      *" << endl;
-    cout << "*    6.  Push front                      *" << endl;
-    cout << "*    7.  Push back                       *" << endl;
-    cout << "*    8.  Pop front                       *" << endl;
-    cout << "*    9.  Pop back                        *" << endl;
-    cout << "*    10. Delete instance(s) of an item   *" << endl;
-    cout << "*    11. Print list                      *" << endl;
-    cout << "*    12. Exit                            *" << endl;
+    cout << "*    1.  Return capacity                 *" << endl;
+    cout << "*    2.  Number of items in the Stack    *" << endl;
+    cout << "*    3.  View the first item             *" << endl;
+    cout << "*    4.  Insert an item                  *" << endl;
+    cout << "*    5.  Remove an item                  *" << endl;
+    cout << "*    6.  Display items                   *" << endl;
+    cout << "*    7.  Clear Stack                     *" << endl;
+    cout << "*    8.  Exit                            *" << endl;
     cout << "*                                        *" << endl;
     cout << "******************************************" << endl;
     cout << endl;
@@ -97,18 +94,6 @@ int main()
           //Code
           break;
         case 8:
-          //Code
-          break;
-        case 9:
-          //Code
-          break;
-        case 10:
-          //Code
-          break;
-        case 11:
-          //Code
-          break;
-        case 12:
           cout << "\nExiting program" << endl;
           run_menu = 0; //Successful termination of program
           break;
@@ -125,25 +110,19 @@ int main()
   else
   {
     int num_select; //Used to select from the menu options below
-    cout << "\nEntered ELSE block" << endl;
-
-    cout << "For your new container, please select from the following options\n" << endl;
+    cout << "For your new Queue, please select from the following options\n" << endl;
 
     cout << "******************************************" << endl;
     cout << "*                                        *" << endl;
     cout << "*    Enter the desired number            *" << endl;
-    cout << "*    1.  Create List                     *" << endl;
-    cout << "*    2.  Count number of items           *" << endl;
-    cout << "*    3.  Retrieve first item             *" << endl;
-    cout << "*    4.  Retrieve last item              *" << endl;
-    cout << "*    5.  Count instances of an item      *" << endl;
-    cout << "*    6.  Push front                      *" << endl;
-    cout << "*    7.  Push back                       *" << endl;
-    cout << "*    8.  Pop front                       *" << endl;
-    cout << "*    9.  Pop back                        *" << endl;
-    cout << "*    10. Delete instance(s) of an item   *" << endl;
-    cout << "*    11. Print list                      *" << endl;
-    cout << "*    12. Exit                            *" << endl;
+    cout << "*    1.  Return capacity                 *" << endl;
+    cout << "*    2.  Number of items in the Queue    *" << endl;
+    cout << "*    3.  View the first item             *" << endl;
+    cout << "*    4.  Insert an item                  *" << endl;
+    cout << "*    5.  Remove an item                  *" << endl;
+    cout << "*    6.  Display items                   *" << endl;
+    cout << "*    7.  Clear Queue                     *" << endl;
+    cout << "*    8.  Exit                            *" << endl;
     cout << "*                                        *" << endl;
     cout << "******************************************" << endl;
     cout << endl;
@@ -177,18 +156,6 @@ int main()
           //Code
           break;
         case 8:
-          //Code
-          break;
-        case 9:
-          //Code
-          break;
-        case 10:
-          //Code
-          break;
-        case 11:
-          //Code
-          break;
-        case 12:
           cout << "\nExiting program" << endl;
           run_menu = 0; //Successful termination of program
           break;

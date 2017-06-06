@@ -23,6 +23,11 @@ class Queue
     {
       //Might implement with malloc. But not needed. This is just a test.
       array = (Type*)malloc(initialSize * sizeof(Type));
+      if(array == NULL)
+      {
+        //Allocation failed
+        throw out_of_range("Allocation failed!");
+      }
     }
 
     Queue(int value) : count(0), initialSize(value), currentSize(value), theFront(value), theBack(value)
@@ -44,6 +49,7 @@ class Queue
     ~Queue()
     {
       delete array;
+      free(array); //Is it needed since we're using malloc or does delete take care of it?
     }
 
     //If Front and Back index are equal then the queue is empty
@@ -120,13 +126,45 @@ class Queue
       //If incrementing the Back by 1 is equal to the size of the array then resize
       if(theBack + 1 == currentSize)
       {
+        currentSize *= 2; //Double the size of the array
         //Use realloc here to increase the size of the array. Realloc should maintain the current elements.
+        array = realloc(array, currentSize * sizeof(Type));
       }
 
-      else
+      //Places the item into the queue
+      array[theBack] = data;
+      theBack++; //Increments theBack to the next empty position in the queue
+
+    }
+
+    //Removes an item from the Queue and halves the size if there's a lot of room
+    Type dequeue()
+    {
+      theBack--; //Simiply decreasing the back index should suffice since this data will be overwritten
+
+      //If after removing item array is now 1/4 full & currentSize is bigger than initialSize
+      if((size() % 4 == 0) && currentSize > initialSize)
       {
-        array[theBack] = data;
-        theBack++; //Increments theBack to the next empty position in the queue
+        if(empty())
+        {
+          throw out_of_range("Queue is empty!");
+        }
+
+        else
+        {
+          //Halves the size of the array the reallocates the space. Should keep the items
+          currentSize /= 2;
+          array = realloc(array, currentSize * sizeof(Type));
+        }
+      }
+    }
+
+    //Removes all items from the queue by dequeue'ing them until empty
+    void clear()
+    {
+      while(!empty())
+      {
+        dequeue();
       }
     }
 
