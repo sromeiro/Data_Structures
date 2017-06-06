@@ -110,10 +110,15 @@ class Queue
     //Prints out the content of our queue
     void display()
     {
+      if(empty())
+      {
+        cout << "Queue is empty. Nothing to display!" << endl;
+        return;
+      }
       int i; //Start from the front of the queue
       cout << "List of items stored in the Queue:" << endl;
       cout << "Front\n" << "  |\n" << "  V" << endl; //Arrow that points down
-      for(i = theFront; i > theBack; i++)
+      for(i = theFront; i < theBack; i++)
       {
         cout << " [" << array[i] << "]";
       }
