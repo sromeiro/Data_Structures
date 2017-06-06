@@ -87,10 +87,10 @@ class Queue
     }
 
     //Returns the number of elements currently in our queue
-    int size() const
+    int size()
     {
-      int i = 0;
-      for(i; i < theBack; i++)
+      int i;
+      for(i = 0; i < theBack; i++)
       {
         //Increments counter up to the last item in our queue
       }
@@ -110,10 +110,10 @@ class Queue
     //Prints out the content of our queue
     void display()
     {
-      int i = theFront; //Start from the front of the queue
+      int i; //Start from the front of the queue
       cout << "List of items stored in the Queue:" << endl;
       cout << "Front\n" << "  |\n" << "  V" << endl; //Arrow that points down
-      for(i; i > theBack; i++)
+      for(i = theFront; i > theBack; i++)
       {
         cout << " [" << array[i] << "]";
       }
@@ -121,14 +121,15 @@ class Queue
     }
 
     //Add an item to the Queue as long as there is room
-    void enqueue(Type const & data)
+    void enqueue(Type & data)
     {
+      cout << "\nPlacing " << data << " at the back of the Queue" << endl;
       //If incrementing the Back by 1 is equal to the size of the array then resize
       if(theBack + 1 == currentSize)
       {
         currentSize *= 2; //Double the size of the array
         //Use realloc here to increase the size of the array. Realloc should maintain the current elements.
-        array = realloc(array, currentSize * sizeof(Type));
+        array = (Type *)realloc(array, currentSize * sizeof(Type));
       }
 
       //Places the item into the queue
@@ -154,9 +155,11 @@ class Queue
         {
           //Halves the size of the array the reallocates the space. Should keep the items
           currentSize /= 2;
-          array = realloc(array, currentSize * sizeof(Type));
+          array = (Type *)realloc(array, currentSize * sizeof(Type));
         }
       }
+
+      return array[theBack];
     }
 
     //Removes all items from the queue by dequeue'ing them until empty

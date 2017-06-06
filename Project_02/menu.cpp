@@ -7,6 +7,10 @@ typedef int dataType; //Change the data type here if needed
 
 int main()
 {
+  //Instantiate a Queue
+  Stack<dataType> myStack;
+  Queue<dataType> myQueue;
+
   char option; //Used to select between Stacks 's' or 'q' Queues
   int run_menu = 1;
   cout << "Welcome!\nPlease select from the following options which type of";
@@ -27,17 +31,11 @@ int main()
   switch(option)
   {
     case 's':
-    {
-      //Instantiate a Stack
-      Stack<dataType> myStack;
+      //Any code needed here?
       break;
-    }
     case 'q':
-    {
-      //Instantiate a Queue
-      Queue<dataType> myQueue;
+      //Any code needed here?
       break;
-    }
     default:
       cout << "This is an invalid option. Please restart the program";
       cout << " and try again." << endl;
@@ -73,25 +71,43 @@ int main()
       switch (num_select)
       {
         case 1:
-          //Code
+          //Capacity of Stack
+          myStack.capacity();
           break;
         case 2:
-          //Code
+          //Size of Stack
+          myStack.size();
           break;
         case 3:
-          //Code
+          //Top of the Stack
+          myStack.top();
           break;
         case 4:
-          //Code
+        {
+          //****** NEEDS TO BE FIXED ******//
+          //Push an item on the Stack
+          dataType item;
+          cout << "Please enter the number you want to put into the Stack" << endl;
+          cout << "Number: ";
+          cin >> item;
+          //myStack.push(item);
           break;
+        }
         case 5:
-          //Code
+        {
+          //****** NEEDS TO BE FIXED ******//
+          //Pop item from the Stack
+          //cout << "Removed " << myStack.pop() << " from the Stack!" << endl;
           break;
+        }
         case 6:
-          //Code
+          //Display items in the Stack
+          myStack.display();
           break;
         case 7:
-          //Code
+          //****** NEEDS TO BE FIXED ******//
+          //Clears items from Stack
+          //myStack.clear();
           break;
         case 8:
           cout << "\nExiting program" << endl;
@@ -135,25 +151,40 @@ int main()
       switch (num_select)
       {
         case 1:
-          //Code
+          //Capacity of Queue
+          myQueue.capacity();
           break;
         case 2:
-          //Code
+          //Size of Queue
+          myQueue.size();
           break;
         case 3:
-          //Code
+          //Front item of Queue
+          myQueue.front();
           break;
         case 4:
-          //Code
+        {
+          //Pushes an item to the end of the Queue
+          dataType item;
+          cout << "Please enter the number you want to put into the Queue" << endl;
+          cout << "Number: ";
+          cin >> item;
+          myQueue.enqueue(item);
           break;
+        }
         case 5:
-          //Code
+        {
+          //Removes an item from the back of the Queue
+          cout << "Removed " << myQueue.dequeue() << " from the Queue" << endl;
           break;
+        }
         case 6:
-          //Code
+          //Display items in the Queue
+          myQueue.display();
           break;
         case 7:
-          //Code
+          //Clears all items in the Queue
+          myQueue.clear();
           break;
         case 8:
           cout << "\nExiting program" << endl;
