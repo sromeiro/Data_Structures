@@ -29,8 +29,20 @@ class Stack
     //Overloaded Constructor that accepts a value from the user
     Stack(int value) : count(0), myTop(-1), initialSize(value), currentSize(value)
     {
-      Type stackArray[value]; //Need to create new array here?
-      array = stackArray; //Point our array pointer to this array and use pointer?
+      if(value <= 0)
+      {
+        cout << "Invalid container size!" << endl;
+        cout << "Container size set to: 1" << endl;
+
+        Type stackArray[1]; //Need to create new array here?
+        array = stackArray; //Point our array pointer to this array and use pointer?
+      }
+
+      else
+      {
+        Type stackArray[value]; //Need to create new array here?
+        array = stackArray; //Point our array pointer to this array and use pointer?
+      }
     }
 
     //Destructor that deallocates memory assigned to array
@@ -67,7 +79,7 @@ class Stack
       int i = 0;
       for(i; i <= myTop; i++)
       {
-        //Increments counter up the top of the stack
+        //Increments counter up to the top of the stack
       }
 
       //Assigns the value we counted up to, to variable "count". Needed? Not sure.
@@ -87,13 +99,13 @@ class Stack
     {
       int i = myTop; //Start from the top and work down the Stack
       cout << "List of items stored in the Stack:" << endl;
-      cout << "[" << array[i--] << "] " << "<-- Top" << endl;
+      cout << "[" << array[i--] << "] " << "<-- Top" << endl; //Top element
       for(i; i >= 1; i--)
       {
         cout << "i is: " << i << endl;
-        cout << "[" << array[i] << "]" << endl;
+        cout << "[" << array[i] << "]" << endl; //Middle elements
       }
-      cout << "[" << array[i-1] << "] " << "<-- Bottom" << endl;
+      cout << "[" << array[i-1] << "] " << "<-- Bottom" << endl; //Bottom element
     }
 
     //Pushes a new item to the top of the Stack
@@ -138,7 +150,7 @@ class Stack
     //Removes all the elements in the stack
     void clear()
     {
-      
+
     }
 
 
