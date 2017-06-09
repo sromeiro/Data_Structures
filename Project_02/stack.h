@@ -1,160 +1,130 @@
-#ifndef STACK_H
-#define STACK_H
-#define DEFAULT_SIZE 5
-
-#include<iostream>
-#include<stdexcept>
-
+#ifndef PORJ2PRAC_DYNSTACK_H
+#define PORJ2PRAC_DYNSTACK_H
+#include <iostream>
 using namespace std;
 
 template <class Type>
-class Stack
+class DynStack
 {
-  private:
-    Type *array; //An array of int, double, or whatever type
-    int counter, myTop; //Tracks # of items in array and where the top of the stack is
-    int initialSize; //Keeps track of our initial size - never go below this
-    int currentSize; //Keeps track of the current size of our array
-
-  public:
-
-
-    //Default Constructor
-    Stack() : counter(0), myTop(-1), initialSize(DEFAULT_SIZE), currentSize(DEFAULT_SIZE)
+private:
+    Type * array;
+    int count;                                                //current number of elements
+    int initialSize;
+    int arraySize;
+public:
+    DynStack(int n=15) : count(-1) ,initialSize(15)         //count -1 becomes no elements in array
     {
-      Type stackArray[initialSize]; //Need to create new array here?
-      array = stackArray; //Point our array pointer to this array and use pointer?
+        if(n<=0)                                              //if arguement is 0 or a negative integer
+        {
+            arraySize = 1;
+            array = new Type[arraySize];                       //new array size 1
+            initialSize = 1;
+        }
+        else if(n>0)
+        {
+            array = new Type[n];                               //new array is number entered by user
+            arraySize = n;
+            initialSize = n;
+        }
+        else //DONT THINK WE EVEN NEED THIS <----------MAYBE
+        {
+            array = new Type[initialSize];                     //array initial size = 15
+            arraySize = initialSize;
+        }
     }
-
-    //Overloaded Constructor that accepts a value from the user
-    Stack(int value) : counter(0), myTop(-1), initialSize(value), currentSize(value)
+    Type top() const //NEED UNDERFLOW DETECTION
     {
-      if(value <= 0)
-      {
-        cout << "Invalid container size!" << endl;
-        cout << "Container size set to: 1" << endl;
-
-        Type stackArray[1]; //Need to create new array here?
-        array = stackArray; //Point our array pointer to this array and use pointer?
-      }
-
-      else
-      {
-        Type stackArray[value]; //Need to create new array here?
-        array = stackArray; //Point our array pointer to this array and use pointer?
-      }
+        if(empty())       //this will need a throw statement
+        {
+            cout<<"EMPTY NEED CATCH THROW HERE"<<endl;
+            return 0;
+        }
+        return array[count];                                    //return top of array
     }
-
-    //Destructor that deallocates memory assigned to array
-    ~Stack()
+    int size() const
     {
-      cout << "Destructor called" << endl;
-      delete array;
+        return (count+1);                                       //return number of elements+1 (since it accounts for 0 as an element count)
     }
-
-    //If our top is index 0 in our array then the Stack is emtpy
     bool empty() const
     {
-      return myTop == -1;
+        if(count<0)                                             //no elements in stack
+        {
+            return 1;
+        }
+        return 0;                                               //at least one item in stack
     }
-
-    //Returns the value at the top of our Stack
-    Type top() const
+    int capacity()
     {
-      if(empty())
-      {
-        //If our stack is emtpy, throw an exception
-        throw out_of_range("Stack is empty!");
-      }
-
-      else
-      {
-        return array[myTop];
-      }
+        return arraySize;                                       //returns the total amount in which array can hold
     }
-
-    //Returns the number of elements currently in our Stack
-    int size()
-    {
-      int i;
-      for(i = 0; i <= myTop; i++)
-      {
-        //Increments counter up to the top of the stack
-      }
-
-      //Assigns the value we counted up to, to variable "count". Needed? Not sure.
-      //If not needed then what is variable "count" for?
-      counter = i;
-      return counter;
-    }
-
-    //Returns the current size of the array. How many elements it can store
-    int capacity() const
-    {
-      return currentSize;
-    }
-
-    //Prints out the content of our Stack
     void display()
     {
-      int i = myTop; //Start from the top and work down the Stack
-      cout << "List of items stored in the Stack:" << endl;
-      cout << "[" << array[i] << "] " << "<-- Top" << endl; //Top element
-      for(i = myTop - 1; i >= 1; i--)
-      {
-        cout << "i is: " << i << endl;
-        cout << "[" << array[i] << "]" << endl; //Middle elements
-      }
-      cout << "[" << array[i-1] << "] " << "<-- Bottom" << endl; //Bottom element
+        cout<<"Top-->";
+        for(int i=count;i>=0;i--)
+        {
+            if(i==count)
+                cout<<"["<<array[i]<<"]"<<endl;
+            else
+                cout<<"      ["<<array[i]<<"]"<<endl;
+        }
     }
-
-    //Pushes a new item to the top of the Stack
-    void push(Type & data)
+    void push(Type const & data) //NEED TO CHECK IF FULL AND DOUBLE SIZE OF ARRAY
     {
-      cout << "\nPushing " << data << " onto the Stack" << endl;
-      if(size() == currentSize - 1)
-      {
-        Type *oldArray = array; //Backup the old Stack
-        currentSize *= 2; //Double currentSize of Stack
-        Type newArray[currentSize]; //New Stack with double the size
-        newArray = oldArray; //Copy items from Old to new?
-        array = newArray; //array now contains the copied elements and double the size
-      }
+        if((size())==arraySize)
+        {
+            Type * to_delete;
+            Type * temp_increase = new Type[arraySize*2];                  //new array double the size
+            for(int i=0;i<=count;i++)
+            {
+                temp_increase[i] = array[i];                               //copy all elements to new array
+            }
+            to_delete = array;
+            array = temp_increase;
+            delete to_delete;                                              //delete old array
+            arraySize*=2;                                                  //arraysize now doubled
+        }
+        array[++count] = data;                                             //pushing item onto stack
 
-      //Push new item onto the Stack
-      myTop++; //Increments top to new vacant index
-      array[myTop] = data;
     }
-
-    //Pops a value from the top of the Stack
-    Type pop()
+    Type pop() //NEED UNDERFLOW DETECTION HERE
     {
-      //Decrementing myTop turns original stored value into garbage
-      myTop--;
-
-      //If stack is 1/4 full and bigger than original size. Halve the Stack size
-      if((size() == currentSize % 4) && currentSize > initialSize)
-      {
-        //*****Need to account for possible underflow errors*****
-        Type oldArray = array; //Backup the old Stack
-        currentSize /= 2; //Halves currentSize of Stack
-        Type newArray[currentSize] = oldArray; //New Stack with double the size and copied elements?
-        array = newArray; //array now contains the copied elements and double the size
-      }
-
-      return array[myTop];
-
+        if(empty())       //this will need a throw statement
+        {
+            cout<<"EMPTY NEED CATCH THROW HERE"<<endl;
+            return 0;
+        }
+        --count;
+        if(count<(arraySize/4) && arraySize>initialSize)                   //size of array is greater than the initial size
+        {
+            Type * to_delete;                                          //used to create copy of array to delete
+            Type * temp_change = new Type[arraySize/2];
+            for(int i=0;i<=count;i++)                                  //loop and copy elements in the array
+            {
+                temp_change[i] = array[i];
+            }
+            to_delete = array;
+            array = temp_change;                                       //set array to new one created
+            delete to_delete;                                          //delete the old array
+            arraySize/=2;                                              //half our array size
+        }
+        return array[count+1];                                             //return the popped item
     }
-
-    //Removes all the elements in the stack
     void clear()
     {
-      while(!empty())
-      {
-        pop();
-      }
+        delete array;                                                      //delete all elements in array
+        array = new Type[initialSize];                                     //new array of initial size
+        arraySize = initialSize;                                           //set our array size to the initialsize
+        count = -1;                                                        //no items in our array;
     }
-
+    ~DynStack()
+    {
+        delete array;
+        cout<<"TEST STATEMENT DESTRUCTOR HAS EXECUTED"<<endl;
+    };
 };
 
-#endif
+
+
+
+
+#endif //PORJ2PRAC_DYNSTACK_H

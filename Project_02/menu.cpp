@@ -1,15 +1,15 @@
-#include<cstdlib>
-#include"stack.h"
-#include"queue.h"
+#include "DynStack.h"
+#include "DynQueue.h"
+#include <iostream>
 
-typedef int dataType; //Change the data type here if needed
+using namespace std;
 
+typedef string dataType; //Change the data type here if needed
 
-int main()
-{
+int main() {
   //Instantiate a Queue
-  Stack<dataType> myStack;
-  Queue<dataType> myQueue;
+  DynStack <dataType> myStack;
+  //DynQueue <dataType> myQueue;
 
   char option; //Used to select between Stacks 's' or 'q' Queues
   int run_menu = 1;
@@ -28,23 +28,21 @@ int main()
   cin >> option;
   cout << "\nYou selected: \'" << option << "\'" << endl;
 
-  switch(option)
-  {
+  switch (option) {
     case 's':
-      //Any code needed here?
+      //HMMMM
       break;
     case 'q':
       //Any code needed here?
       break;
     default:
       cout << "This is an invalid option. Please restart the program";
-      cout << " and try again." << endl;
-      return 1; //Early termination of program
+          cout << " and try again." << endl;
+          return 1; //Early termination of program
   }
 
   //Block that will handle the menu selection for Stacks
-  if(option == 's')
-  {
+  if (option == 's') {
     int num_select; //Used to select from the menu options below
     cout << "For your new Stack, please select from the following options\n" << endl;
 
@@ -62,69 +60,64 @@ int main()
     cout << "*                                        *" << endl;
     cout << "******************************************" << endl;
     cout << endl;
-    while(run_menu)
-    {
+    while (run_menu) {
       cout << "Selection: ";
       cin >> num_select;
-      cout<<endl;
+      cout << endl;
 
-      switch (num_select)
-      {
+      switch (num_select) {
         case 1:
           //Capacity of Stack
-          myStack.capacity();
-          break;
+          cout<<"Capacity : "<<myStack.capacity()<<endl;
+              break;
         case 2:
           //Size of Stack
-          myStack.size();
-          break;
+          cout<<"Current Size : " <<myStack.size()<<endl;
+              break;
         case 3:
           //Top of the Stack
-          myStack.top();
-          break;
-        case 4:
-        {
+          cout<<"Top :  ["<<myStack.top()<<"]"<<endl;
+              break;
+        case 4: {
           //****** NEEDS TO BE FIXED ******//
           //Push an item on the Stack
           dataType item;
           cout << "Please enter the number you want to put into the Stack" << endl;
           cout << "Number: ";
           cin >> item;
-          //myStack.push(item);
+          myStack.push(item);
           break;
         }
-        case 5:
-        {
+        case 5: {
           //****** NEEDS TO BE FIXED ******//
           //Pop item from the Stack
-          //cout << "Removed " << myStack.pop() << " from the Stack!" << endl;
+          cout<<"Popped :  ["<<myStack.pop()<<"]"<<endl;
           break;
         }
         case 6:
           //Display items in the Stack
           myStack.display();
-          break;
+              break;
         case 7:
           //****** NEEDS TO BE FIXED ******//
           //Clears items from Stack
-          //myStack.clear();
-          break;
+          myStack.clear();
+              break;
         case 8:
           cout << "\nExiting program" << endl;
-          run_menu = 0; //Successful termination of program
-          break;
+              run_menu = 0; //Successful termination of program
+              break;
 
         default:
           cout << "This is an invalid option. Please restart the program";
-          cout << " and try again." << endl;
-          run_menu = 0; //Early termination of program
+              cout << " and try again." << endl;
+              run_menu = 0; //Early termination of program
       }
     }
   }
 
     //Block that will handle the menu selection for Queues
-  else
-  {
+  else {
     int num_select; //Used to select from the menu options below
     cout << "For your new Queue, please select from the following options\n" << endl;
 
@@ -142,60 +135,56 @@ int main()
     cout << "*                                        *" << endl;
     cout << "******************************************" << endl;
     cout << endl;
-    while(run_menu)
-    {
+    while (run_menu) {
       cout << "Selection: ";
       cin >> num_select;
-      cout<<endl;
+      cout << endl;
 
-      switch (num_select)
-      {
-        case 1:
-          //Capacity of Queue
-          myQueue.capacity();
-          break;
-        case 2:
-          //Size of Queue
-          myQueue.size();
-          break;
-        case 3:
-          //Front item of Queue
-          myQueue.front();
-          break;
-        case 4:
-        {
-          //Pushes an item to the end of the Queue
-          dataType item;
-          cout << "Please enter the number you want to put into the Queue" << endl;
-          cout << "Number: ";
-          cin >> item;
-          myQueue.enqueue(item);
-          break;
-        }
-        case 5:
-        {
-          //Removes an item from the back of the Queue
-          cout << "Removed " << myQueue.dequeue() << " from the Queue" << endl;
-          break;
-        }
-        case 6:
-          //Display items in the Queue
-          myQueue.display();
-          break;
-        case 7:
-          //Clears all items in the Queue
-          myQueue.clear();
-          break;
-        case 8:
-          cout << "\nExiting program" << endl;
-          run_menu = 0; //Successful termination of program
-          break;
-
-        default:
-          cout << "This is an invalid option. Please restart the program";
-          cout << " and try again." << endl;
-          run_menu = 0; //Early termination of program
-      }
+//            switch (num_select) {
+//                case 1:
+//                    //Capacity of Queue
+//                    myQueue.capacity();
+//                    break;
+//                case 2:
+//                    //Size of Queue
+//                    myQueue.size();
+//                    break;
+//                case 3:
+//                    //Front item of Queue
+//                    myQueue.front();
+//                    break;
+//                case 4: {
+//                    //Pushes an item to the end of the Queue
+//                    dataType item;
+//                    cout << "Please enter the number you want to put into the Queue" << endl;
+//                    cout << "Number: ";
+//                    cin >> item;
+//                    myQueue.enqueue(item);
+//                    break;
+//                }
+//                case 5: {
+//                    //Removes an item from the back of the Queue
+//                    cout << "Removed " << myQueue.dequeue() << " from the Queue" << endl;
+//                    break;
+//                }
+//                case 6:
+//                    //Display items in the Queue
+//                    myQueue.display();
+//                    break;
+//                case 7:
+//                    //Clears all items in the Queue
+//                    myQueue.clear();
+//                    break;
+//                case 8:
+//                    cout << "\nExiting program" << endl;
+//                    run_menu = 0; //Successful termination of program
+//                    break;
+//
+//                default:
+//                    cout << "This is an invalid option. Please restart the program";
+//                    cout << " and try again." << endl;
+//                    run_menu = 0; //Early termination of program
+//            }
     }
   }
 
