@@ -1,5 +1,6 @@
 #include "DynStack.h"
 #include "DynQueue.h"
+#include <string>
 #include <iostream>
 
 using namespace std;
@@ -7,9 +8,15 @@ using namespace std;
 typedef string dataType; //Change the data type here if needed
 
 int main() {
-  //Instantiate a Queue
-  DynStack <dataType> myStack;
-  DynQueue <dataType> myQueue;
+  int size;
+  string toSet;
+  cout<<"Would you like to set the size of the stack or queue? Y or N"<<endl;
+  cin >> toSet;
+  cout<<"SIZE : ";
+  cin >> size;
+  if(cin.fail()) { cin.clear(); } //handles inputs that aren't of requested type
+  DynStack <dataType> myStack(size);
+  DynQueue <dataType> myQueue(size);
 
   char option; //Used to select between Stacks 's' or 'q' Queues
   int run_menu = 1;
@@ -30,10 +37,8 @@ int main() {
 
   switch (option) {
     case 's':
-      //HMMMM
       break;
     case 'q':
-      //Any code needed here?
       break;
     default:
       cout << "This is an invalid option. Please restart the program";
