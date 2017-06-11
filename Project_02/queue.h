@@ -28,7 +28,7 @@ public:
         }
 
     }
-    
+
     Type front() const
     {
         if(empty())
@@ -193,9 +193,18 @@ public:
             delete []array;                                                 //delete old array
             array = temp_change;                                            //array is now new doubled array
             arraySize/=2;
-            Head = 1;
+            if(arraySize==1)
+            {
+                Head=0;
+            }
+
+            else
+            {
+                Head = 1;
+            }
             return array[0];
         }
+
         else if((Head+1) == arraySize )                                     //Case 2 : Heads at end of array O(1)
         {
             Head = 0;                                                       //Head now back at beginning of array
