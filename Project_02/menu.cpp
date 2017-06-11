@@ -9,12 +9,20 @@ typedef string dataType; //Change the data type here if needed
 
 int main() {
   int size;
+  string random_garbage;
   cout<<"What size would you like to set the stack / queue?"<<endl;
   cout<<"SIZE : ";
   cin >> size;
-  if(cin.fail()) { cin.clear(); } //handles inputs that aren't of requested type
-  DynStack <dataType> myStack(size);
-  DynQueue <dataType> myQueue(size);
+  if (cin.fail())
+  {
+    cin.clear();
+    size = 15;
+    cin >> random_garbage;
+    cout<<"Default capacity set to 15."<<endl;
+  }
+
+  DynStack<dataType> myStack(size);
+  DynQueue<dataType> myQueue(size);
 
   char option; //Used to select between Stacks 's' or 'q' Queues
   int run_menu = 1;
