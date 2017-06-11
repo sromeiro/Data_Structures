@@ -28,6 +28,7 @@ public:
         }
 
     }
+    
     Type front() const
     {
         if(empty())
@@ -39,6 +40,7 @@ public:
             return array[Head];
         }
     }
+
     Type back() const
     {
         if(empty())
@@ -50,18 +52,22 @@ public:
             return array[Tail];
         }
     }
+
     int size() const
     {
         return (count+1);
     }
+
     bool empty() const
     {
         return count == -1;
     }
+
     int capacity() const
     {
         return arraySize;
     }
+
     void display()
     {
         if(empty())
@@ -76,11 +82,13 @@ public:
             for (i = Head; i <= Tail; i++) {
                 cout << " [" << array[i] << "]";
             }
-        }else                                                               //Tail has wrapped around back to beginning
+        }
+
+        else                                                               //Tail has wrapped around back to beginning
         {
             cout << "List of items stored in the Queue:" << endl;
             cout << "Front\n" << "  |\n" << "  V" << endl;
-            for(i=Head;i<arraySize;i++)
+            for(i = Head; i < arraySize; i++)
             {
                 cout << " [" << array[i] << "]";
             }
@@ -91,6 +99,7 @@ public:
         }
         cout << endl;
     }
+
     void enqueue(Type const & data)
     {
         if((size())==arraySize)                                             //if full we double
@@ -99,14 +108,17 @@ public:
             Type * temp_increase = new Type[arraySize*2];                   //new array double the size
             if(Head<=Tail)                                                  //if queue has not wrapped around
             {
-                for (int i = Head; i <= Tail; i++) {                        //copy elements from head to tail
+                for (int i = Head; i <= Tail; i++)                          //copy elements from head to tail
+                {
                     temp_increase[tracker++] = array[i];
                 }
                 Head=0;
                 Tail=(tracker-1);
-            }else                                                           //Tail has wrapped around back to beginning
+            }
+
+            else                                                           //Tail has wrapped around back to beginning
             {
-                for(int i=Head;i<arraySize;i++)                             //copy elements from head to end
+                for(int i = Head; i < arraySize; i++)                             //copy elements from head to end
                 {
                     temp_increase[tracker++] = array[i];
                 }
@@ -124,13 +136,16 @@ public:
             count++;
             return;
         }
+
         else if((Tail+1) == arraySize )                                     //case where reach end of array but not full
         {
             Tail = 0;                                                       //place tail at start
             array[Tail] = data;                                             //place data at 0
             count++;
             return;
-        }else
+        }
+
+        else
         {
             array[++Tail] = data;
             count++;
@@ -138,6 +153,7 @@ public:
         }
 
     }
+
     Type dequeue()
     {
         if(empty())
@@ -151,21 +167,23 @@ public:
             int restart = 0;
             int tail_count = -1;
             Type * temp_change = new Type[arraySize/2];                     //new array double the size
-            if(Head<=Tail)                                                  //if queue has not wrapped around
+            if(Head <= Tail)                                                  //if queue has not wrapped around
             {
-                for(int i=Head;i<=Tail;i++)                                 //loop and copy elements in the array
+                for(int i = Head; i <= Tail; i++)                                 //loop and copy elements in the array
                 {
                     temp_change[restart++] = array[i];
                 }
                 Tail = (restart-1);
-            }else                                                           //Tail has wrapped around back to beginning
+            }
+
+            else                                                           //Tail has wrapped around back to beginning
             {
-                for(int i=Head;i<arraySize;i++)                             //copy elements from head to end
+                for(int i = Head; i < arraySize; i++)                             //copy elements from head to end
                 {
                     temp_change[restart++] = array[i];
                     tail_count++;
                 }
-                for(int j=0;j<=Tail;j++)                                    //copy elements from 0 to tail
+                for(int j = 0; j <= Tail; j++)                                    //copy elements from 0 to tail
                 {
                     temp_change[restart++] = array[j];
                     tail_count++;
@@ -187,6 +205,7 @@ public:
             Head++;                                                         //go to next in line
         return to_return;
     }
+
     void clear()
     {
         if(empty())
@@ -199,8 +218,14 @@ public:
         count = -1;
         Head = 0;
         Tail = -1;
+
+        cout << "Queue has been cleared!" << endl;
     }
-    ~DynQueue(){ delete []array;};
+
+    ~DynQueue()
+    {
+      delete []array;
+    }
 };
 
-#endif //PORJ2PRAC_DYNQUEUE_H
+#endif

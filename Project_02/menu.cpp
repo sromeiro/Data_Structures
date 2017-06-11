@@ -7,7 +7,8 @@ using namespace std;
 
 typedef string dataType; //Change the data type here if needed
 
-int main() {
+int main()
+{
   int size;
   string random_garbage;
   cout<< "Welcome!\nPlease set the size of your new container. ";
@@ -41,19 +42,21 @@ int main() {
   cin >> option;
   cout << "\nYou selected: \'" << option << "\'" << endl;
 
-  switch (option) {
+  switch (option)
+  {
     case 's':
       break;
     case 'q':
       break;
     default:
       cout << "This is an invalid option. Please restart the program";
-          cout << " and try again." << endl;
-          return 1; //Early termination of program
+      cout << " and try again." << endl;
+      return 1; //Early termination of program
   }
 
   //Block that will handle the menu selection for Stacks
-  if (option == 's') {
+  if (option == 's')
+  {
     int num_select; //Used to select from the menu options below
     cout << "For your new Stack, please select from the following options\n" << endl;
 
@@ -71,20 +74,22 @@ int main() {
     cout << "*                                        *" << endl;
     cout << "******************************************" << endl;
     cout << endl;
-    while (run_menu) {
+    while (run_menu)
+    {
       cout << "\nSelection: ";
       cin >> num_select;
       cout << endl;
 
-      switch (num_select) {
+      switch (num_select)
+      {
         case 1:
           //Capacity of Stack
-          cout<<"Capacity : "<<myStack.capacity()<<endl;
-              break;
+          cout << "Capacity : " << myStack.capacity() << endl;
+          break;
         case 2:
           //Size of Stack
-          cout<<"Current Size : " <<myStack.size()<<endl;
-              break;
+          cout << myStack.size() << " items in the Stack" << endl;
+          break;
         case 3:
           //Top of the Stack
           try
@@ -95,8 +100,9 @@ int main() {
           {
             cerr << underflow_error.what() << endl;
           }
-              break;
-        case 4: {
+          break;
+        case 4:
+        {
           //Push an item on the Stack
           dataType item;
           cout << "Please enter the number you want to put into the Stack" << endl;
@@ -106,7 +112,8 @@ int main() {
           myStack.push(item);
           break;
         }
-        case 5: {
+        case 5:
+        {
           //Pop item from the Stack
           try
           {
@@ -128,9 +135,8 @@ int main() {
           {
             cerr <<underflow_error.what() << endl;
           }
-              break;
+          break;
         case 7:
-          //****** NEEDS TO BE FIXED ******//
           //Clears items from Stack
           try
           {
@@ -140,22 +146,23 @@ int main() {
           {
             cerr <<underflow_error.what() << endl;
           }
-              break;
+          break;
         case 8:
           cout << "\nExiting program" << endl;
-              run_menu = 0; //Successful termination of program
-              break;
+          run_menu = 0; //Successful termination of program
+          break;
 
         default:
           cout << "This is an invalid option. Please restart the program";
-              cout << " and try again." << endl;
-              run_menu = 0; //Early termination of program
+          cout << " and try again." << endl;
+          run_menu = 0; //Early termination of program
       }
     }
   }
 
     //Block that will handle the menu selection for Queues
-  else {
+  else
+  {
     int num_select; //Used to select from the menu options below
     cout << "For your new Queue, please select from the following options\n" << endl;
 
@@ -173,20 +180,22 @@ int main() {
     cout << "*                                        *" << endl;
     cout << "******************************************" << endl;
     cout << endl;
-    while (run_menu) {
+    while (run_menu)
+    {
       cout << "\nSelection: ";
       cin >> num_select;
       cout << endl;
 
-      switch (num_select) {
+      switch (num_select)
+      {
         case 1:
           //Capacity of Queue
           cout<<"Capacity : "<<myQueue.capacity()<<endl;
-              break;
+          break;
         case 2:
           //Size of Queue
-          cout<<"Current Size : " <<myQueue.size()<<endl;
-              break;
+          cout<< myQueue.size() << " items in the Queue" << endl;
+          break;
         case 3:
           //Front item of Queue
           try
@@ -197,8 +206,9 @@ int main() {
           {
             cerr << underflow_error.what() << endl;
           }
-              break;
-        case 4: {
+          break;
+        case 4:
+        {
           //Pushes an item to the end of the Queue
           dataType item;
           cout << "Please enter the number you want to put into the Queue" << endl;
@@ -208,7 +218,8 @@ int main() {
           myQueue.enqueue(item);
           break;
         }
-        case 5: {
+        case 5:
+        {
           //Removes an item from the back of the Queue
           try
           {
@@ -230,7 +241,7 @@ int main() {
           {
             cerr <<underflow_error.what() << endl;
           }
-              break;
+          break;
         case 7:
           //Clears all items in the Queue
           try
@@ -241,16 +252,16 @@ int main() {
           {
             cerr <<underflow_error.what() << endl;
           }
-              break;
+          break;
         case 8:
           cout << "\nExiting program" << endl;
-              run_menu = 0; //Successful termination of program
-              break;
+          run_menu = 0; //Successful termination of program
+          break;
 
         default:
           cout << "This is an invalid option. Please restart the program";
-              cout << " and try again." << endl;
-              run_menu = 0; //Early termination of program
+          cout << " and try again." << endl;
+          run_menu = 0; //Early termination of program
       }
     }
   }
