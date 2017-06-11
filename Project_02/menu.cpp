@@ -9,9 +9,7 @@ typedef string dataType; //Change the data type here if needed
 
 int main() {
   int size;
-  string toSet;
-  cout<<"Would you like to set the size of the stack or queue? Y or N"<<endl;
-  cin >> toSet;
+  cout<<"What size would you like to set the stack / queue?"<<endl;
   cout<<"SIZE : ";
   cin >> size;
   if(cin.fail()) { cin.clear(); } //handles inputs that aren't of requested type
