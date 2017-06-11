@@ -1,181 +1,206 @@
-#ifndef QUEUE_H
-#define QUEUE_H
-#define DEFAULT_SIZE 5
-
-#include<stdio.h>
-#include<iostream>
+#ifndef PORJ2PRAC_DYNQUEUE_H
+#define PORJ2PRAC_DYNQUEUE_H
 #include<stdexcept>
-
-using namespace std;
-
 template <class Type>
-class Queue
+class DynQueue
 {
-  private:
-    Type *array; //An array of int, double, or whatever type
-    int count; //Tracks # of items in array
-    int initialSize; //Keeps track of our initial size - never go below this
-    int currentSize; //Keeps track of the current size of our array
-    int theFront, theBack; //Index to front and back of the queue. Back should always be the next empty index
-
-  public:
-    Queue() : count(0), initialSize(DEFAULT_SIZE), currentSize(DEFAULT_SIZE), theFront(0), theBack(0)
+private:
+    Type * array;
+    int Head;
+    int Tail;
+    int count;
+    int initialSize;
+    int arraySize;
+public:
+    DynQueue(int n = 15) : Head(0),Tail(-1),count(-1),initialSize(15),arraySize(15)
     {
-      //Might implement with malloc. But not needed. This is just a test.
-      array = (Type*)malloc(initialSize * sizeof(Type));
-      if(array == NULL)
-      {
-        //Allocation failed
-        throw out_of_range("Allocation failed!");
-      }
-    }
-
-    Queue(int value) : count(0), initialSize(value), currentSize(value), theFront(value), theBack(value)
-    {
-      if(value <= 0)
-      {
-        cout << "Invalid container size!" << endl;
-        cout << "Container size set to: 1" << endl;
-
-        array = (Type*)malloc(1 * sizeof(Type));
-      }
-
-      else
-      {
-        array = (Type*)malloc(value * sizeof(Type));
-      }
-    }
-
-    ~Queue()
-    {
-      delete array;
-      free(array); //Is it needed since we're using malloc or does delete take care of it?
-    }
-
-    //If Front and Back index are equal then the queue is empty
-    bool empty() const
-    {
-      return theFront == theBack;
-    }
-
-    //Returns the element that's in the front of the queue
-    Type front() const
-    {
-      //Empty queue returns an out of range exception
-      if(empty())
-      {
-        throw out_of_range("Queue is empty!");
-      }
-      else
-      {
-        return array[theFront];
-      }
-    }
-
-    //Returns the element that's in the back of the queue
-    Type back() const
-    {
-      //Empty queue returns an out of range exception
-      if(empty())
-      {
-        throw out_of_range("Queue is empty!");
-      }
-      else
-      {
-        return array[theBack];
-      }
-    }
-
-    //Returns the number of elements currently in our queue
-    int size()
-    {
-      int i;
-      for(i = 0; i < theBack; i++)
-      {
-        //Increments counter up to the last item in our queue
-      }
-
-      //Assigns the value we counted up to, to variable "count". Needed? Not sure.
-      //If not needed then what is variable "count" for?
-      count = i;
-      return count;
-    }
-
-    //Returns the current size of the array. How many elements it can store
-    int capacity() const
-    {
-      return currentSize;
-    }
-
-    //Prints out the content of our queue
-    void display()
-    {
-      if(empty())
-      {
-        cout << "Queue is empty. Nothing to display!" << endl;
-        return;
-      }
-      int i; //Start from the front of the queue
-      cout << "List of items stored in the Queue:" << endl;
-      cout << "Front\n" << "  |\n" << "  V" << endl; //Arrow that points down
-      for(i = theFront; i < theBack; i++)
-      {
-        cout << " [" << array[i] << "]";
-      }
-      cout << endl;
-    }
-
-    //Add an item to the Queue as long as there is room
-    void enqueue(Type & data)
-    {
-      cout << "\nPlacing " << data << " at the back of the Queue" << endl;
-      //If incrementing the Back by 1 is equal to the size of the array then resize
-      if(theBack + 1 == currentSize)
-      {
-        currentSize *= 2; //Double the size of the array
-        //Use realloc here to increase the size of the array. Realloc should maintain the current elements.
-        array = (Type *)realloc(array, currentSize * sizeof(Type));
-      }
-
-      //Places the item into the queue
-      array[theBack] = data;
-      theBack++; //Increments theBack to the next empty position in the queue
-
-    }
-
-    //Removes an item from the Queue and halves the size if there's a lot of room
-    Type dequeue()
-    {
-      theBack--; //Simiply decreasing the back index should suffice since this data will be overwritten
-
-      //If after removing item array is now 1/4 full & currentSize is bigger than initialSize
-      if((size() % 4 == 0) && currentSize > initialSize)
-      {
-        if(empty())
+        if(n<=0)                                               //if arguement is 0 or a negative integer
         {
-          throw out_of_range("Queue is empty!");
+            arraySize = 1;
+            array = new Type[arraySize];                       //new array size 1
+            initialSize = 1;
         }
-
         else
         {
-          //Halves the size of the array the reallocates the space. Should keep the items
-          currentSize /= 2;
-          array = (Type *)realloc(array, currentSize * sizeof(Type));
+            array = new Type[n];                               //new array is number entered by user or default 15
+            arraySize = n;
+            initialSize = n;
         }
-      }
 
-      return array[theBack];
     }
+    Type front() const
+    {
+        if(empty())
+        {
+            throw out_of_range("Queue is empty!");
+        }
+        else
+        {
+            return array[Head];
+        }
+    }
+    Type back() const
+    {
+        if(empty())
+        {
+            throw out_of_range("Queue is empty!");
+        }
+        else
+        {
+            return array[Tail];
+        }
+    }
+    int size() const
+    {
+        return (count+1);
+    }
+    bool empty() const
+    {
+        return count == -1;
+    }
+    int capacity() const
+    {
+        return arraySize;
+    }
+    void display()
+    {
+        if(empty())
+        {
+            throw out_of_range("Queue is empty!");
+        }
+        int i;
+        cout << "List of items stored in the Queue:" << endl;
+        cout << "Front\n" << "  |\n" << "  V" << endl;
+        if(Head<=Tail)                                                      //If queue has not wrapped around
+        {
+            for (i = Head; i <= Tail; i++) {
+                cout << " [" << array[i] << "]";
+            }
+        }else                                                               //Tail has wrapped around back to beginning
+        {
+            cout << "List of items stored in the Queue:" << endl;
+            cout << "Front\n" << "  |\n" << "  V" << endl;
+            for(i=Head;i<arraySize;i++)
+            {
+                cout << " [" << array[i] << "]";
+            }
+            for(i=0;i<=Tail;i++)
+            {
+                cout << " [" << array[i] << "]";
+            }
+        }
+        cout << endl;
+    }
+    void enqueue(Type const & data)
+    {
+        if((size())==arraySize)                                             //if full we double
+        {
+            int tracker = 0;
+            Type * temp_increase = new Type[arraySize*2];                   //new array double the size
+            if(Head<=Tail)                                                  //if queue has not wrapped around
+            {
+                for (int i = Head; i <= Tail; i++) {                        //copy elements from head to tail
+                    temp_increase[tracker++] = array[i];
+                }
+                Head=0;
+                Tail=(tracker-1);
+            }else                                                           //Tail has wrapped around back to beginning
+            {
+                for(int i=Head;i<arraySize;i++)                             //copy elements from head to end
+                {
+                    temp_increase[tracker++] = array[i];
+                }
+                for(int j=0;j<=Tail;j++)                                    //copy elements from 0 to tail
+                {
+                    temp_increase[tracker++] = array[j];
+                }
+                Head=0;
+                Tail=(tracker-1);
+            }
+            delete []array;                                                 //delete old array
+            array = temp_increase;                                          //array is now new doubled array
+            arraySize*=2;
+            array[++Tail] = data;
+            count++;
+            return;
+        }
+        else if((Tail+1) == arraySize )                                     //case where reach end of array but not full
+        {
+            Tail = 0;                                                       //place tail at start
+            array[Tail] = data;                                             //place data at 0
+            count++;
+            return;
+        }else
+        {
+            array[++Tail] = data;
+            count++;
+            return;
+        }
 
-    //Removes all items from the queue by dequeue'ing them until empty
+    }
+    Type dequeue()
+    {
+        if(empty())
+        {
+            throw out_of_range("Queue is empty!");
+        }
+        --count;                                                            //one less from count
+        Type to_return = array[Head];
+        if(count<(arraySize/4) && arraySize>initialSize)                    //CASE 1 : if 1/4 full and size large than the initial O(n)
+        {
+            int restart = 0;
+            int tail_count = -1;
+            Type * temp_change = new Type[arraySize/2];                     //new array double the size
+            if(Head<=Tail)                                                  //if queue has not wrapped around
+            {
+                for(int i=Head;i<=Tail;i++)                                 //loop and copy elements in the array
+                {
+                    temp_change[restart++] = array[i];
+                }
+                Tail = (restart-1);
+            }else                                                           //Tail has wrapped around back to beginning
+            {
+                for(int i=Head;i<arraySize;i++)                             //copy elements from head to end
+                {
+                    temp_change[restart++] = array[i];
+                    tail_count++;
+                }
+                for(int j=0;j<=Tail;j++)                                    //copy elements from 0 to tail
+                {
+                    temp_change[restart++] = array[j];
+                    tail_count++;
+                }
+                Tail = tail_count;
+            }
+            delete []array;                                                 //delete old array
+            array = temp_change;                                            //array is now new doubled array
+            arraySize/=2;
+            Head = 1;
+            return array[0];
+        }
+        else if((Head+1) == arraySize )                                     //Case 2 : Heads at end of array O(1)
+        {
+            Head = 0;                                                       //Head now back at beginning of array
+            return to_return;
+        }
+        else                                                                //Case 3: Majority of time O(1)
+            Head++;                                                         //go to next in line
+        return to_return;
+    }
     void clear()
     {
-      while(!empty())
-      {
-        dequeue();
-      }
+        if(empty())
+        {
+            throw out_of_range("Queue is empty!");
+        }
+        delete []array;                                                      //delete all elements in array
+        array = new Type[initialSize];                                       //new array of initial size
+        arraySize = initialSize;                                             //set our array size to the initialsize
+        count = -1;
+        Head = 0;
+        Tail = -1;
     }
-
+    ~DynQueue(){ delete []array;};
 };
 
-#endif
+#endif //PORJ2PRAC_DYNQUEUE_H

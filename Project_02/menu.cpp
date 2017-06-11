@@ -9,7 +9,7 @@ typedef string dataType; //Change the data type here if needed
 int main() {
   //Instantiate a Queue
   DynStack <dataType> myStack;
-  //DynQueue <dataType> myQueue;
+  DynQueue <dataType> myQueue;
 
   char option; //Used to select between Stacks 's' or 'q' Queues
   int run_menu = 1;
@@ -76,32 +76,59 @@ int main() {
               break;
         case 3:
           //Top of the Stack
-          cout<<"Top :  ["<<myStack.top()<<"]"<<endl;
+          try
+          {
+            cout<<"Top :  ["<<myStack.top()<<"]"<<endl;
+          }
+          catch (const out_of_range& underflow_error)
+          {
+            cerr << underflow_error.what() << endl;
+          }
               break;
         case 4: {
-          //****** NEEDS TO BE FIXED ******//
           //Push an item on the Stack
           dataType item;
           cout << "Please enter the number you want to put into the Stack" << endl;
           cout << "Number: ";
           cin >> item;
+          if(cin.fail()) { cin.clear();break; } //Inline that handles inputs that aren't of requested type
           myStack.push(item);
           break;
         }
         case 5: {
-          //****** NEEDS TO BE FIXED ******//
           //Pop item from the Stack
-          cout<<"Popped :  ["<<myStack.pop()<<"]"<<endl;
+          try
+          {
+            cout<<"Popped :  ["<<myStack.pop()<<"]"<<endl;
+          }
+          catch(const out_of_range& underflow_error)
+          {
+            cerr <<underflow_error.what() << endl;
+          }
           break;
         }
         case 6:
           //Display items in the Stack
-          myStack.display();
+          try
+          {
+            myStack.display();
+          }
+          catch(const out_of_range& underflow_error)
+          {
+            cerr <<underflow_error.what() << endl;
+          }
               break;
         case 7:
           //****** NEEDS TO BE FIXED ******//
           //Clears items from Stack
-          myStack.clear();
+          try
+          {
+            myStack.clear();
+          }
+          catch(const out_of_range& underflow_error)
+          {
+            cerr <<underflow_error.what() << endl;
+          }
               break;
         case 8:
           cout << "\nExiting program" << endl;
@@ -140,51 +167,80 @@ int main() {
       cin >> num_select;
       cout << endl;
 
-//            switch (num_select) {
-//                case 1:
-//                    //Capacity of Queue
-//                    myQueue.capacity();
-//                    break;
-//                case 2:
-//                    //Size of Queue
-//                    myQueue.size();
-//                    break;
-//                case 3:
-//                    //Front item of Queue
-//                    myQueue.front();
-//                    break;
-//                case 4: {
-//                    //Pushes an item to the end of the Queue
-//                    dataType item;
-//                    cout << "Please enter the number you want to put into the Queue" << endl;
-//                    cout << "Number: ";
-//                    cin >> item;
-//                    myQueue.enqueue(item);
-//                    break;
-//                }
-//                case 5: {
-//                    //Removes an item from the back of the Queue
-//                    cout << "Removed " << myQueue.dequeue() << " from the Queue" << endl;
-//                    break;
-//                }
-//                case 6:
-//                    //Display items in the Queue
-//                    myQueue.display();
-//                    break;
-//                case 7:
-//                    //Clears all items in the Queue
-//                    myQueue.clear();
-//                    break;
-//                case 8:
-//                    cout << "\nExiting program" << endl;
-//                    run_menu = 0; //Successful termination of program
-//                    break;
-//
-//                default:
-//                    cout << "This is an invalid option. Please restart the program";
-//                    cout << " and try again." << endl;
-//                    run_menu = 0; //Early termination of program
-//            }
+      switch (num_select) {
+        case 1:
+          //Capacity of Queue
+          cout<<"Capacity : "<<myQueue.capacity()<<endl;
+              break;
+        case 2:
+          //Size of Queue
+          cout<<"Current Size : " <<myQueue.size()<<endl;
+              break;
+        case 3:
+          //Front item of Queue
+          try
+          {
+            cout<<"Front :  ["<<myQueue.front()<<"]"<<endl;
+          }
+          catch (const out_of_range& underflow_error)
+          {
+            cerr << underflow_error.what() << endl;
+          }
+              break;
+        case 4: {
+          //Pushes an item to the end of the Queue
+          dataType item;
+          cout << "Please enter the number you want to put into the Queue" << endl;
+          cout << "Number: ";
+          cin >> item;
+          if(cin.fail()) { cin.clear();break; } //Inline that handles inputs that aren't of requested type
+          myQueue.enqueue(item);
+          break;
+        }
+        case 5: {
+          //Removes an item from the back of the Queue
+          try
+          {
+            cout << "Dequeued: [" << myQueue.dequeue() << "]" << endl;
+          }
+          catch(const out_of_range& underflow_error)
+          {
+            cerr <<underflow_error.what() << endl;
+          }
+          break;
+        }
+        case 6:
+          //Display items in the Queue
+          try
+          {
+            myQueue.display();
+          }
+          catch(const out_of_range& underflow_error)
+          {
+            cerr <<underflow_error.what() << endl;
+          }
+              break;
+        case 7:
+          //Clears all items in the Queue
+          try
+          {
+            myQueue.clear();
+          }
+          catch(const out_of_range& underflow_error)
+          {
+            cerr <<underflow_error.what() << endl;
+          }
+              break;
+        case 8:
+          cout << "\nExiting program" << endl;
+              run_menu = 0; //Successful termination of program
+              break;
+
+        default:
+          cout << "This is an invalid option. Please restart the program";
+              cout << " and try again." << endl;
+              run_menu = 0; //Early termination of program
+      }
     }
   }
 

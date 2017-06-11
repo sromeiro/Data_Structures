@@ -1,0 +1,7 @@
+cmake_minimum_required(VERSION 3.5)
+project(Data_Structures_proj2)
+
+set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -std=c++11")
+
+set(SOURCE_FILES Project_02/menu.cpp)
+add_executable(Project_02 ${SOURCE_FILES})
