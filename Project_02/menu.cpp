@@ -24,10 +24,9 @@ int main() {
 
   DynStack<dataType> myStack(size);
   DynQueue<dataType> myQueue(size);
-
   char option; //Used to select between Stacks 's' or 'q' Queues
   int run_menu = 1;
-  cout << "Please select from the following options which type of";
+  cout << "Welcome!\nPlease select from the following options which type of";
   cout << " container you would like to create:" << endl << endl;
 
   cout << "***********************************" << endl;
@@ -38,7 +37,7 @@ int main() {
   cout << "*                                 *" << endl;
   cout << "***********************************" << endl;
   cout << endl;
-  cout << "\nSelection: ";
+  cout << "Selection: ";
   cin >> option;
   cout << "\nYou selected: \'" << option << "\'" << endl;
 
@@ -175,7 +174,7 @@ int main() {
     cout << "******************************************" << endl;
     cout << endl;
     while (run_menu) {
-      cout << "Selection: ";
+      cout << "\nSelection: ";
       cin >> num_select;
       cout << endl;
 
