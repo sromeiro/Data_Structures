@@ -1,5 +1,5 @@
-#include "DynStack.h"
-#include "DynQueue.h"
+#include "stack.h"
+#include "queue.h"
 #include <string>
 #include <iostream>
 
@@ -10,7 +10,8 @@ typedef string dataType; //Change the data type here if needed
 int main() {
   int size;
   string random_garbage;
-  cout<<"What size would you like to set the stack / queue?"<<endl;
+  cout<< "Welcome!\nPlease set the size of your new container. ";
+  cout << "Enter a non-integer for the default size." << endl;
   cout<<"SIZE : ";
   cin >> size;
   if (cin.fail())
@@ -18,7 +19,7 @@ int main() {
     cin.clear();
     size = 15;
     cin >> random_garbage;
-    cout<<"Default capacity set to 15."<<endl;
+    cout<< "Default capacity set to 15." << endl << endl;
   }
 
   DynStack<dataType> myStack(size);
@@ -26,7 +27,7 @@ int main() {
 
   char option; //Used to select between Stacks 's' or 'q' Queues
   int run_menu = 1;
-  cout << "Welcome!\nPlease select from the following options which type of";
+  cout << "Please select from the following options which type of";
   cout << " container you would like to create:" << endl << endl;
 
   cout << "***********************************" << endl;
@@ -37,7 +38,7 @@ int main() {
   cout << "*                                 *" << endl;
   cout << "***********************************" << endl;
   cout << endl;
-  cout << "Selection: ";
+  cout << "\nSelection: ";
   cin >> option;
   cout << "\nYou selected: \'" << option << "\'" << endl;
 
@@ -72,7 +73,7 @@ int main() {
     cout << "******************************************" << endl;
     cout << endl;
     while (run_menu) {
-      cout << "Selection: ";
+      cout << "\nSelection: ";
       cin >> num_select;
       cout << endl;
 
