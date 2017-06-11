@@ -110,6 +110,8 @@ public:
         array = new Type[initialSize];                                     //new array of initial size
         arraySize = initialSize;                                           //set our array size to the initialsize
         count = -1;                                                        //no items in our array;
+
+        cout << "Stack has been cleared!" << endl;
     }
     ~DynStack()
     {
