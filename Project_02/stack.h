@@ -18,15 +18,15 @@ public:
     {
         if(n<=0)                                                         //if arguement is 0 or a negative integer
         {
-          arraySize = 1;
-          array = new Type[arraySize];                                 //new array size 1
-          initialSize = 1;
+            arraySize = 1;
+            array = new Type[arraySize];                                 //new array size 1
+            initialSize = 1;
         }
         else
         {
-          array = new Type[n];                                         //new array is number entered by user or default 15
-          arraySize = n;
-          initialSize = n;
+            array = new Type[n];                                         //new array is number entered by user or default 15
+            arraySize = n;
+            initialSize = n;
         }
     }
     Type top() const
@@ -37,22 +37,18 @@ public:
         }
         return array[count];                                             //return top of array
     }
-
     int size() const
     {
         return (count+1);                                                //return number of elements+1 (since it accounts for 0 as an element count)
     }
-
     bool empty() const
     {
         return count == -1;                                              //if -1 then empty
     }
-
     int capacity()
     {
         return arraySize;                                                //returns the total amount in which array can hold
     }
-
     void display()
     {
         if(empty())
@@ -62,13 +58,12 @@ public:
         cout<<"Top-->";
         for(int i=count;i>=0;i--)
         {
-          if(i==count)
-            cout<<"["<<array[i]<<"]"<<endl;
-          else
-            cout<<"      ["<<array[i]<<"]"<<endl;
+            if(i==count)
+                cout<<"["<<array[i]<<"]"<<endl;
+            else
+                cout<<"      ["<<array[i]<<"]"<<endl;
         }
     }
-
     void push(Type const & data)
     {
         if((size())==arraySize)
@@ -76,7 +71,7 @@ public:
             Type * temp_increase = new Type[arraySize*2];                  //new array double the size
             for(int i=0;i<=count;i++)
             {
-              temp_increase[i] = array[i];                               //copy all elements to new array
+                temp_increase[i] = array[i];                               //copy all elements to new array
             }
             delete []array;
             array = temp_increase;
@@ -84,10 +79,9 @@ public:
         }
         array[++count] = data;                                             //pushing item onto stack
     }
-
     Type pop()
     {
-        if(empty())       //this will need a throw statement
+        if(empty())
         {
             throw out_of_range("Stack is empty");
         }
@@ -106,7 +100,6 @@ public:
         }
         return to_return;                                                  //return the popped item
     }
-
     void clear()
     {
         if(empty())
@@ -117,9 +110,7 @@ public:
         array = new Type[initialSize];                                     //new array of initial size
         arraySize = initialSize;                                           //set our array size to the initialsize
         count = -1;                                                        //no items in our array;
-        cout << "Stack has been cleared!" << endl;
     }
-    
     ~DynStack()
     {
         delete []array;
@@ -130,4 +121,4 @@ public:
 
 
 
-#endif
+#endif //PORJ2PRAC_DYNSTACK_H
