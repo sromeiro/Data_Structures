@@ -11,7 +11,7 @@ class treeNode
 {
   private:
     Type value; //Data type stored in the Node
-    int height; //Tracks height of each node
+    int height, key; //Tracks height of each node
     short int balanceFactor; //-1 Left High, 0 Balanced, 1 Right High
     treeNode * parent, leftChild, rightChild;
 
@@ -62,7 +62,7 @@ class treeNode
         tempRight = rightChild->height;
         tempLeft = leftChild->height;
       }
-      
+
       balanceFactor = tempRight - tempLeft;
     }
 
