@@ -1,6 +1,7 @@
 #ifndef LINKEDTREE_H
 #define LINKEDTREE_H
 #include<stdexcept>
+#include<iostream>
 
 using namespace std;
 
@@ -8,7 +9,7 @@ template <class Type>
 class linkedTree
 {
   private:
-    int mySize; //Key tied to the data node. Needed since some types can't be sorted
+    int mySize; //For easy access to size of the tree
     treeNode<Type> * root; //Pointer to the root of the tree
 
   public:
@@ -18,14 +19,85 @@ class linkedTree
     }
 
     //Returns root pointer
-    treeNode<Type> * getRoot() const
+    treeNode<Type> * getRoot()
     {
       return root;
     }
 
     //Returns size of tree
-    int getSize() const
+    int getSize()
     {
+      if(empty())
+      {
+        throw runtime_error("Tree is empty!");
+        return 0;
+      }
+      else if(countChildren(root) == 0)
+      {
+        //Root is the only node
+        return mySize = 1;
+      }
+
+      mySize = 1; //Tree contains at least 1 node
+      treeNode<Type> * parent = root;     //Temporary node to hold parent
+      treeNode<Type> * currentNode = root; //Temporary node to hold current node
+
+      while(parent != NULL) //while not at root
+      {
+        if(countChildren(currentNode))
+        {
+          parent = currentNode; //Update parent before moving currentNode down
+          if(currentNode->leftChild)
+          {
+            //Left child exists. Increment mySize
+            mySize++;
+            currentNode = currentNode->leftChild;
+          }
+          else if(currentNode->rightChild)
+          {
+            //No left child but right child exists. Increment mySize
+            mySize++;
+            currentNode = currentNode->rightChild;
+          }
+        }
+
+        else
+        {
+          //No children exist. Check siblings
+          if(currentNode.sibling())
+          {
+            //Sibling exists check if it's left or right child of parent
+            while(currentNode == parent->rightChild)
+            {
+              //I'm the right child and have already been counted. Move up the tree
+              currentNode = parent;
+              parent = parent->parent;
+            }
+
+            //I'm the left child, move to right and increment mySize
+            currentNode = currentNode.getSibling();
+            mySize++;
+          }
+
+          else
+          {
+            //While no siblings exists OR I'm the right child. Move up the tree.
+            while(currentNode.siblings() == 0 || currentNode == parent->rightChild)
+            {
+              currentNode = parent;
+              parent = parent->parent;
+            }
+
+            if(parent != NULL) //Not at root yet
+            {
+              //Found a left child node with a sibling. Move over and increment.
+              currentNode = currentNode.getSibling();
+              mySize++;
+            }
+          }
+        }
+      }
+
       return mySize;
     }
 
@@ -36,7 +108,7 @@ class linkedTree
     }
 
     //Returns height of a particular node
-    int getHeight(treeNode<Type> & node) const
+    int getHeight(treeNode<Type> & node)
     {
       return node->height;
     }
@@ -172,8 +244,9 @@ class linkedTree
       }
 
       treeNode<Type> * currentNode = root;
-      treeNode<Type> * currentParent = root;
+      treeNode<Type> * currentParent = root; //Probably don't need parent
 
+      //While data hasn't been found. Check for children and move down
       while(currentNode->value != data)
       {
         if(countChildren(currentNode) != 0)
@@ -203,9 +276,91 @@ class linkedTree
       return currentNode;
     }
 
+    //Traverses tree in Preorder. Parent -> Left -> Right
+    void preorder()
+    {
+      cout << "Preorder traversal is:" << endl;
+
+
+
+    }
+
+    //Traverses tree in Postorder. Left -> Right -> Parent
+    void postorder()
+    {
+      if(empty())
+      {
+        throw runtime_error("Tree is empty!");
+        return;
+      }
+
+      treeNode<Type> * parent = root;     //Temporary node to hold parent
+      treeNode<Type> * currentNode = root; //Temporary node to hold current node
+
+      while(parent != NULL) //while not at root
+      {
+        if(countChildren(currentNode))
+        {
+          parent = currentNode; //Update parent before moving currentNode down
+          if(currentNode->leftChild)
+          {
+            //Left child exists. Descend left
+            currentNode = currentNode->leftChild;
+          }
+          else if(currentNode->rightChild)
+          {
+            //No left child. Right exists. Descend right
+            currentNode = currentNode->rightChild;
+          }
+        }
+
+        else
+        {
+          //No children exist. Begin printing
+          auxPostorder(parent);
+          //=======================WORKING HERE==============================//
+        }
+      }
+    }
+
+    //Traverses tree in Inorder. Left -> Parent -> Right
+    void inorder()
+    {
+      cout << "Inorder traversal is:" << endl;
+
+
+
+    }
+
+    //Destructor. Deletes all pointers within tree
     ~linkedTree()
     {
       //Needs to delete all nodes
+    }
+
+    //Auxilary function to assist with Postorder traversal
+    void auxPostorder(treeNode<Type> & node)
+    {
+      if(node == NULL)
+      {
+        //Node does not exist
+        cout << "Node does not exist!" << endl;
+        return;
+      }
+
+      //Print Left
+      if(node->leftChild)
+      {
+        cout << "[" << node->leftChild->value << "] ";
+      }
+      //Print Right
+      if(node->rightChild)
+      {
+        cout << "[" << node->rightChild->value << "] ";
+      }
+
+      //Print Parent
+      cout << "[" << node->value << "]" << endl;
     }
 
 };
