@@ -7,7 +7,7 @@
 
 using namespace std;
 
-typedef string dataType; //Change the data type here if needed
+typedef int dataType; //Change the data type here if needed
 
 int main()
 {
@@ -24,6 +24,7 @@ int main()
   //   cin >> random_garbage;
   //   cout<< "Default capacity set to 15." << endl << endl;
 
+  linkedTree<int> myTree;
 
   char option; //Used to select between General 'g', Heaps 'h' or AVL 'a'
   int run_menu = 1;
@@ -61,24 +62,36 @@ int main()
 //===================BLOCK THAT HANDLES GENERAL TREES=========================//
 //****************************************************************************//
 
+
+//==============================================================================
+//Most of the cases below are being used to test functions from LinkedTree class
+//They don't reflect what menu needs to be doing. Testing purposes only.
+//==============================================================================
   if (option == 'g')
   {
     int num_select; //Used to select from the menu options below
     cout << "For your new ####, please select from the following options\n" << endl;
 
-    cout << "******************************************" << endl;
-    cout << "*                                        *" << endl;
-    cout << "*    Enter the desired number            *" << endl;
-    cout << "*    1.  Return capacity                 *" << endl;
-    cout << "*    2.  Number of items in the Stack    *" << endl;
-    cout << "*    3.  View the first item             *" << endl;
-    cout << "*    4.  Insert an item                  *" << endl;
-    cout << "*    5.  Remove an item                  *" << endl;
-    cout << "*    6.  Display items                   *" << endl;
-    cout << "*    7.  Clear Stack                     *" << endl;
-    cout << "*    8.  Exit                            *" << endl;
-    cout << "*                                        *" << endl;
-    cout << "******************************************" << endl;
+    cout << "**********************************************" << endl;
+    cout << "*                                            *" << endl;
+    cout << "*    Enter the desired number                *" << endl;
+    cout << "*    1.  Return root                         *" << endl;
+    cout << "*    2.  Find node (data)                    *" << endl;
+    cout << "*    3.  Return height                       *" << endl;
+    cout << "*    4.  Return height (node)                *" << endl;
+    cout << "*    5.  Is tree empty?                      *" << endl;
+    cout << "*    6.  Return number of leaves             *" << endl;
+    cout << "*    7.  Return number of siblings (node)    *" << endl;
+    cout << "*    8.  Find node (data)                    *" << endl;
+    cout << "*    9.  Print Preorder                      *" << endl;
+    cout << "*    10. Print Postorder                     *" << endl;
+    cout << "*    11. Print Inorder                       *" << endl;
+    cout << "*    12. Clear tree                          *" << endl;
+    cout << "*    13. Insert (data)                       *" << endl;
+    cout << "*    14. Delete (data)                       *" << endl;
+    cout << "*    15. Exit                                *" << endl;
+    cout << "*                                            *" << endl;
+    cout << "**********************************************" << endl;
     cout << endl;
     while (run_menu)
     {
@@ -89,8 +102,12 @@ int main()
       switch (num_select)
       {
         case 1:
-          //Code
+        {
+          int num;
+          num = myTree.getValue();
+          cout << "getValue got: " << num << endl;
           break;
+        }
         case 2:
           //Code
           break;
@@ -110,6 +127,35 @@ int main()
           //Code
           break;
         case 8:
+          //Code
+          break;
+        case 9:
+          //Code
+          break;
+        case 10:
+          //Code
+          break;
+        case 11:
+          //Code
+          break;
+        case 12:
+          //Code
+          break;
+        case 13:
+            int num;
+            cout << "Please enter data value: ";
+            cin >> num;
+
+            cout << "\nYou entered: " << num << endl;
+            myTree.insert(num);
+
+          break;
+        case 14:
+          {
+
+          }
+          break;
+        case 15:
           //Code
           break;
         default:

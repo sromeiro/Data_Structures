@@ -11,15 +11,18 @@ class treeNode
 {
   private:
     Type value; //Data type stored in the Node
-    int height, key; //Tracks height of each node
+    int height; //Tracks height of each node
     short int balanceFactor; //-1 Left High, 0 Balanced, 1 Right High
-    treeNode * parent, leftChild, rightChild;
+    treeNode * parent;
+    treeNode * leftChild;
+    treeNode * rightChild;
 
   public:
     //Default constructor initialized to default values
-    treeNode() : value(0), height(0), balanceFactor(0), parent(NULL), leftChild(NULL), rightChild(NULL)
+    treeNode(Type data) : value(0), height(0), balanceFactor(0), parent(NULL), leftChild(NULL), rightChild(NULL)
     {
       //Set parameters and initialize user data here if needed
+      value = data;
     }
 
     //Updates height of the node. Relies on the height of its children
