@@ -50,7 +50,7 @@ public:
         }
         if(node==NULL)
         {
-            return 0;
+            return -1;
         }
         return max(getHeight(node->leftChild),getHeight(node->rightChild))+1;
     }
@@ -304,6 +304,7 @@ public:
         temp->rightChild = node;
         node->parent = temp; //update parent
         root=temp;
+        root->parent = NULL; //update parent
     }
     //right of right subtree case root (1,3) = -2 and child (1,2) = -1
     void right_of_right(treeNode<Type> * node)
@@ -321,6 +322,7 @@ public:
             node->parent = temp; //update parent
         }
         root = temp;
+        root->parent = NULL; //update parent
     }
     //INSIDE ROTATIONS
     //left of right  root (3,1) = 2 and child (1,2) = -1
@@ -349,6 +351,7 @@ public:
         temp1->rightChild = node;
         node->parent=temp1;//update parent
         root = temp1;
+        root->parent = NULL; //update parent
     }
     //right of left root (1,3) = -2  and child (2,1) = 1
     void right_of_left(treeNode<Type> * node)
@@ -376,6 +379,7 @@ public:
         temp1->leftChild = node;
         node->parent = temp1;//update parent
         root = temp1;
+        root->parent = NULL; //update parent
     }
 
     //Deletes the requested data item from the tree
@@ -499,7 +503,7 @@ public:
     void printing(treeNode<Type> * node)
     {
         cout << "Info on node: " << node->value << endl;
-        cout << "Height of this node is: " << node->height << endl;
+        cout << "Height of this node is: " << getHeight(node) << endl;
         if(node->parent != NULL)
         {
             cout << "Parent of this node is: " << node->parent->value << endl;
