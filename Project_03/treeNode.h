@@ -1,6 +1,9 @@
 #ifndef TREENODE_H
 #define TREENODE_H
 #include<stdexcept>
+#include<iostream>
+
+using namespace std;
 
 template <class Type> //Template "Type" definition for friend linkedTree class
 
@@ -25,6 +28,11 @@ class treeNode
       value = data;
     }
 
+    Type getNodeValue()
+    {
+      return value;
+    }
+
     //Updates height of the node. Relies on the height of its children
     void updateHeight()
     {
@@ -35,20 +43,26 @@ class treeNode
         height = 0; //No children then height is 0
       }
 
-      else if(leftChild->height >= rightChild->height)
+      else if(leftChild == NULL)
       {
-        //height of both children is equal or left is greater
+        //If no left child exists. Height should only access right child
+        height += rightChild->height;
+      }
+
+      else if(rightChild == NULL)
+      {
+        //If no right child exists. Height should only access left child
         height += leftChild->height;
       }
 
       else
       {
-        //height of right child is greater
-        height += rightChild->height;
+        //Both childs exist. Height should only update based on the highest one.
+        height += (leftChild->height >= rightChild->height ? leftChild->height : rightChild->height);
       }
     }
 
-    void balance()
+    void balance() //<--------- NEEDS UPDATING
     {
       int tempRight, tempLeft; //Holds values of right and left child
 

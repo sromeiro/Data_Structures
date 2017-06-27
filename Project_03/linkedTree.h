@@ -37,71 +37,6 @@ class linkedTree
         throw runtime_error("Tree is empty!");
         return 0;
       }
-      else if(countChildren(root) == 0)
-      {
-        //Root is the only node
-        return mySize = 1;
-      }
-
-      mySize = 1; //Tree contains at least 1 node
-      treeNode<Type> * parent = root;     //Temporary node to hold parent
-      treeNode<Type> * currentNode = root; //Temporary node to hold current node
-
-      while(parent != NULL) //while not at root
-      {
-        if(countChildren(currentNode))
-        {
-          parent = currentNode; //Update parent before moving currentNode down
-          if(currentNode->leftChild)
-          {
-            //Left child exists. Increment mySize
-            mySize++;
-            currentNode = currentNode->leftChild;
-          }
-          else if(currentNode->rightChild)
-          {
-            //No left child but right child exists. Increment mySize
-            mySize++;
-            currentNode = currentNode->rightChild;
-          }
-        }
-
-        else
-        {
-          //No children exist. Check siblings
-          if(currentNode.sibling())
-          {
-            //Sibling exists check if it's left or right child of parent
-            while(currentNode == parent->rightChild)
-            {
-              //I'm the right child and have already been counted. Move up the tree
-              currentNode = parent;
-              parent = parent->parent;
-            }
-
-            //I'm the left child, move to right and increment mySize
-            currentNode = currentNode.getSibling();
-            mySize++;
-          }
-
-          else
-          {
-            //While no siblings exists OR I'm the right child. Move up the tree.
-            while(currentNode.siblings() == 0 || currentNode == parent->rightChild)
-            {
-              currentNode = parent;
-              parent = parent->parent;
-            }
-
-            if(parent != NULL) //Not at root yet
-            {
-              //Found a left child node with a sibling. Move over and increment.
-              currentNode = currentNode.getSibling();
-              mySize++;
-            }
-          }
-        }
-      }
 
       return mySize;
     }
@@ -113,7 +48,7 @@ class linkedTree
     }
 
     //Returns height of a particular node
-    int getHeight(treeNode<Type> & node)
+    int getHeight(treeNode<Type> * node)
     {
       return node->height;
     }
@@ -127,71 +62,24 @@ class linkedTree
     //Returns the number of nodes in a tree with no children
     int leaves()
     {
-      int leaves = 0;
-      treeNode<Type> * currentNode = root; //temporary node for traversing
-
-      while(currentNode != NULL)
-      {
-        if(countChildren(currentNode) != 0)
-        {
-          //Children exist.
-          if(currentNode->leftChild)
-          {
-            //Left child exists. Descend left.
-            currentNode = currentNode->leftChild;
-          }
-          else if(currentNode->rightChild)
-          {
-            //No left child. Right child exists. Descend right.
-            currentNode = currentNode->rightChild;
-          }
-        }
-
+        if(root==NULL){ return 0;}                                          //empty root
         else
+            return leavesRec(root);
+    }
+
+    //Auxilary function to be called by leaves()
+    int leavesRec(treeNode<Type> * node)
+    {
+        if(node == NULL){return 0;}
+        if(node->leftChild == NULL && node->rightChild == NULL)
         {
-          //No children. I'm a leaf.
-          leaves++;
-
-          while(currentNode.siblings() == 0 && currentNode != NULL)
-          {
-            /*
-            * Only evaluates if no siblings exist and I'm not NULL.
-            * Keep going up the tree until a sibling is found or NULL reached
-            */
-            currentNode = currentNode->parent;
-          }
-          if(currentNode->value < currentNode.getSibling()->value)
-          {
-            /*
-            * If a sibling exists with a higher value then it is the right sibling.
-            * Make currentNode that right sibling and continue checks.
-            */
-            currentNode = currentNode.getSibling();
-          }
-          else
-          {
-            /*
-            * If a sibling exists but with a lower value, then we need to move
-            * up the tree until we find a sibling with a higher value or we reach NULL
-            */
-            while(currentNode != NULL && currentNode->value > currentNode.getSibling()->value)
-            {
-              currentNode = currentNode->parent;
-            }
-            //Sibling with higher value found. Move there.
-            currentNode = currentNode.getSibling();
-          }
-
-          //End else. Return to while loop.
+            return 1;
         }
-
-      }
-
-      return leaves;
+        return leavesRec(node->leftChild) + leavesRec(node->rightChild);
     }
 
     //Returns the number of siblings of a given node
-    int siblings(treeNode<Type> & node)
+    int siblings(treeNode<Type> * node)
     {
       if(node->parent == NULL)
       {
@@ -244,7 +132,7 @@ class linkedTree
     {
       if(root->value == data)
       {
-        cout << "Value is in root!" << endl;
+        //cout << "Value is in root!" << endl;
         //Root contains desired value
         return root;
       }
@@ -256,33 +144,35 @@ class linkedTree
       //While data hasn't been found. Check for children and move down
       while(currentNode->value != data)
       {
-        cout << "WHILE currentNode->value != data" << endl;
+        //cout << "WHILE currentNode->value != data" << endl;
         if(countChildren(currentNode) != 0)
         {
-          cout << "IF Children exist" << endl;
+          //cout << "IF Children exist" << endl;
           //currentParent = currentNode; //Update parent to current before descent****************
           if(currentNode->value > data)
           {
-            cout << "currentNode->value LESS than data. Descend LEFT" << endl;
+            //cout << "currentNode->value LESS than data. Descend LEFT" << endl;
             //Data is smaller than currentNode. Descend left.
             currentNode = currentNode->leftChild;
           }
           else if(currentNode->value < data)
           {
-            cout << "currentNode->value GREATER than data. Descend RIGHT" << endl;
+            //cout << "currentNode->value GREATER than data. Descend RIGHT" << endl;
             //Data is larger than currentNode. Descend right.
             currentNode = currentNode->rightChild;
-            cout << "Going to access currentNode->value now" << endl;
+            //cout << "Going to access currentNode->value now" << endl;
           }
         }
 
         else
         {
           //Data not in tree
-          cout << "Data you were looking for was not found!" << endl;
+          throw runtime_error("Data you were looking for was not found!");
           return NULL;
         }
       }
+
+      //cout << "Data found in current node" << endl;
 
       //Data found in currentNode
       return currentNode;
@@ -291,57 +181,61 @@ class linkedTree
     //Traverses tree in Preorder. Parent -> Left -> Right
     void preorder()
     {
-      cout << "Preorder traversal is:" << endl;
+        cout<<"Preorder :";
+        preorderRec(root);
+        cout<<endl;
+    }
 
-
-
+    //PREORDER HELPER FUNCTION FOR RECURSIVE
+    void preorderRec(treeNode<Type> * node)
+    {
+        if(node==NULL)
+        {
+            return;
+        }
+        cout<<" ["<<node->value<<"]";
+        preorderRec(node->leftChild);
+        preorderRec(node->rightChild);
     }
 
     //Traverses tree in Postorder. Left -> Right -> Parent
     void postorder()
     {
-      if(empty())
-      {
-        throw runtime_error("Tree is empty!");
-        return;
-      }
+        cout<<"Postoder :";
+        postorderRec(root);
+        cout<<endl;
+    }
 
-      treeNode<Type> * parent = root;     //Temporary node to hold parent
-      treeNode<Type> * currentNode = root; //Temporary node to hold current node
-
-      while(parent != NULL) //while not at root
-      {
-        if(countChildren(currentNode))
+    //POSTORDER HELPER FUNCTION FOR RECURSIVE
+    void postorderRec(treeNode<Type> * node)
+    {
+        if(node==NULL)
         {
-          parent = currentNode; //Update parent before moving currentNode down
-          if(currentNode->leftChild)
-          {
-            //Left child exists. Descend left
-            currentNode = currentNode->leftChild;
-          }
-          else if(currentNode->rightChild)
-          {
-            //No left child. Right exists. Descend right
-            currentNode = currentNode->rightChild;
-          }
+            return;
         }
-
-        else
-        {
-          //No children exist. Begin printing
-          auxPostorder(parent);
-          //=======================WORKING HERE==============================//
-        }
-      }
+        postorderRec(node->leftChild);
+        postorderRec(node->rightChild);
+        cout<<" ["<<node->value<<"]";
     }
 
     //Traverses tree in Inorder. Left -> Parent -> Right
     void inorder()
     {
-      cout << "Inorder traversal is:" << endl;
+        cout<<"Inorder :";
+        inorderRec(root);
+        cout<<endl;
+    }
 
-
-
+    //INORDER HELPER FUNCTION FOR RECURSIVE
+    void inorderRec(treeNode<Type> * node)
+    {
+        if(node==NULL)
+        {
+            return;
+        }
+        inorderRec(node->leftChild);
+        cout<<" ["<<node->value<<"]";
+        inorderRec(node->rightChild);
     }
 
     //Clears the tree of all nodes
@@ -353,92 +247,89 @@ class linkedTree
     //Inserts requested data item into the tree
     void insert(Type data)
     {
-      cout << "Insert called" << endl;
+      //cout << "Insert called" << endl;
       if(empty())
       {
-        cout << "It's empty" << endl;
+        //cout << "It's empty" << endl;
         //New item is root
         treeNode<Type> * newNode = new treeNode<Type>(data);
         root = newNode;
+        mySize++;
         return;
       }
 
       treeNode<Type> * currentNode = root;
+      treeNode<Type> * currentParent = root; //Will keep track of parent to come back up
 
-      while(data < currentNode->value)
+      while(currentNode->value != data) //While new node hasn't been created
       {
-        cout << "Data is LESS than current value" << endl;
-        if(currentNode->leftChild == NULL)
+        while(data < currentNode->value) //Descend left until no left child is found
         {
-          //Left child does not exist and data is less than current. Create node
-          cout << "No left child exists. Creating Node." << endl;
-          treeNode<Type> * newNode = new treeNode<Type>(data);
-          currentNode->leftChild = newNode;
-          newNode->parent = currentNode;
-          currentNode = newNode; //Breaks out of the While loop
-        }
-
-        else
-        {
-          cout << "Left child exists. Descending left" << endl;
-          currentNode = currentNode->leftChild;
-        }
-      }
-
-      /*
-      currentNode = findNode(data);
-      cout << "Need to create the NODE" << endl;
-      if(currentNode == NULL)
-      {
-        cout << "Entered IF Current node is NULL" << endl;
-        //Data item is not in the tree. Add the item.
-        currentNode = root; //Set currentNode to root to begin search
-        parent = root->parent;
-
-        while(parent == NULL)
-        {
-          cout << "WHILE parent == NULL" << endl;
-          while(currentNode->leftChild && currentNode->value < data)
+          //cout << "Data: " << data << " is LESS than " << currentNode->value << endl;
+          if(currentNode->leftChild == NULL)
           {
-            cout << "WHILE LESS" << endl;
-            //Left child exists and data is less than current. Descend left
+            //Left child does not exist and data is less than current. Create node
+            //cout << "No left child exists. Creating Node." << endl;
+            treeNode<Type> * newNode = new treeNode<Type>(data); //Creating the new node
+            currentNode->leftChild = newNode; //leftChild is now the new node
+            newNode->parent = currentNode;
+            currentParent = currentNode;
+
+            while(currentParent != NULL)
+            {
+              //From the parent of the new node up to root. Update all heights.
+              //cout << "Updating height of node " << currentParent->value << " from: " << currentParent->height << endl;
+              currentParent->updateHeight();
+              //cout << "Height of node " << currentParent->value << " is now: " << currentParent->height << endl;
+              currentParent = currentParent->parent;
+
+            }
+            currentNode = newNode; //Breaks out of the main while loop
+            mySize++;
+          }
+
+          else
+          {
+            //cout << "Left child exists. Descending left" << endl;
+            currentParent = currentNode;
             currentNode = currentNode->leftChild;
           }
-          if(currentNode->value < data)
-          {
-            cout << "IF LESS" << endl;
-            //Left child does not exist and data is less than current. Create node
-            treeNode<Type> * newNode = new treeNode<Type>(data);
-            currentNode->leftChild = newNode;
-            newNode->parent = currentNode;
-            parent = currentNode;
-          }
+        }
 
-          while(currentNode->rightChild && currentNode->value > data)
+        while(data > currentNode->value) //Descend right until no right child is found
+        {
+          //cout << "Data: " << data << " is GREATER than " << currentNode->value << endl;
+          if(currentNode->rightChild == NULL)
           {
-            cout << "WHILE LARGE" << endl;
-            //Right child exists and data is greater than current. Descend right
-            currentNode = currentNode->rightChild;
-          }
-          if(currentNode->value > data)
-          {
-            cout << "IF LARGE" << endl;
             //Right child does not exist and data is greater than current. Create node
+            //cout << "No right child exists. Creating Node." << endl;
             treeNode<Type> * newNode = new treeNode<Type>(data);
             currentNode->rightChild = newNode;
             newNode->parent = currentNode;
-            parent = currentNode;
+            currentParent = currentNode;
+
+            while(currentParent != NULL)
+            {
+              //From the parent of the new node up to root. Update all heights.
+              //cout << "Updating height of node " << currentParent->value << " from: " << currentParent->height << endl;
+              currentParent->updateHeight();
+              //cout << "Height of node " << currentParent->value << " is now: " << currentParent->height << endl;
+              currentParent = currentParent->parent;
+
+            }
+            currentNode = newNode; //Breaks out of the While loop
+            mySize++;
+          }
+
+          else
+          {
+            //cout << "Right child exists. Descending right" << endl;
+            currentParent = currentNode;
+            currentNode = currentNode->rightChild;
           }
         }
       }
-
-      else
-      {
-        //Data item found in the tree
-        cout << "The data item [" << data << "] is already in the tree!" << endl;
-      }
-      */
-      cout << "Function insert ENDED" << endl;
+      //cout << "Function ended" << endl;
     }
 
     //Deletes the requested data item from the tree

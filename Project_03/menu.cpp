@@ -76,7 +76,7 @@ int main()
     cout << "*                                            *" << endl;
     cout << "*    Enter the desired number                *" << endl;
     cout << "*    1.  Return root                         *" << endl;
-    cout << "*    2.  Find node (data)                    *" << endl;
+    cout << "*    2.  Return size                         *" << endl;
     cout << "*    3.  Return height                       *" << endl;
     cout << "*    4.  Return height (node)                *" << endl;
     cout << "*    5.  Is tree empty?                      *" << endl;
@@ -103,60 +103,117 @@ int main()
       {
         case 1:
         {
-          int num;
-          num = myTree.getValue();
-          cout << "getValue got: " << num << endl;
-          break;
+          treeNode<dataType> * myRoot;
+          myRoot = myTree.getRoot();
+          cout << "Returned root: [" << myRoot->getNodeValue() << "]" << endl;
         }
+          break;
         case 2:
-          //Code
+          {
+            try
+            {
+              cout << "Size of this tree is: " << myTree.getSize() << endl;
+            }
+            catch(const runtime_error& notFound)
+            {
+              cerr << notFound.what() << endl;
+            }
+          }
           break;
         case 3:
-          //Code
+          {
+            cout << "Height of root is: " << myTree.getHeight() << endl;
+          }
           break;
         case 4:
-          //Code
+          {
+            cout << "What node would you like the height for?" << endl;
+            cout << "node: ";
+            dataType node;
+            cin >> node;
+            treeNode<dataType> * found;
+            try
+            {
+              found = myTree.findNode(node);
+              cout << "Height of node [" << node << "] is: " << myTree.getHeight(found) << endl;
+            }
+            catch(const runtime_error& notFound)
+            {
+              cerr << notFound.what() << endl;
+            }
+          }
           break;
         case 5:
-          //Code
+          {
+            myTree.empty() ? cout << "Empty!" << endl : cout << "Not empty!" << endl;
+          }
           break;
         case 6:
-          //Code
+          {
+            cout << "Number of leaves in tree is: " << myTree.leaves() << endl;
+          }
           break;
         case 7:
-          //Code
+          {
+            cout << "Enter the node to check for siblings: ";
+            dataType node;
+            cin >> node;
+            treeNode<dataType> * found;
+            try
+            {
+              found = myTree.findNode(node);
+              cout << "Number of sibling is: " << myTree.siblings(found) << endl;
+            }
+            catch(const runtime_error& notFound)
+            {
+              cerr << notFound.what() << endl;
+            }
+          }
           break;
         case 8:
-          //Code
+          {
+            dataType data;
+            cout << "Enter the data item you're looking for: ";
+            cin >> data;
+            treeNode<dataType> * found;
+            try
+            {
+              found = myTree.findNode(data);
+              cout << "Returned data item: [" << found->getNodeValue() << "] has been found!" << endl;
+            }
+            catch(const runtime_error& notFound)
+            {
+              cerr << notFound.what() << endl;
+            }
+          }
           break;
         case 9:
-          //Code
+          myTree.preorder();
           break;
         case 10:
-          //Code
+          myTree.postorder();
           break;
         case 11:
-          //Code
+          myTree.inorder();
           break;
         case 12:
           //Code
           break;
         case 13:
-            int num;
-            cout << "Please enter data value: ";
-            cin >> num;
-
-            cout << "\nYou entered: " << num << endl;
-            myTree.insert(num);
-
-          break;
-        case 14:
           {
-
+            cout << "Please enter a data value to enter into the tree: ";
+            dataType data;
+            cin >> data;
+            myTree.insert(data);
+            cout << "Value: " << data << " inserted" << endl;
           }
           break;
-        case 15:
+        case 14:
           //Code
+          break;
+        case 15:
+          cout << "\nExiting program" << endl;
+          run_menu = 0; //Successful termination of program
           break;
         default:
           cout << "This is an invalid option. Please restart the program";
