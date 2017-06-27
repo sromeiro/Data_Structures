@@ -241,7 +241,28 @@ class linkedTree
     //Clears the tree of all nodes
     void clear()
     {
+      clearRec(root);
+    }
 
+    void clearRec(treeNode<Type> * node)
+    {
+      if(countChildren(node) == 2)
+      {
+        clearRec(node->leftChild);
+        clearRec(node->rightChild);
+      }
+      else if(countChildren(node) == 1 && node->leftChild)
+      {
+        clearRec(node->leftChild);
+      }
+      else if(countChildren(node) == 1 && node->rightChild)
+      {
+        clearRec(node->rightChild);
+      }
+      else
+      {
+        del(node->value);
+      }
     }
 
     //Inserts requested data item into the tree
@@ -335,7 +356,6 @@ class linkedTree
     //Deletes the requested data item from the tree
     void del(Type data)
     {
-      cout << "DEL CALLED" << endl;
       if(empty())
       {
         throw runtime_error("Tree is empty!");
@@ -344,27 +364,90 @@ class linkedTree
       treeNode<Type> * currentNode;
       treeNode<Type> * currentParent;
       currentNode = findNode(data);
+
+      if(currentNode == root)
+      {
+        //Node to be deleted is root
+        root = currentNode->rightChild;
+        root->parent = currentNode->parent;
+        root->rightChild = currentNode->rightChild->rightChild;
+        root->leftChild = currentNode->leftChild;
+        currentNode->leftChild->parent = root;
+        root->updateHeight();
+        delete currentNode;
+        mySize--;
+        return;
+      }
+
       currentParent = currentNode->parent;
 
       cout << "Node to delete is: " << currentNode->value << endl;
       cout << "Parent of this node is: " << currentParent->value << endl;
-
-      //delRec(data, root);
-      cout << "DEL ENDED" << endl;
-    }
-
-    void delRec(Type data, treeNode<Type> * node)
-    {
-      cout << "DELREC CALLED" << endl;
-      if(data < node->value)
+      if(countChildren(currentNode) == 2)
       {
-        delete node->leftChild;
+        cout << "Children of this node are: " << currentNode->leftChild->value << " and " << currentNode->rightChild->value << endl;
+        currentParent->leftChild = currentNode->rightChild;
+        currentNode->rightChild->leftChild = currentNode->leftChild;
+        currentNode->rightChild->parent = currentNode->parent;
+        delete currentNode;
+
+        currentParent->leftChild->updateHeight();
+        while(currentParent != NULL)
+        {
+          currentParent->updateHeight();
+          currentParent = currentParent->parent;
+        }
+        mySize--;
+        //cout << "Children of the Parent is NOW: " << currentParent->leftChild->value << " and " << currentParent->rightChild->value << endl;
+        //cout << "Node " << currentParent->leftChild->value << " left child is NOW: " << currentParent->leftChild->leftChild->value << endl;
       }
-      else if(data > node->value)
+      else if(countChildren(currentNode) == 1 && currentNode->leftChild)
       {
-        delete node->rightChild;
+        cout << "Current node has a left child and it is: " << currentNode->leftChild->value << endl;
+        currentParent->leftChild = currentNode->leftChild;
+        currentNode->leftChild->parent = currentNode->parent;
+        delete currentNode;
+        while(currentParent != NULL)
+        {
+          currentParent->updateHeight();
+          currentParent = currentParent->parent;
+        }
+        mySize--;
       }
-      cout << "DELREC ENDED" << endl;
+      else if(countChildren(currentNode) == 1 && currentNode->rightChild)
+      {
+        cout << "Current node has a right child and it is: " << currentNode->rightChild->value << endl;
+        currentParent->rightChild = currentNode->rightChild;
+        currentNode->rightChild->parent = currentNode->parent;
+        delete currentNode;
+        while(currentParent != NULL)
+        {
+          currentParent->updateHeight();
+          currentParent = currentParent->parent;
+        }
+        mySize--;
+      }
+      else
+      {
+        cout << "Current node has no children" << endl;
+        if(currentParent->leftChild == currentNode)
+        {
+          currentParent->leftChild = NULL;
+        }
+        else
+        {
+          currentParent->rightChild = NULL;
+        }
+
+        delete currentNode;
+        while(currentParent != NULL)
+        {
+          currentParent->updateHeight();
+          currentParent = currentParent->parent;
+        }
+
+        mySize--;
+      }
     }
 
     //Destructor. Deletes all pointers within tree
@@ -372,6 +455,35 @@ class linkedTree
     {
       //Needs to delete all nodes
     }
+
+
+
+    void printing(treeNode<Type> * node)
+    {
+      cout << "Info on node: " << node->value << endl;
+      if(node->parent != NULL)
+      {
+        cout << "Parent of this node is: " << node->parent->value << endl;
+      }
+
+      if(countChildren(node) == 2)
+      {
+        cout << "Children of this node are: " << node->leftChild->value << " and " << node->rightChild->value << endl;
+      }
+      else if(countChildren(node) == 1 && node->leftChild)
+      {
+        cout << "Node only has a left child and it is: " << node->leftChild->value << endl;
+      }
+      else if(countChildren(node) == 1 && node->rightChild)
+      {
+        cout << "Node only has a right child and it is: " << node->rightChild->value << endl;
+      }
+      else
+      {
+        cout << "This node has no children" << endl;
+      }
+    }
+
 };
 
 #endif

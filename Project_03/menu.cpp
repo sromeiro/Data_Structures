@@ -228,6 +228,23 @@ int main()
           cout << "\nExiting program" << endl;
           run_menu = 0; //Successful termination of program
           break;
+        case 16:
+          {
+            dataType data;
+            cout << "Print info for? ";
+            cin >> data;
+            treeNode<dataType> * found;
+            try
+            {
+              found = myTree.findNode(data);
+              myTree.printing(found);
+            }
+            catch(const runtime_error& notFound)
+            {
+              cerr << notFound.what() << endl;
+            }
+          }
+          break;
         default:
           cout << "This is an invalid option. Please restart the program";
           cout << " and try again." << endl;
