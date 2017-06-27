@@ -6,8 +6,9 @@
 using namespace std;
 
 template <class Type> //Template "Type" definition for friend linkedTree class
-
 class linkedTree; //Needed for Friend Class definition inside the class
+template <class Type>
+class maxHeapTree;
 
 template <class Type> //Template "Type" definition for treeNode class
 class treeNode
@@ -16,21 +17,33 @@ class treeNode
     Type value; //Data type stored in the Node
     int height; //Tracks height of each node
     short int balanceFactor; //-1 Left High, 0 Balanced, 1 Right High
+    int key;
     treeNode * parent;
     treeNode * leftChild;
     treeNode * rightChild;
 
   public:
     //Default constructor initialized to default values
-    treeNode(Type data) : value(0), height(0), balanceFactor(0), parent(NULL), leftChild(NULL), rightChild(NULL)
+    treeNode(Type data) : value(0), height(0), balanceFactor(0), key(0), parent(NULL), leftChild(NULL), rightChild(NULL)
     {
       //Set parameters and initialize user data here if needed
       value = data;
     }
-
-    Type getNodeValue()
+    void setKey(int key_to_set)
     {
-      return value;
+        key = key_to_set;
+    }
+    void setValue(Type value_to_set)
+    {
+        value = value_to_set;
+    }
+    Type getValue()
+    {
+        return value;
+    }
+    int getKey()
+    {
+        return key;
     }
 
     //Updates height of the node. Relies on the height of its children
@@ -91,7 +104,7 @@ class treeNode
 
     //Friend class to have access to all private members
     friend class linkedTree<Type>;
-
+    friend class maxHeapTree<Type>;
 };
 
 
