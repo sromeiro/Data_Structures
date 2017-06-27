@@ -2,7 +2,6 @@
 #define TREENODE_H
 #include<stdexcept>
 #include<iostream>
-#include<string>
 
 using namespace std;
 
@@ -27,7 +26,8 @@ class treeNode
 
   public:
     //Default constructor initialized to default values
-    treeNode(Type data) : height(0), balanceFactor(0), key(0), parent(NULL), leftChild(NULL), rightChild(NULL)
+    treeNode(): height(0), balanceFactor(0), key(0) , parent(NULL) , leftChild(NULL) , rightChild(NULL) {}
+    treeNode(Type data) :  height(0), balanceFactor(0), key(0), parent(NULL), leftChild(NULL), rightChild(NULL)
     {
       //Set parameters and initialize user data here if needed
       value = data;
@@ -76,26 +76,6 @@ class treeNode
         //Both childs exist. Height should only update based on the highest one.
         height += (leftChild->height >= rightChild->height ? leftChild->height : rightChild->height);
       }
-    }
-
-    void balance() //<--------- NEEDS UPDATING
-    {
-      int tempRight, tempLeft; //Holds values of right and left child
-
-      if(leftChild == NULL)
-      {
-        tempLeft = -1;
-      }
-      else if(rightChild == NULL)
-      {
-        tempRight = -1;
-      }
-      else
-      {
-        tempRight = rightChild->height;
-        tempLeft = leftChild->height;
-      }
-      balanceFactor = tempRight - tempLeft;
     }
 
     //Default destructor
