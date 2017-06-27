@@ -1,5 +1,5 @@
-#ifndef DATAPROJ_MYMAXHEAPTREE_H
-#define DATAPROJ_MYMAXHEAPTREE_H
+#ifndef PROJ3_MAXHEAPTREE_H
+#define PROJ3_MAXHEAPTREE_H
 
 /***********************************************************************************************************************
  *                                               IMPORTANT                                                             *
@@ -12,13 +12,13 @@ private:
     TreeNode<Type> * array;                                               //array of tree nodes for heap
     int count;                                                            //number of elements(tree nodes) in array
     int capacity;
-    int origCapacity;
+    int initCapacity;
 public:
-    MaxHeapTree(int n = 15) : count(0) //default size 15 for array
+    MaxHeapTree(int n = 5) : array(NULL) , count(0) //default size 15 for array
     {
-        array = new TreeNode<Type>[n];                                    //create an tree node array of default size 15
         capacity = n;
-        origCapacity = n;                                                 //
+        initCapacity = n;
+        array = new TreeNode<Type>[capacity+1];                                    //create an tree node array of default size 15//
     }
     TreeNode<Type> * getMax()
     {
@@ -36,6 +36,11 @@ public:
     int getSize()
     {
         return count;
+    }
+    //USED TO TEST DYNAMIC ARRAY SIZE CHANGE
+    int getCapacity()
+    {
+        return capacity;
     }
     bool empty()
     {
@@ -78,19 +83,29 @@ public:
     {
         if(count == 0) // no nodes in array
         {
-            // TreeNode<Type> * temp = new TreeNode<Type>();                                 //create new node set our key and our value     //WILL BE DELETEING SINCE WE DONT NEED NEW
             TreeNode<Type> temp;                                //create new node set our key and our value
             temp.setKey(key_to_insert);
             temp.setValue(data);
-            array[1] = temp;                                                            //place pointer to our first node in array
             count++;                                                                      //our count is now 1
+            array[count] = temp;                                                            //place pointer to our first node in array
             return;
         }
-        //TreeNode<Type> * node = new TreeNode<Type>();                                     //first create our new node and set value and key //WILL BE DELETEING SINCE WE DONT NEED NEW
+        if(count == capacity)
+        {
+            TreeNode<Type> * temp_increase = new TreeNode<Type>[(capacity*2)+1];
+            for(int i=0;i<=count;i++)
+            {
+                temp_increase[i] = array[i];
+            }
+            delete []array;
+            array = temp_increase;
+            capacity*=2;
+        }
         TreeNode<Type>  node;                                    //first create our new node and set value and key
         node.setKey(key_to_insert);
         node.setValue(data);
-        array[++count] = node;                                                          //place our node in last position in array
+        count++;
+        array[count] =  node;                                                          //place our node in last position in array
         int temp_count = count;                                                           //need a temp count so we dont alter our original count
         while(array[temp_count].getKey() > array[temp_count/2].getKey() && temp_count>=2) //IF CHILD IS GREATER THAN PARENT WE SWAP (COUNT >= 2 or will go out of bounds)
         {
@@ -99,10 +114,6 @@ public:
             array[temp_count/2] = array[temp_count];                                      //parent swapped with greater child
             array[temp_count] = temp;                                                     //previous parent is now the child node
             temp_count = temp_count/2;                                                    //temp count is now at the parent and will traverse up
-            if (temp_count==1)
-            {
-                break;
-            }
         }
     }
     void delMax() {
@@ -112,14 +123,20 @@ public:
         {
             return;
         }
+        if((count-1)<(capacity/4)&&capacity>initCapacity)  //if size is going to be 1/4 after the delete and the capacity and greater than initialsize set
+        {
+            TreeNode<Type> * temp_change = new TreeNode<Type>[(capacity/2)+1]; //new array of 1/2 size
+            for(int i=0;i<=count;i++)
+            {
+                temp_change[i] = array[i]; //copy over elements
+            }
+            delete []array;              //delete old array
+            array = temp_change;
+            capacity/=2;                 //capacity now have the size
+        }
         if (count == 1) {
-//            TreeNode<Type>  temp;
-//            temp = array[1];
-            //delete temp;
-
             count--;
             return;
-
         }                                          //if only one node delete root and count goes back to 0
         //FIRST SWAP LAST AND FIRST NODE IN ARRAY
         TreeNode<Type>  temp;
@@ -131,7 +148,7 @@ public:
             {
                 if (array[index * 2].getKey() > array[(index * 2) + 1].getKey() && array[index].getKey() < array[index * 2].getKey())  //compare our child keys ( left > right ) and ( parent < left )
                 {
-                    TreeNode<Type>  temp;                                                  //swap our parent and child
+                    TreeNode<Type> temp;                                                  //swap our parent and child
                     temp = array[index];                                                  //copy of parent
                     array[index] = array[index * 2];                                              //parent is now the left child
                     array[index * 2] =  temp;                                                      //previous parent is now left child
@@ -186,7 +203,7 @@ public:
     void clear()
     {
         delete []array;
-        array = new TreeNode<Type>[capacity];                                    //create an tree node array of default capacity 15
+        array = new TreeNode<Type>[capacity+1];                                    //create an tree node array of default capacity 15
         count=0;
     }
     ~MaxHeapTree()
@@ -195,4 +212,4 @@ public:
     }
 };
 
-#endif //DATAPROJ_MYMAXHEAPTREE_H
+#endif //PROJ3_MAXHEAPTREE_H
