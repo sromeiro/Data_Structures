@@ -51,14 +51,14 @@ class avlTree
       {
         //Parent exists. Update heights
         treeNode<Type> * currentNode = node;
-        cout << "Height of parent node " << currentNode->parent->value << " is currently: " << currentNode->parent->height << endl;
+        //cout << "Height of parent node " << currentNode->parent->value << " is currently: " << currentNode->parent->height << endl;
         while(currentNode != NULL)
         {
           currentNode->updateHeight();
           currentNode = currentNode->parent;
         }
         currentNode = find(node->value); //Go back to original node just to test print
-        cout << "Height of parent node " << currentNode->parent->value << " now changed to: " << currentNode->parent->height << endl;
+        //cout << "Height of parent node " << currentNode->parent->value << " now changed to: " << currentNode->parent->height << endl;
       }
 
       return node->height;
@@ -244,6 +244,10 @@ class avlTree
     //INSERT NODE HELPER FUNCTION FOR RECURSIVE
     treeNode<Type> * insertNode(treeNode<Type> * node, Type data)
     {
+      if(node != NULL)
+      {
+        cout << "Data here is: " << data << " Node value is: " << node->value << endl;
+      }
       if(node == NULL)                                                     //empty spot so we create new node and return it
       {
           treeNode<Type> * node = new treeNode<Type>(data);
@@ -252,14 +256,17 @@ class avlTree
       }
       if(data < node->value)                                                //left child
       {
+        cout << "Entered data LESS than Node" << endl;
           node->leftChild = insertNode(node->leftChild,data);                         //node->left is new node returned
           node->leftChild->parent = node;
       }
-      else if(data > node->value)                                           //right child
+      if(data > node->value)                                           //right child
       {
+        cout << "Entered data GREATER than Node" << endl;
           node->rightChild = insertNode(node->rightChild,data);                       //node->right is new node returned
           node->rightChild->parent = node;
       }
+      cout << "Returning node: " << node->value << endl;
       return node;
     }
 
