@@ -244,7 +244,7 @@ class avlTree
         }
         return node;
     }
-    
+
     void balance(treeNode<Type> * node) // FOUR CASES (RIGHT - LEFT) FOR HEIGHT DIFFERENCE
     {
         int tempRight=0, tempLeft=0 , left_factor=0, right_factor=0 , second_factor=0;                    //Holds values of right and left child

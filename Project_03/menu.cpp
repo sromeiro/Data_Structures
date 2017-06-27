@@ -508,13 +508,31 @@ else if (option == 'a')
         }
         break;
       case 5:
-        //Code
+        {
+          myAvlTree.empty() ? cout << "Empty!" << endl : cout << "Not empty!" << endl;
+        }
         break;
       case 6:
-        //Code
+        {
+          cout << "Number of leaves in tree is: " << myAvlTree.leaves() << endl;
+        }
         break;
       case 7:
-        //Code
+      {
+        cout << "Enter the node to check for siblings: ";
+        dataType node;
+        cin >> node;
+        treeNode<dataType> * found;
+        try
+        {
+          found = myAvlTree.find(node);
+          cout << "Number of sibling is: " << myAvlTree.siblings(found) << endl;
+        }
+        catch(const runtime_error& notFound)
+        {
+          cerr << notFound.what() << endl;
+        }
+      }
         break;
       case 8:
         {
@@ -557,7 +575,8 @@ else if (option == 'a')
         //Code
         break;
       case 15:
-        //Code
+        cout << "\nExiting program" << endl;
+        run_menu = 0; //Successful termination of program
         break;
       case 16:
         {
@@ -568,7 +587,7 @@ else if (option == 'a')
           try
           {
             found = myAvlTree.find(data);
-            //myAvlTree.printing(found);
+            myAvlTree.printing(found);
           }
           catch(const runtime_error& notFound)
           {
