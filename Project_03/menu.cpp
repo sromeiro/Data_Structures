@@ -28,6 +28,12 @@ int main()
   maxHeapTree<dataType> myHeapTree;
   avlTree<dataType> myAvlTree;
 
+//  myAvlTree.insert("20");
+//  myAvlTree.insert("10");
+//  myAvlTree.insert("13");
+//  myAvlTree.insert("03");
+//  myAvlTree.insert("5");
+//  myAvlTree.clear();
 
   char option; //Used to select between General 'g', Heaps 'h' or AVL 'a'
   int run_menu = 1;
@@ -553,16 +559,44 @@ else if (option == 'a')
         }
         break;
       case 9:
-        myAvlTree.preorder();
+        try
+        {
+          myAvlTree.preorder();
+        }
+        catch(const runtime_error& notFound)
+        {
+          cerr << notFound.what() << endl;
+        }
         break;
       case 10:
-        myAvlTree.postorder();
+        try
+        {
+          myAvlTree.postorder();
+        }
+        catch(const runtime_error& notFound)
+        {
+          cerr << notFound.what() << endl;
+        }
         break;
       case 11:
-        myAvlTree.inorder();
+        try
+        {
+          myAvlTree.inorder();
+        }
+        catch(const runtime_error& notFound)
+        {
+          cerr << notFound.what() << endl;
+        }
         break;
       case 12:
-        //Code
+        try
+        {
+          myAvlTree.clear();
+        }
+        catch(const runtime_error& notFound)
+        {
+          cerr << notFound.what() << endl;
+        }
         break;
       case 13:
         {

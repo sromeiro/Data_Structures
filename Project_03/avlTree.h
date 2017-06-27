@@ -149,6 +149,10 @@ public:
     //Traverses tree in Preorder. Parent -> Left -> Right
     void preorder()
     {
+        if(empty())
+        {
+            throw runtime_error("Tree is empty!");
+        }
         cout<<"Preorder :";
         preorderRec(root);
         cout<<endl;
@@ -169,6 +173,10 @@ public:
     //Traverses tree in Postorder. Left -> Right -> Parent
     void postorder()
     {
+        if(empty())
+        {
+            throw runtime_error("Tree is empty!");
+        }
         cout<<"Postoder :";
         postorderRec(root);
         cout<<endl;
@@ -189,6 +197,10 @@ public:
     //Traverses tree in Inorder. Left -> Parent -> Right
     void inorder()
     {
+        if(empty())
+        {
+            throw runtime_error("Tree is empty!");
+        }
         cout<<"Inorder :";
         inorderRec(root);
         cout<<endl;
@@ -206,9 +218,42 @@ public:
         inorderRec(node->rightChild);
     }
 /****************************************      MUTATORS    ********************/
+    //Clears the tree of all nodes
     void clear()
     {
-        //REMOVES ALL ELEMENTS IN THE TREE
+        if(empty())
+        {
+            throw runtime_error("Tree is empty!");
+        }
+        clearRec(root);
+    }
+
+    void clearRec(treeNode<Type> * node)
+    {
+        if(root==NULL)
+        {
+
+        }
+        if(countChildren(node) == 2)
+        {
+            clearRec(node->leftChild);
+            clearRec(node->rightChild);
+            clearRec(node);
+        }
+        else if(countChildren(node) == 1 && node->leftChild)
+        {
+            clearRec(node->leftChild);
+            clearRec(node);
+        }
+        else if(countChildren(node) == 1 && node->rightChild)
+        {
+            clearRec(node->rightChild);
+            clearRec(node);
+        }
+        else
+        {
+            del(node->value);
+        }
     }
     void insert(Type  data)
     {
@@ -250,7 +295,10 @@ public:
     void balance(treeNode<Type> * node) // FOUR CASES (RIGHT - LEFT) FOR HEIGHT DIFFERENCE
     {
         int tempRight=0, tempLeft=0 , left_factor=0, right_factor=0 , second_factor=0;                    //Holds values of right and left child
-
+        if(empty())//if empty
+        {
+            return;
+        }
         tempRight = getHeight(node->rightChild);        //get height of right
         tempLeft = getHeight(node->leftChild);          //get height of left
 
@@ -317,10 +365,7 @@ public:
             temp->leftChild->parent = node; //update parent
         }
         temp->leftChild = node;
-        if(node!=NULL)
-        {
-            node->parent = temp; //update parent
-        }
+        node->parent = temp; //update parent
         root = temp;
         root->parent = NULL; //update parent
     }
@@ -451,9 +496,13 @@ public:
         currentNode = currentNode->parent;
       }
       */
-      delete currentNode;
-      balance(root);
-      mySize--;
+        delete currentNode;
+        mySize--;
+        if(empty()) //dont want to call balance if empty
+        {
+            return;
+        }
+        balance(root);
     }
 
 //============================================================================//
@@ -484,6 +533,10 @@ public:
     //Auxilary function that tells us how many children a node has
     int countChildren(treeNode<Type> * node)
     {
+        if(node==NULL)
+        {
+            return 0;
+        }
         int children = 0;
         if(node->leftChild != NULL)
         {
