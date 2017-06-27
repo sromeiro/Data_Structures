@@ -2,6 +2,7 @@
 #define TREENODE_H
 #include<stdexcept>
 #include<iostream>
+#include<string>
 
 using namespace std;
 

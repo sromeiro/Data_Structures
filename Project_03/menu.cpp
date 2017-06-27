@@ -24,7 +24,7 @@ int main()
   //   cin >> random_garbage;
   //   cout<< "Default capacity set to 15." << endl << endl;
 
-  linkedTree<int> myTree;
+  linkedTree<dataType> myTree;
 
   char option; //Used to select between General 'g', Heaps 'h' or AVL 'a'
   int run_menu = 1;
@@ -103,9 +103,16 @@ int main()
       {
         case 1:
         {
-          treeNode<dataType> * myRoot;
-          myRoot = myTree.getRoot();
-          cout << "Returned root: [" << myRoot->getValue() << "]" << endl;
+          try
+          {
+            treeNode<dataType> * myRoot;
+            myRoot = myTree.getRoot();
+            cout << "Returned root: [" << myRoot->getValue() << "]" << endl;
+          }
+          catch(const runtime_error& empty)
+          {
+            cerr << empty.what() << endl;
+          }
         }
           break;
         case 2:
@@ -114,15 +121,22 @@ int main()
             {
               cout << "Size of this tree is: " << myTree.getSize() << endl;
             }
-            catch(const runtime_error& notFound)
+            catch(const runtime_error& empty)
             {
-              cerr << notFound.what() << endl;
+              cerr << empty.what() << endl;
             }
           }
           break;
         case 3:
           {
-            cout << "Height of root is: " << myTree.getHeight() << endl;
+            try
+            {
+              cout << "Height of root is: " << myTree.getHeight() << endl;
+            }
+            catch(const runtime_error& empty)
+            {
+              cerr << empty.what() << endl;
+            }
           }
           break;
         case 4:
@@ -197,7 +211,17 @@ int main()
           myTree.inorder();
           break;
         case 12:
-          //Code
+          {
+            try
+            {
+              myTree.clear();
+              cout << "Tree has been cleared" << endl;
+            }
+            catch(const runtime_error& notFound)
+            {
+              cerr << notFound.what() << endl;
+            }
+          }
           break;
         case 13:
           {
