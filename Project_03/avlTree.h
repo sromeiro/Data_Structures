@@ -39,7 +39,7 @@ class avlTree
       return root->height;
     }
 
-    //Returns height of a particular node
+    //Returns height of a particular node. Also updates heights of parent nodes
     int getHeight(treeNode<Type> * node)
     {
       if(empty())
@@ -49,6 +49,7 @@ class avlTree
 
       if(node->parent != NULL)
       {
+        //Parent exists. Update heights
         treeNode<Type> * currentNode = node;
         cout << "Height of parent node " << currentNode->parent->value << " is currently: " << currentNode->parent->height << endl;
         while(currentNode != NULL)
@@ -56,7 +57,7 @@ class avlTree
           currentNode->updateHeight();
           currentNode = currentNode->parent;
         }
-        currentNode = find(node->value);
+        currentNode = find(node->value); //Go back to original node just to test print
         cout << "Height of parent node " << currentNode->parent->value << " now changed to: " << currentNode->parent->height << endl;
       }
 
@@ -106,46 +107,51 @@ class avlTree
 //    }
     treeNode<Type> * find(Type data)
     {
-        if(root->value == data)
-        {
-            //cout << "Value is in root!" << endl;
-            //Root contains desired value
-            return root;
-        }
+      if(empty())
+      {
+        throw runtime_error("Tree is empty!");
+      }
 
-        //cout << "Value is NOT in root" << endl;
-        treeNode<Type> * currentNode = root;
-        //treeNode<Type> * currentParent = root; //Probably don't need parent*************************
+      if(root->value == data)
+      {
+          //cout << "Value is in root!" << endl;
+          //Root contains desired value
+          return root;
+      }
 
-        //While data hasn't been found. Check for children and move down
-        while(currentNode->value != data)
-        {
-            //cout << "WHILE currentNode->value != data" << endl;
-            if(countChildren(currentNode) != 0)
-            {
-                //cout << "IF Children exist" << endl;
-                //currentParent = currentNode; //Update parent to current before descent****************
-                if(currentNode->value > data)
-                {
-                    //cout << "currentNode->value LESS than data. Descend LEFT" << endl;
-                    //Data is smaller than currentNode. Descend left.
-                    currentNode = currentNode->leftChild;
-                }
-                else if(currentNode->value < data)
-                {
-                    //cout << "currentNode->value GREATER than data. Descend RIGHT" << endl;
-                    //Data is larger than currentNode. Descend right.
-                    currentNode = currentNode->rightChild;
-                    //cout << "Going to access currentNode->value now" << endl;
-                }
-            }
+      //cout << "Value is NOT in root" << endl;
+      treeNode<Type> * currentNode = root;
+      //treeNode<Type> * currentParent = root; //Probably don't need parent*************************
 
-            else
-            {
-                //Data not in tree
-                throw runtime_error("Data you were looking for was not found!");
-                return NULL;
-            }
+      //While data hasn't been found. Check for children and move down
+      while(currentNode->value != data)
+      {
+          //cout << "WHILE currentNode->value != data" << endl;
+          if(countChildren(currentNode) != 0)
+          {
+              //cout << "IF Children exist" << endl;
+              //currentParent = currentNode; //Update parent to current before descent****************
+              if(currentNode->value > data)
+              {
+                  //cout << "currentNode->value LESS than data. Descend LEFT" << endl;
+                  //Data is smaller than currentNode. Descend left.
+                  currentNode = currentNode->leftChild;
+              }
+              else if(currentNode->value < data)
+              {
+                  //cout << "currentNode->value GREATER than data. Descend RIGHT" << endl;
+                  //Data is larger than currentNode. Descend right.
+                  currentNode = currentNode->rightChild;
+                  //cout << "Going to access currentNode->value now" << endl;
+              }
+          }
+
+          else
+          {
+              //Data not in tree
+              throw runtime_error("Data you were looking for was not found!");
+              return NULL;
+          }
         }
 
         //cout << "Data found in current node" << endl;

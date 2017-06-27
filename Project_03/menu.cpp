@@ -395,13 +395,46 @@ else if (option == 'a')
         }
         break;
       case 2:
-        //Code
+        {
+          try
+          {
+            cout << "Size of this tree is: " << myAvlTree.getSize() << endl;
+          }
+          catch(const runtime_error& empty)
+          {
+            cerr << empty.what() << endl;
+          }
+        }
         break;
       case 3:
-        //Code
+        {
+          try
+          {
+            cout << "Height of root is: " << myAvlTree.getHeight() << endl;
+          }
+          catch(const runtime_error& empty)
+          {
+            cerr << empty.what() << endl;
+          }
+        }
         break;
       case 4:
-        //Code
+        {
+          cout << "What node would you like the height for?" << endl;
+          cout << "node: ";
+          dataType node;
+          cin >> node;
+          treeNode<dataType> * found;
+          try
+          {
+            found = myAvlTree.find(node);
+            cout << "Height of node [" << node << "] is: " << myAvlTree.getHeight(found) << endl;
+          }
+          catch(const runtime_error& notFound)
+          {
+            cerr << notFound.what() << endl;
+          }
+        }
         break;
       case 5:
         //Code
@@ -448,6 +481,7 @@ else if (option == 'a')
           cin >> data;
           myAvlTree.insert(data);
 
+          //Block below will handle updating the parent nodes
           treeNode<dataType> * toUpdate;
           try
           {
