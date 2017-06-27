@@ -345,7 +345,7 @@ class linkedTree
     }
 
     //Auxilary function to assist with Postorder traversal
-    void auxPostorder(treeNode<Type> & node)
+    void auxPostorder(treeNode<Type> * node)
     {
       if(node == NULL)
       {
@@ -367,6 +367,43 @@ class linkedTree
 
       //Print Parent
       cout << "[" << node->value << "]" << endl;
+    }
+
+    void insert(Type data)
+    {
+        if(root == NULL)
+        {
+            treeNode<Type> * node = new treeNode<Type>();                    //create new node (will be our root)
+            node->value = data;
+            root = node;
+//            count++;                                                         //count + 1 for total number of elements
+            return;
+        }
+        else {
+            insertNode(root, data);                                          //else call recursive helper function to add node
+        }
+    }
+    //INSERT NODE HELPER FUNCTION FOR RECURSIVE
+    treeNode<Type> * insertNode(treeNode<Type> * node, Type data)
+    {
+        if(node == NULL)                                                     //empty spot so we create new node and return it
+        {
+            treeNode<Type> * node = new treeNode<Type>();
+            node->value = data;
+  //          count++;
+            return node;
+        }
+        if(data < node->value)                                                //left child
+        {
+            node->leftChild = insertNode(node->leftChild,data);                         //node->left is new node returned
+            node->leftChild->parent = node;
+        }
+        else if(data > node->value)                                           //right child
+        {
+            node->rightChild = insertNode(node->rightChild,data);                       //node->right is new node returned
+            node->rightChild->parent = node;
+        }
+        return node;
     }
 
 };
