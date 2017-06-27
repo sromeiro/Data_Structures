@@ -105,7 +105,7 @@ int main()
         {
           treeNode<dataType> * myRoot;
           myRoot = myTree.getRoot();
-          cout << "Returned root: [" << myRoot->getNodeValue() << "]" << endl;
+          cout << "Returned root: [" << myRoot->getValue() << "]" << endl;
         }
           break;
         case 2:
@@ -179,7 +179,7 @@ int main()
             try
             {
               found = myTree.findNode(data);
-              cout << "Returned data item: [" << found->getNodeValue() << "] has been found!" << endl;
+              cout << "Returned data item: [" << found->getValue() << "] has been found!" << endl;
             }
             catch(const runtime_error& notFound)
             {
