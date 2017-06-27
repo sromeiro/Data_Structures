@@ -534,13 +534,13 @@ else if (option == 'a')
         }
         break;
       case 9:
-        //Code
+        myAvlTree.preorder();
         break;
       case 10:
-        //Code
+        myAvlTree.postorder();
         break;
       case 11:
-        //Code
+        myAvlTree.inorder();
         break;
       case 12:
         //Code
@@ -550,29 +550,7 @@ else if (option == 'a')
           cout << "Please enter a data value to enter into the tree: ";
           dataType data;
           cin >> data;
-          treeNode<dataType> * search;
-          search = myAvlTree.find(data);
-
           myAvlTree.insert(data);
-
-          try
-          {
-            treeNode<dataType> * search;
-            search = myAvlTree.find(data);
-            if(search)
-            {
-              cout << "Item already exists in the tree" << endl;
-            }
-            else
-            {
-              myAvlTree.insert(data);
-              cout << "Value: " << data << " inserted" << endl;
-            }
-          }
-          catch(const runtime_error& error)
-          {
-            cerr << error.what() << endl;
-          }
         }
         break;
       case 14:
