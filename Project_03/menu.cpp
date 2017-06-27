@@ -568,11 +568,31 @@ else if (option == 'a')
           cout << "Please enter a data value to enter into the tree: ";
           dataType data;
           cin >> data;
+          /*
+          if(data.compare("01") > 0 && data.compare("09") < 0)
+          {
+            cout << "Data is between 1 - 9" << endl;
+          }
+          */
           myAvlTree.insert(data);
+          cout << "Value: " << data << " inserted" << endl;
         }
         break;
       case 14:
-        //Code
+        {
+          cout << "Please enter a data value to delete from the tree: ";
+          dataType data;
+          cin >> data;
+          try
+          {
+            myAvlTree.del(data);
+            cout << "Value: " << data << " deleted" << endl;
+          }
+          catch(const runtime_error& notFound)
+          {
+            cerr << notFound.what() << endl;
+          }
+        }
         break;
       case 15:
         cout << "\nExiting program" << endl;

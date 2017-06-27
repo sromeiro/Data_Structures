@@ -341,9 +341,78 @@ class avlTree
         temp1->leftChild = node;
         root = temp1;
     }
-    void del(Type & data)
+
+    //Deletes the requested data item from the tree
+    void del(Type data)
     {
-        //REMOVES DATA AND MUST BE KEPT BALANCED
+      if(empty())
+      {
+        throw runtime_error("Tree is empty!");
+      }
+
+      treeNode<Type> * currentNode;
+      treeNode<Type> * currentParent;
+      currentNode = find(data);
+      currentParent = currentNode->parent;
+
+      cout << "Node to delete is: " << currentNode->value << endl;
+      //cout << "It's parent is: " << currentNode->parent->value << endl;
+
+      if(countChildren(currentNode) == 2) //Node to delete has 2 children.
+      {
+        cout << "Children of this node are: " << currentNode->leftChild->value << " and " << currentNode->rightChild->value << endl;
+        //Find successor, the smallest of the rightChild
+        treeNode<Type> * successorNode = currentNode->rightChild;
+        currentParent = currentNode;
+
+        while(successorNode->leftChild)
+        {
+          //Find smallest of larger values
+          currentParent = successorNode;
+          successorNode = successorNode->leftChild;
+        }
+
+        currentNode->value = successorNode->value; //Copy successor value over to current
+        currentNode = successorNode; //Copy pointer address
+
+      }
+
+      //Case where there was only 1 or 0 children
+      treeNode<Type> * subtree; //Subtree is the tree formed by the node being deleted
+      subtree = currentNode->leftChild; //Originally set it to left child
+      if(subtree == NULL)
+      {
+        //If left child subtree didn't exist, then set it to right child
+        subtree = currentNode->rightChild;
+      }
+      if(currentParent == NULL)
+      {
+        //This is root that is being removed
+        root = subtree;
+        if(root != NULL)
+        {
+          root->parent = NULL;
+        }
+      }
+      else if(currentParent->leftChild == currentNode)
+      {
+        //If saved parent left child is being deleted, point left child to new subtree
+        currentParent->leftChild = subtree;
+      }
+      else
+      {
+        //If saved parent right child is being deleted, point right child to new subtree
+        currentParent->rightChild = subtree;
+      }
+
+      /*while(currentNode != NULL)
+      {
+        currentNode->updateHeight();
+        currentNode = currentNode->parent;
+      }
+      */
+      delete currentNode;
+      mySize--;
     }
 
 //============================================================================//
