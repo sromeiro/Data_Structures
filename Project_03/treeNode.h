@@ -27,7 +27,7 @@ class treeNode
 
   public:
     //Default constructor initialized to default values
-    treeNode(Type data) : value(0), height(0), balanceFactor(0), key(0), parent(NULL), leftChild(NULL), rightChild(NULL)
+    treeNode(Type data) : height(0), balanceFactor(0), key(0), parent(NULL), leftChild(NULL), rightChild(NULL)
     {
       //Set parameters and initialize user data here if needed
       value = data;

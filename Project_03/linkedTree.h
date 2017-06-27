@@ -434,6 +434,12 @@ class linkedTree
         currentParent->rightChild = subtree;
       }
 
+      while(currentNode != NULL)
+      {
+        currentNode->updateHeight();
+        currentNode = currentNode->parent;
+      }
+
       delete currentNode;
       mySize--;
     }
