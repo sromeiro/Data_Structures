@@ -455,6 +455,7 @@ class linkedTree
     void printing(treeNode<Type> * node)
     {
       cout << "Info on node: " << node->value << endl;
+      cout << "Height of this node is: " << node->height << endl;
       if(node->parent != NULL)
       {
         cout << "Parent of this node is: " << node->parent->value << endl;

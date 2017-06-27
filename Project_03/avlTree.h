@@ -46,7 +46,21 @@ class avlTree
       {
         throw runtime_error("Tree is empty!");
       }
-        return node->height;
+
+      if(node->parent != NULL)
+      {
+        treeNode<Type> * currentNode = node;
+        cout << "Height of parent node " << currentNode->parent->value << " is currently: " << currentNode->parent->height << endl;
+        while(currentNode != NULL)
+        {
+          currentNode->updateHeight();
+          currentNode = currentNode->parent;
+        }
+        currentNode = find(node->value);
+        cout << "Height of parent node " << currentNode->parent->value << " now changed to: " << currentNode->parent->height << endl;
+      }
+
+      return node->height;
     }
 
     //Returns true if the tree is empty
@@ -212,7 +226,7 @@ class avlTree
           treeNode<Type> * node = new treeNode<Type>(data);                    //create new node (will be our root)
           root = node;
           mySize++;
-          node->updateHeight();                                                     //count + 1 for total number of elements
+          node->updateHeight();
           return;
       }
       else
@@ -228,11 +242,6 @@ class avlTree
       {
           treeNode<Type> * node = new treeNode<Type>(data);
           mySize++;
-          /*while(node != NULL)
-          {
-            node->updateHeight();
-            node = node->parent;
-          }*/
           return node;
       }
       if(data < node->value)                                                //left child

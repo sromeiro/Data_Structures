@@ -413,7 +413,21 @@ else if (option == 'a')
         //Code
         break;
       case 8:
-        //Code
+        {
+          dataType data;
+          cout << "Enter the data item you're looking for: ";
+          cin >> data;
+          treeNode<dataType> * found;
+          try
+          {
+            found = myAvlTree.find(data);
+            cout << "Returned data item: [" << found->getValue() << "] has been found!" << endl;
+          }
+          catch(const runtime_error& notFound)
+          {
+            cerr << notFound.what() << endl;
+          }
+        }
         break;
       case 9:
         //Code
@@ -433,6 +447,19 @@ else if (option == 'a')
           dataType data;
           cin >> data;
           myAvlTree.insert(data);
+
+          treeNode<dataType> * toUpdate;
+          try
+          {
+            toUpdate = myAvlTree.find(data);
+            cout << "Updating the height of its parent" << endl;
+            myAvlTree.getHeight(toUpdate);
+          }
+          catch(const runtime_error& notFound)
+          {
+            cerr << notFound.what() << endl;
+          }
+
           cout << "Value: " << data << " inserted" << endl;
         }
         break;
