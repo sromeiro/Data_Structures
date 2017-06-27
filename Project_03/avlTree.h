@@ -297,7 +297,10 @@ public:
         treeNode<Type> * temp;
         temp = node->leftChild;
         node->leftChild = temp->rightChild;
-        temp->rightChild->parent = node;//update parent
+        if(temp->rightChild != NULL)
+        {
+            temp->rightChild->parent = node;//update parent
+        }
         temp->rightChild = node;
         node->parent = temp; //update parent
         root=temp;

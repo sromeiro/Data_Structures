@@ -28,7 +28,7 @@ int main()
   maxHeapTree<dataType> myHeapTree;
   avlTree<dataType> myAvlTree;
 
-  myAvlTree.inorder();
+
   char option; //Used to select between General 'g', Heaps 'h' or AVL 'a'
   int run_menu = 1;
   cout << "Welcome!\nPlease select from the following options which type of";
