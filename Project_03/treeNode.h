@@ -40,6 +40,10 @@ class treeNode
     {
         value = value_to_set;
     }
+    void setParent(treeNode<Type> * to_set)
+    {
+        parent = to_set;
+    }
     Type getValue()
     {
         return value;

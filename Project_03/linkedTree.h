@@ -447,7 +447,7 @@ class linkedTree
     //Destructor. Deletes all pointers within tree
     ~linkedTree()
     {
-      //Needs to delete all nodes
+      clear();
     }
 
 
