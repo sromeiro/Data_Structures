@@ -209,7 +209,20 @@ int main()
           }
           break;
         case 14:
-          //Code
+          {
+            cout << "Please enter a data value to delete from the tree: ";
+            dataType data;
+            cin >> data;
+            try
+            {
+              myTree.del(data);
+              cout << "Value: " << data << " deleted" << endl;
+            }
+            catch(const runtime_error& notFound)
+            {
+              cerr << notFound.what() << endl;
+            }
+          }
           break;
         case 15:
           cout << "\nExiting program" << endl;

@@ -335,7 +335,36 @@ class linkedTree
     //Deletes the requested data item from the tree
     void del(Type data)
     {
+      cout << "DEL CALLED" << endl;
+      if(empty())
+      {
+        throw runtime_error("Tree is empty!");
+      }
 
+      treeNode<Type> * currentNode;
+      treeNode<Type> * currentParent;
+      currentNode = findNode(data);
+      currentParent = currentNode->parent;
+
+      cout << "Node to delete is: " << currentNode->value << endl;
+      cout << "Parent of this node is: " << currentParent->value << endl;
+
+      //delRec(data, root);
+      cout << "DEL ENDED" << endl;
+    }
+
+    void delRec(Type data, treeNode<Type> * node)
+    {
+      cout << "DELREC CALLED" << endl;
+      if(data < node->value)
+      {
+        delete node->leftChild;
+      }
+      else if(data > node->value)
+      {
+        delete node->rightChild;
+      }
+      cout << "DELREC ENDED" << endl;
     }
 
     //Destructor. Deletes all pointers within tree
@@ -343,69 +372,6 @@ class linkedTree
     {
       //Needs to delete all nodes
     }
-
-    //Auxilary function to assist with Postorder traversal
-    void auxPostorder(treeNode<Type> * node)
-    {
-      if(node == NULL)
-      {
-        //Node does not exist
-        cout << "Node does not exist!" << endl;
-        return;
-      }
-
-      //Print Left
-      if(node->leftChild)
-      {
-        cout << "[" << node->leftChild->value << "] ";
-      }
-      //Print Right
-      if(node->rightChild)
-      {
-        cout << "[" << node->rightChild->value << "] ";
-      }
-
-      //Print Parent
-      cout << "[" << node->value << "]" << endl;
-    }
-
-    void insert(Type data)
-    {
-        if(root == NULL)
-        {
-            treeNode<Type> * node = new treeNode<Type>();                    //create new node (will be our root)
-            node->value = data;
-            root = node;
-//            count++;                                                         //count + 1 for total number of elements
-            return;
-        }
-        else {
-            insertNode(root, data);                                          //else call recursive helper function to add node
-        }
-    }
-    //INSERT NODE HELPER FUNCTION FOR RECURSIVE
-    treeNode<Type> * insertNode(treeNode<Type> * node, Type data)
-    {
-        if(node == NULL)                                                     //empty spot so we create new node and return it
-        {
-            treeNode<Type> * node = new treeNode<Type>();
-            node->value = data;
-  //          count++;
-            return node;
-        }
-        if(data < node->value)                                                //left child
-        {
-            node->leftChild = insertNode(node->leftChild,data);                         //node->left is new node returned
-            node->leftChild->parent = node;
-        }
-        else if(data > node->value)                                           //right child
-        {
-            node->rightChild = insertNode(node->rightChild,data);                       //node->right is new node returned
-            node->rightChild->parent = node;
-        }
-        return node;
-    }
-
 };
 
 #endif
