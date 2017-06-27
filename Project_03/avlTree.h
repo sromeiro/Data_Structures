@@ -445,6 +445,7 @@ public:
       }
       */
       delete currentNode;
+      balance(root);
       mySize--;
     }
 
