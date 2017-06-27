@@ -9,6 +9,8 @@ template <class Type> //Template "Type" definition for friend linkedTree class
 class linkedTree; //Needed for Friend Class definition inside the class
 template <class Type>
 class maxHeapTree;
+template <class Type>
+class avlTree;
 
 template <class Type> //Template "Type" definition for treeNode class
 class treeNode
@@ -92,7 +94,6 @@ class treeNode
         tempRight = rightChild->height;
         tempLeft = leftChild->height;
       }
-
       balanceFactor = tempRight - tempLeft;
     }
 
@@ -105,6 +106,7 @@ class treeNode
     //Friend class to have access to all private members
     friend class linkedTree<Type>;
     friend class maxHeapTree<Type>;
+    friend class avlTree<Type>;
 };
 
 
