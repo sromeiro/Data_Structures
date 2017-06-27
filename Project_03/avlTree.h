@@ -308,9 +308,15 @@ public:
         treeNode<Type> * temp;
         temp = node->rightChild;
         node->rightChild = temp->leftChild;
-        temp->leftChild->parent=node; //update parent
+        if(temp->leftChild != NULL)
+        {
+            temp->leftChild->parent = node; //update parent
+        }
         temp->leftChild = node;
-        node->parent = temp; //update parent
+        if(node!=NULL)
+        {
+            node->parent = temp; //update parent
+        }
         root = temp;
     }
     //INSIDE ROTATIONS
@@ -322,7 +328,10 @@ public:
         temp1 = node->leftChild;
         temp2 = temp1->rightChild;
         temp1->rightChild = temp2->leftChild;
-        temp2->leftChild->parent = temp1; //update parent
+        if(temp2->leftChild != NULL)
+        {
+            temp2->leftChild->parent = temp1; //update parent
+        }
         temp2->leftChild = temp1;
         temp1->parent = temp2; //update parent
         node->leftChild = temp2;
@@ -330,7 +339,10 @@ public:
         //SECOND ROTATE
         temp1 = node->leftChild;
         node->leftChild = temp1->rightChild;
-        temp1->rightChild->parent = node;//update parent
+        if(temp1->rightChild != NULL)
+        {
+            temp1->rightChild->parent = node;//update parent
+        }
         temp1->rightChild = node;
         node->parent=temp1;//update parent
         root = temp1;
@@ -343,7 +355,10 @@ public:
         temp1 = node->rightChild;
         temp2 = temp1->leftChild;
         temp1->leftChild = temp2->rightChild;
-        temp2->rightChild->parent = temp1;//update parent
+        if(temp1->leftChild != NULL)
+        {
+            temp2->rightChild->parent = temp1;//update parent
+        }
         temp2->rightChild = temp1;
         temp1->parent = temp2;//update parent
         node->rightChild = temp2;
@@ -351,7 +366,10 @@ public:
         //SECOND ROTATE
         temp1 = node->rightChild;
         node->rightChild = temp1->leftChild;
-        temp1->leftChild->parent = node;//update parent
+        if(temp1->leftChild != NULL)
+        {
+            temp1->leftChild->parent = node;//update parent
+        }
         temp1->leftChild = node;
         node->parent = temp1;//update parent
         root = temp1;
