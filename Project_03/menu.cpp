@@ -25,7 +25,7 @@ int main()
   //   cout<< "Default capacity set to 15." << endl << endl;
 
   linkedTree<dataType> myTree;
-//  maxHeapTree<dataType> myHeapTree;
+  maxHeapTree<dataType> myHeapTree;
   avlTree<dataType> myAvlTree;
 
   char option; //Used to select between General 'g', Heaps 'h' or AVL 'a'
@@ -291,14 +291,16 @@ int main()
     cout << "******************************************" << endl;
     cout << "*                                        *" << endl;
     cout << "*    Enter the desired number            *" << endl;
-    cout << "*    1.  Return capacity                 *" << endl;
-    cout << "*    2.  Number of items in the Queue    *" << endl;
-    cout << "*    3.  View the first item             *" << endl;
-    cout << "*    4.  Insert an item                  *" << endl;
-    cout << "*    5.  Remove an item                  *" << endl;
-    cout << "*    6.  Display items                   *" << endl;
-    cout << "*    7.  Clear Queue                     *" << endl;
-    cout << "*    8.  Exit                            *" << endl;
+    cout << "*    1.  Return root                     *" << endl;
+    cout << "*    2.  Return size                     *" << endl;
+    cout << "*    3.  Return height                   *" << endl;
+    cout << "*    4.  Is tree empty?                  *" << endl;
+    cout << "*    5.  Return number of leaves         *" << endl;
+    cout << "*    6.  Print                           *" << endl;
+    cout << "*    7.  Clear tree                      *" << endl;
+    cout << "*    8.  Insert (key,data)               *" << endl;
+    cout << "*    9.  Delete                          *" << endl;
+    cout << "*    10. Exit                            *" << endl;
     cout << "*                                        *" << endl;
     cout << "******************************************" << endl;
     cout << endl;
@@ -311,29 +313,98 @@ int main()
       switch (num_select)
       {
         case 1:
-          //Code
+          try
+          {
+            cout << "Root is : " << myHeapTree.getMax() << endl;
+          }
+          catch(const runtime_error& empty)
+          {
+            cerr << empty.what() << endl;
+          }
           break;
         case 2:
-          //Code
+          try
+          {
+            cout << "Size is : " << myHeapTree.getSize() << endl;
+          }
+          catch(const runtime_error& empty)
+          {
+            cerr << empty.what() << endl;
+          }
           break;
         case 3:
-          //Code
+          try
+          {
+            cout << "Tree Height is : " << myHeapTree.height() << endl;
+          }
+          catch(const runtime_error& empty)
+          {
+            cerr << empty.what() << endl;
+          }
           break;
         case 4:
-          //Code
+          myHeapTree.empty() ? cout << "Empty!" << endl : cout << "Not empty!" << endl;
           break;
         case 5:
-          //Code
+          try
+          {
+            cout << "Number of Leaves : " << myHeapTree.leaves() << endl;
+          }
+          catch(const runtime_error& empty)
+          {
+            cerr << empty.what() << endl;
+          }
           break;
         case 6:
-          //Code
+          try
+          {
+            myHeapTree.print();
+          }
+          catch(const runtime_error& empty)
+          {
+            cerr << empty.what() << endl;
+          }
           break;
         case 7:
-          //Code
+          try
+          {
+            myHeapTree.clear();
+            cout<<"Tree Cleared"<<endl;
+          }
+          catch(const runtime_error& empty)
+          {
+            cerr << empty.what() << endl;
+          }
           break;
         case 8:
-          //Code
+        {
+          cout << "Please enter a key (integer) : ";
+          int key;
+          cin >> key;
+          cout << endl;
+          cout << "Please enter data : ";
+          dataType data;
+          cin >> data;
+          myHeapTree.insert(key, data);
+          cout << "Key : " << key << " Value: " << data << " inserted" << endl;
+        }
           break;
+        case 9:
+          try
+          {
+            cout<<"Deleting Max : "<<myHeapTree.getMax()<<endl;
+            myHeapTree.delMax();
+            cout<<"Delete Successful"<<endl;
+          }
+          catch(const runtime_error& empty)
+          {
+            cerr << empty.what() << endl;
+          }
+          break;
+        case 10:
+              cout << "\nExiting program" << endl;
+              run_menu = 0; //Successful termination of program
+              break;
         default:
           cout << "This is an invalid option. Please restart the program";
           cout << " and try again." << endl;
@@ -519,7 +590,7 @@ else if (option == 'a')
           try
           {
             found = myAvlTree.find(data);
-            myAvlTree.printing(found);
+            //myAvlTree.printing(found);
           }
           catch(const runtime_error& notFound)
           {

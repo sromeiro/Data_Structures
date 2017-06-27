@@ -21,26 +21,29 @@ public:
         initCapacity = n;
         array = new treeNode<Type>[capacity+1];                                    //create an tree node array of default size 15//
     }
-    treeNode<Type> * getMax()
+    Type getMax()
     {
-        if(count==0)                                                      //if empty
+        if(empty())
         {
-            //NEED CATCH THROW HERE
-            cout<<"empty"<<endl;
-            return & array[1];                 //NEED TO DELETE THIS IN CATCH THROW STATEMENT
+            throw runtime_error("Heap Tree is empty!");
         }
-        else
-        {
-            return & array[1];
-        }
+        return array[1].getValue();
     }
     int getSize()
     {
+        if(empty())
+        {
+            throw runtime_error("Heap Tree is empty!");
+        }
         return count;
     }
     //USED TO TEST DYNAMIC ARRAY SIZE CHANGE
     int getCapacity()
     {
+        if(empty())
+        {
+            throw runtime_error("Heap Tree is empty!");
+        }
         return capacity;
     }
     bool empty()
@@ -49,7 +52,10 @@ public:
     }
     int leaves()
     {
-        if(empty()){return 0;}
+        if(empty())
+        {
+            throw runtime_error("Heap Tree is empty!");
+        }
         else
         {
             if(count%2 == 0) //IS EVEN
@@ -64,6 +70,10 @@ public:
     }
     int height()
     {
+        if(empty())
+        {
+            throw runtime_error("Heap Tree is empty!");
+        }
         int height = 0;
         if(empty())
         {
@@ -119,10 +129,9 @@ public:
     }
     void delMax() {
         int index = 1;                                                                    //used for sorting after swap
-        //NEED CATCH THROW HERE
-        if (count == 0)                                                                      //empty heap
+        if(empty())
         {
-            return;
+            throw runtime_error("Heap Tree is empty!");
         }
         if((count-1)<(capacity/4)&&capacity>initCapacity)  //if size is going to be 1/4 after the delete and the capacity and greater than initialsize set
         {
@@ -183,10 +192,9 @@ public:
     }
     void print()
     {
-        if(count==0) //NEED CATCH THROW HERE
+        if(empty())
         {
-            cout<<"empty"<<endl;
-            return;
+            throw runtime_error("Heap Tree is empty!");
         }
         cout<<"Val : ";
         for(int i = 1; i <=count; i++)
@@ -203,6 +211,10 @@ public:
     }
     void clear()
     {
+        if(empty())
+        {
+            throw runtime_error("Heap Tree is empty!");
+        }
         delete []array;
         array = new treeNode<Type>[capacity+1];                                    //create an tree node array of default capacity 15
         count=0;
