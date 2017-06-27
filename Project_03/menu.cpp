@@ -479,22 +479,29 @@ else if (option == 'a')
           cout << "Please enter a data value to enter into the tree: ";
           dataType data;
           cin >> data;
+          treeNode<dataType> * search;
+          search = myAvlTree.find(data);
+
           myAvlTree.insert(data);
 
-          //Block below will handle updating the parent nodes
-          treeNode<dataType> * toUpdate;
           try
           {
-            toUpdate = myAvlTree.find(data);
-            cout << "Updating the height of its parent" << endl;
-            myAvlTree.getHeight(toUpdate);
+            treeNode<dataType> * search;
+            search = myAvlTree.find(data);
+            if(search)
+            {
+              cout << "Item already exists in the tree" << endl;
+            }
+            else
+            {
+              myAvlTree.insert(data);
+              cout << "Value: " << data << " inserted" << endl;
+            }
           }
-          catch(const runtime_error& notFound)
+          catch(const runtime_error& error)
           {
-            cerr << notFound.what() << endl;
+            cerr << error.what() << endl;
           }
-
-          cout << "Value: " << data << " inserted" << endl;
         }
         break;
       case 14:
