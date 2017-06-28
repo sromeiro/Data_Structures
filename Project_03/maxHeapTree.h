@@ -2,10 +2,6 @@
 #define MAXHEAPTREE_H
 #include<stdexcept>
 
-/***********************************************************************************************************************
- *                                               IMPORTANT                                                             *
- *                                   INDEX OF ARRAY STARTS FROM 1 NOT 0                                                *
- ***********************************************************************************************************************/
 template <class Type>
 class maxHeapTree
 {
@@ -221,9 +217,7 @@ public:
     }
     ~maxHeapTree()
     {
-        cout << "Destructor maxHeapTree called" << endl;
         delete []array;
-        cout << "Destructor maxHeapTree OK" << endl;
     }
 };
 

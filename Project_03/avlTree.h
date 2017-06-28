@@ -100,35 +100,26 @@ public:
 
         if(root->value == data)
         {
-            //cout << "Value is in root!" << endl;
             //Root contains desired value
             return root;
         }
 
-        //cout << "Value is NOT in root" << endl;
         treeNode<Type> * currentNode = root;
-        //treeNode<Type> * currentParent = root; //Probably don't need parent*************************
 
         //While data hasn't been found. Check for children and move down
         while(currentNode->value != data)
         {
-            //cout << "WHILE currentNode->value != data" << endl;
             if(countChildren(currentNode) != 0)
             {
-                //cout << "IF Children exist" << endl;
-                //currentParent = currentNode; //Update parent to current before descent****************
                 if(currentNode->value > data)
                 {
-                    //cout << "currentNode->value LESS than data. Descend LEFT" << endl;
                     //Data is smaller than currentNode. Descend left.
                     currentNode = currentNode->leftChild;
                 }
                 else if(currentNode->value < data)
                 {
-                    //cout << "currentNode->value GREATER than data. Descend RIGHT" << endl;
                     //Data is larger than currentNode. Descend right.
                     currentNode = currentNode->rightChild;
-                    //cout << "Going to access currentNode->value now" << endl;
                 }
             }
 
@@ -139,8 +130,6 @@ public:
                 return NULL;
             }
         }
-
-        //cout << "Data found in current node" << endl;
 
         //Data found in currentNode
         return currentNode;
@@ -440,67 +429,34 @@ public:
       currentNode = find(data);
       currentParent = currentNode->parent;
 
-      //cout << "Node to delete is: " << currentNode->value << endl;
-      //cout << "Parent of this node is " << currentParent->value << endl;
-
       treeNode<Type> * successorNode = currentNode->rightChild;
       treeNode<Type> * successorParent = currentNode;
       if(countChildren(currentNode) == 2) //Node to delete has 2 children.
       {
-        //cout << "Children of this node are: " << currentNode->leftChild->value << " and " << currentNode->rightChild->value << endl;
         //Find successor, the smallest of the rightChild
 
-        //cout << "successorParent is currently: " << successorParent->value << endl;
         while(successorNode->leftChild)
         {
           //Find smallest of larger values
-          //cout << "SuccessorNode Left child is: " << successorNode->leftChild->value << endl;
           successorParent = successorNode;
           successorNode = successorNode->leftChild;
         }
 
-        //cout << "successorParent is currently: " << successorParent->value << endl;
-
-        //cout << "SuccessorNode currently holds: " << successorNode->value << endl;
         currentNode->value = successorNode->value; //Copy successor value over to current
-        //cout << "CurrentNode Parent is: " << currentNode->parent->value << endl;
         currentNode = successorNode; //Copy pointer address
-        //cout << "CurrentNode Parent is NOW: " << currentNode->parent->value << endl;
-        //cout << "CurrentParent is : " << currentParent->value << endl;
         currentParent = successorParent;
-        //cout << "CurrentParent is NOW: " << currentParent->value << endl;
-
-
-        //cout << "Successor Node is: " << successorNode->value << endl;
-        //cout << "Parent of this node is " << successorParent->value << endl;
       }
 
 
 
       //Case where there was only 1 or 0 children
       treeNode<Type> * subtree; //Subtree is the tree formed by the node being deleted
-      //if(successorNode != NULL)
-      //{
-        //Successor node exists then use it
-        //subtree = successorNode->leftChild; //Originally set it to left child
-
-      //}
-      //else
-      //{
-        subtree = currentNode->leftChild; //Originally set it to left child
-      //}
-
+      subtree = currentNode->leftChild; //Originally set it to left child
 
       if(subtree == NULL)
       {
         //If left child subtree didn't exist, then set it to right child
         subtree = currentNode->rightChild;
-        //cout << "Subtree changed to rightChild" << endl;
-        if(subtree != NULL)
-        {
-          //cout << "Subtree is " << subtree->value << endl;
-        }
-
       }
       if(currentParent == NULL)
       {
@@ -514,23 +470,19 @@ public:
       else if(currentParent->leftChild == currentNode)
       {
         //If saved parent left child is being deleted, point left child to new subtree
-        //cout << "Left child of the parent node: " << currentParent->value << " is the node to be deleted. Setting subtree as left child instead" << endl;
         currentParent->leftChild = subtree;
         if(subtree != NULL)
         {
-          //cout << "Setting subtrees parent to the currentParent" << endl;
           subtree->parent = currentParent;
         }
       }
       else
       {
         //If saved parent right child is being deleted, point right child to new subtree
-        //cout << "Right child of the parent node: " << currentParent->value << " is the node to be deleted. Setting subtree as right child instead" << endl;
         currentParent->rightChild = subtree;
 
         if(subtree != NULL)
         {
-          //cout << "Setting subtrees parent to the currentParent" << endl;
           subtree->parent = currentParent;
         }
 
@@ -542,99 +494,16 @@ public:
         subtree = subtree->parent;
       }
 
-
-
       delete currentNode;
       balance(root);
       mySize--;
     }
-/*
-    void del(Type data)
+
+    //Destructor. Deletes all pointers within tree
+    ~avlTree()
     {
-      if(empty())
-      {
-        throw runtime_error("Tree is empty!");
-      }
-
-      treeNode<Type> * currentNode;
-      treeNode<Type> * currentParent;
-      currentNode = find(data);
-      currentParent = currentNode->parent;
-
-      cout << "Node to delete is: " << currentNode->value << endl;
-      //cout << "It's parent is: " << currentNode->parent->value << endl;
-
-      if(countChildren(currentNode) == 2) //Node to delete has 2 children.
-      {
-        cout << "Children of this node are: " << currentNode->leftChild->value << " and " << currentNode->rightChild->value << endl;
-        //Find successor, the smallest of the rightChild
-        treeNode<Type> * successorNode = currentNode->rightChild;
-        currentParent = currentNode;
-
-        while(successorNode->leftChild)
-        {
-          //Find smallest of larger values
-          currentParent = successorNode;
-          successorNode = successorNode->leftChild;
-        }
-
-        currentNode->value = successorNode->value; //Copy successor value over to current
-        currentNode = successorNode; //Copy pointer address
-
-      }
-
-      //Case where there was only 1 or 0 children
-      treeNode<Type> * subtree; //Subtree is the tree formed by the node being deleted
-      subtree = currentNode->leftChild; //Originally set it to left child
-      if(subtree == NULL)
-      {
-        //If left child subtree didn't exist, then set it to right child
-        subtree = currentNode->rightChild;
-      }
-      if(currentParent == NULL)
-      {
-        //This is root that is being removed
-        root = subtree;
-        if(root != NULL)
-        {
-          root->parent = NULL;
-        }
-      }
-      else if(currentParent->leftChild == currentNode)
-      {
-        //If saved parent left child is being deleted, point left child to new subtree
-        currentParent->leftChild = subtree;
-      }
-      else
-      {
-        //If saved parent right child is being deleted, point right child to new subtree
-        currentParent->rightChild = subtree;
-      }
-
-      while(currentNode != NULL)
-      {
-        currentNode->updateHeight();
-        currentNode = currentNode->parent;
-      }
-
-        delete currentNode;
-        mySize--;
-        if(empty()) //dont want to call balance if empty
-        {
-            return;
-        }
-        balance(root);
+      clear();
     }
-*/
-
-
-//Destructor. Deletes all pointers within tree
-  ~avlTree()
-  {
-    cout << "Destructor avlTree called" << endl;
-    clear();
-    cout << "Destructor avlTree OK" << endl;
-  }
 //============================================================================//
 //                    AUXILARY FUNCTIONS BELOW                                //
 //============================================================================//
@@ -680,35 +549,6 @@ public:
         }
 
         return children;
-    }
-
-    //Simple function to give information on requested node.
-    void printing(treeNode<Type> * node)
-    {
-        cout << "Info on node: " << node->value << endl;
-        cout << "Height of this node is: " << getHeight(node) << endl;
-        if(node->parent != NULL)
-        {
-            cout << "Parent of this node is: " << node->parent->value << endl;
-        }
-
-        if(countChildren(node) == 2)
-        {
-            cout << "Children of this node are: " << node->leftChild->value << " and " << node->rightChild->value << endl;
-
-        }
-        else if(countChildren(node) == 1 && node->leftChild)
-        {
-            cout << "Node only has a left child and it is: " << node->leftChild->value << endl;
-        }
-        else if(countChildren(node) == 1 && node->rightChild)
-        {
-            cout << "Node only has a right child and it is: " << node->rightChild->value << endl;
-        }
-        else
-        {
-            cout << "This node has no children" << endl;
-        }
     }
 };
 
