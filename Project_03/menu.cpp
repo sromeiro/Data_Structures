@@ -7,7 +7,7 @@
 
 using namespace std;
 
-typedef string dataType; //Change the data type here if needed
+typedef int dataType; //Change the data type here if needed
 
 int main()
 {

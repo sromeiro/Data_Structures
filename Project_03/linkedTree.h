@@ -372,6 +372,7 @@ class linkedTree
       //cout << "Function ended" << endl;
     }
 
+/*
     //Deletes the requested data item from the tree
     void del(Type data)
     {
@@ -382,15 +383,11 @@ class linkedTree
 
       treeNode<Type> * currentNode;
       treeNode<Type> * currentParent;
-      treeNode<Type> * deletingNode;
       currentNode = findNode(data);
       currentParent = currentNode->parent;
 
-      deletingNode = findNode(data);
-      cout << "Deleting node is: " << deletingNode->value << endl;
+      //cout << "Node to delete is: " << currentNode->value << endl;
 
-      cout << "Node to delete is: " << currentNode->value << endl;
-      cout << "Parent of this node is " << currentParent->value << endl;
       if(countChildren(currentNode) == 2) //Node to delete has 2 children.
       {
         cout << "Children of this node are: " << currentNode->leftChild->value << " and " << currentNode->rightChild->value << endl;
@@ -408,21 +405,117 @@ class linkedTree
         currentNode->value = successorNode->value; //Copy successor value over to current
         currentNode = successorNode; //Copy pointer address
 
-        cout << "Successor Node is: " << currentNode->value << endl;
-        cout << "Parent of this node is " << currentParent->value << endl;
+      }
+
+      //Case where there was only 1 or 0 children
+      treeNode<Type> * subtree; //Subtree is the tree formed by the node being deleted
+      subtree = currentNode->leftChild; //Originally set it to left child
+      if(subtree == NULL)
+      {
+        //If left child subtree didn't exist, then set it to right child
+        subtree = currentNode->rightChild;
+      }
+      if(currentParent == NULL)
+      {
+        //This is root that is being removed
+        root = subtree;
+        if(root != NULL)
+        {
+          root->parent = NULL;
+        }
+      }
+      else if(currentParent->leftChild == currentNode)
+      {
+        //If saved parent left child is being deleted, point left child to new subtree
+        currentParent->leftChild = subtree;
+      }
+      else
+      {
+        //If saved parent right child is being deleted, point right child to new subtree
+        currentParent->rightChild = subtree;
+      }
+
+      while(currentNode != NULL)
+      {
+        currentNode->updateHeight();
+        currentNode = currentNode->parent;
+      }
+
+      delete currentNode;
+      mySize--;
+    }
+*/
+
+
+    void del(Type data)
+    {
+      if(empty())
+      {
+        throw runtime_error("Tree is empty!");
+      }
+
+      treeNode<Type> * currentNode;
+      treeNode<Type> * currentParent;
+      treeNode<Type> * deletingNode;
+      currentNode = findNode(data);
+      currentParent = currentNode->parent;
+
+      deletingNode = currentNode;
+      cout << "DeletingNode is: " << deletingNode->value << endl;
+
+      cout << "Node to delete is: " << currentNode->value << endl;
+      cout << "Parent of this node is " << currentParent->value << endl;
+
+      treeNode<Type> * successorNode = currentNode->rightChild;
+      treeNode<Type> * successorParent = successorNode;
+      if(countChildren(currentNode) == 2) //Node to delete has 2 children.
+      {
+        cout << "Children of this node are: " << currentNode->leftChild->value << " and " << currentNode->rightChild->value << endl;
+        //Find successor, the smallest of the rightChild
+
+
+        while(successorNode->leftChild)
+        {
+          //Find smallest of larger values
+          successorParent = successorNode;
+          successorNode = successorNode->leftChild;
+        }
+
+        currentNode->value = successorNode->value; //Copy successor value over to current
+        cout << "Current Node Parent is: " << currentNode->parent->value << endl;
+        currentNode = successorNode; //Copy pointer address
+        cout << "Current Node Parent is NOW: " << currentNode->parent->value << endl;
+        cout << "Current Parent is : " << currentParent->value << endl;
+        currentParent = successorParent;
+        cout << "Current Parent is NOW: " << currentParent->value << endl;
+
+
+        cout << "Successor Node is: " << successorNode->value << endl;
+        cout << "Parent of this node is " << successorParent->value << endl;
       }
 
 
 
       //Case where there was only 1 or 0 children
       treeNode<Type> * subtree; //Subtree is the tree formed by the node being deleted
-      subtree = currentNode->leftChild; //Originally set it to left child
-      //cout << "Subtree is " << subtree->value << endl;
+      //if(successorNode != NULL)
+      //{
+        //Successor node exists then use it
+        //subtree = successorNode->leftChild; //Originally set it to left child
+
+      //}
+      //else
+      //{
+        subtree = currentNode->leftChild; //Originally set it to left child
+      //}
+
+
       if(subtree == NULL)
       {
         //If left child subtree didn't exist, then set it to right child
         subtree = currentNode->rightChild;
         cout << "Subtree changed to rightChild" << endl;
+        cout << "Subtree is " << subtree->value << endl;
       }
       if(currentParent == NULL)
       {
@@ -458,16 +551,14 @@ class linkedTree
 
       }
 
-      while(currentNode != NULL)
+      while(subtree != NULL)
       {
-        currentNode->updateHeight();
-        currentNode = currentNode->parent;
+        subtree->updateHeight();
+        subtree = subtree->parent;
       }
-      cout << "DeletingNode is: " << deletingNode->value << endl;
 
-      currentNode = deletingNode;
-      currentNode->value = deletingNode->value;
-      cout << "Deleting node " << currentNode->value << endl;
+
+
       delete currentNode;
       mySize--;
     }
