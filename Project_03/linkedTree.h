@@ -382,11 +382,14 @@ class linkedTree
 
       treeNode<Type> * currentNode;
       treeNode<Type> * currentParent;
+      treeNode<Type> * deletingNode;
       currentNode = findNode(data);
       currentParent = currentNode->parent;
 
-      //cout << "Node to delete is: " << currentNode->value << endl;
+      deletingNode = currentNode;
 
+      cout << "Node to delete is: " << currentNode->value << endl;
+      cout << "Parent of this node is " << currentParent->value << endl;
       if(countChildren(currentNode) == 2) //Node to delete has 2 children.
       {
         cout << "Children of this node are: " << currentNode->leftChild->value << " and " << currentNode->rightChild->value << endl;
@@ -406,13 +409,18 @@ class linkedTree
 
       }
 
+      cout << "Node to delete is: " << currentNode->value << endl;
+      cout << "Parent of this node is " << currentParent->value << endl;
+
       //Case where there was only 1 or 0 children
       treeNode<Type> * subtree; //Subtree is the tree formed by the node being deleted
       subtree = currentNode->leftChild; //Originally set it to left child
+      //cout << "Subtree is " << subtree->value << endl;
       if(subtree == NULL)
       {
         //If left child subtree didn't exist, then set it to right child
         subtree = currentNode->rightChild;
+        cout << "Subtree changed to rightChild" << endl;
       }
       if(currentParent == NULL)
       {
@@ -426,12 +434,26 @@ class linkedTree
       else if(currentParent->leftChild == currentNode)
       {
         //If saved parent left child is being deleted, point left child to new subtree
+        cout << "Left child of the parent is the node to be deleted. Setting subtree as left child instead" << endl;
         currentParent->leftChild = subtree;
+        if(subtree != NULL)
+        {
+          cout << "Setting subtrees parent to the currentParent" << endl;
+          subtree->parent = currentParent;
+        }
       }
       else
       {
         //If saved parent right child is being deleted, point right child to new subtree
+        cout << "Right child of the parent is the node to be deleted. Setting subtree as right child instead" << endl;
         currentParent->rightChild = subtree;
+
+        if(subtree != NULL)
+        {
+          cout << "Setting subtrees parent to the currentParent" << endl;
+          subtree->parent = currentParent;
+        }
+
       }
 
       while(currentNode != NULL)
@@ -440,6 +462,8 @@ class linkedTree
         currentNode = currentNode->parent;
       }
 
+      currentNode = deletingNode;
+      cout << "Deleting node " << currentNode->value << endl;
       delete currentNode;
       mySize--;
     }
