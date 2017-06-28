@@ -502,7 +502,11 @@ public:
     //Destructor. Deletes all pointers within tree
     ~avlTree()
     {
-      clear();
+      if(mySize!=0)
+        {
+          clear();
+        }
+        delete[] root;
     }
 //============================================================================//
 //                    AUXILARY FUNCTIONS BELOW                                //

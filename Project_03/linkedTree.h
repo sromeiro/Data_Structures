@@ -171,8 +171,6 @@ class linkedTree
         }
       }
 
-       << "Data found in current node" << endl;
-
       //Data found in currentNode
       return currentNode;
     }
@@ -430,7 +428,11 @@ class linkedTree
     //Destructor. Deletes all pointers within tree
     ~linkedTree()
     {
-      clear();
+      if(mySize!=0)
+        {
+          clear();
+        }
+      delete[] root;
     }
 };
 

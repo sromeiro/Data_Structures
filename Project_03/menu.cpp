@@ -620,6 +620,6 @@ else if (option == 'a')
   }
 }
 
-  cout << "\nSuccessful termination of program2" << endl;
+  cout << "\nSuccessful termination of program" << endl;
   return 0;
 }
