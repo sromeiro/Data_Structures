@@ -386,7 +386,8 @@ class linkedTree
       currentNode = findNode(data);
       currentParent = currentNode->parent;
 
-      deletingNode = currentNode;
+      deletingNode = findNode(data);
+      cout << "Deleting node is: " << deletingNode->value << endl;
 
       cout << "Node to delete is: " << currentNode->value << endl;
       cout << "Parent of this node is " << currentParent->value << endl;
@@ -407,10 +408,11 @@ class linkedTree
         currentNode->value = successorNode->value; //Copy successor value over to current
         currentNode = successorNode; //Copy pointer address
 
+        cout << "Successor Node is: " << currentNode->value << endl;
+        cout << "Parent of this node is " << currentParent->value << endl;
       }
 
-      cout << "Node to delete is: " << currentNode->value << endl;
-      cout << "Parent of this node is " << currentParent->value << endl;
+
 
       //Case where there was only 1 or 0 children
       treeNode<Type> * subtree; //Subtree is the tree formed by the node being deleted
@@ -434,7 +436,7 @@ class linkedTree
       else if(currentParent->leftChild == currentNode)
       {
         //If saved parent left child is being deleted, point left child to new subtree
-        cout << "Left child of the parent is the node to be deleted. Setting subtree as left child instead" << endl;
+        cout << "Left child of the parent node: " << currentParent->value << " is the node to be deleted. Setting subtree as left child instead" << endl;
         currentParent->leftChild = subtree;
         if(subtree != NULL)
         {
@@ -445,7 +447,7 @@ class linkedTree
       else
       {
         //If saved parent right child is being deleted, point right child to new subtree
-        cout << "Right child of the parent is the node to be deleted. Setting subtree as right child instead" << endl;
+        cout << "Right child of the parent node: " << currentParent->value << " is the node to be deleted. Setting subtree as right child instead" << endl;
         currentParent->rightChild = subtree;
 
         if(subtree != NULL)
@@ -461,8 +463,10 @@ class linkedTree
         currentNode->updateHeight();
         currentNode = currentNode->parent;
       }
+      cout << "DeletingNode is: " << deletingNode->value << endl;
 
       currentNode = deletingNode;
+      currentNode->value = deletingNode->value;
       cout << "Deleting node " << currentNode->value << endl;
       delete currentNode;
       mySize--;
