@@ -15,11 +15,7 @@ class linkedTree
 
   public:
     linkedTree() : mySize(0), root(NULL)
-    {
-      //Set parameters above and initialize them here if user values are needed
-    }
-
-
+    {}
 
     //Returns root pointer
     treeNode<Type> * getRoot()
@@ -570,7 +566,9 @@ class linkedTree
     //Destructor. Deletes all pointers within tree
     ~linkedTree()
     {
+      cout << "Destructor linkedTree called" << endl;
       clear();
+      cout << "Destructor linkedTree OK" << endl;
     }
 
 

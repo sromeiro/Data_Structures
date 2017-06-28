@@ -221,7 +221,9 @@ public:
     }
     ~maxHeapTree()
     {
+        cout << "Destructor maxHeapTree called" << endl;
         delete []array;
+        cout << "Destructor maxHeapTree OK" << endl;
     }
 };
 

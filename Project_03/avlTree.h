@@ -545,6 +545,7 @@ public:
 
 
       delete currentNode;
+      balance(root);
       mySize--;
     }
 /*
@@ -625,6 +626,15 @@ public:
         balance(root);
     }
 */
+
+
+//Destructor. Deletes all pointers within tree
+  ~avlTree()
+  {
+    cout << "Destructor avlTree called" << endl;
+    clear();
+    cout << "Destructor avlTree OK" << endl;
+  }
 //============================================================================//
 //                    AUXILARY FUNCTIONS BELOW                                //
 //============================================================================//

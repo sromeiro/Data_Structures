@@ -2,41 +2,23 @@
 #include"linkedTree.h"
 #include"maxHeapTree.h"
 #include"avlTree.h"
-#include <string>
-#include <iostream>
+#include<string>
+#include<iostream>
+#include<typeinfo>
 
 using namespace std;
 
-typedef int dataType; //Change the data type here if needed
+typedef string dataType; //Change the data type here if needed
 
 int main()
 {
-  // int size;
-  // string random_garbage;
-  // cout<< "Welcome!\nPlease set the size of your new container. ";
-  // cout << "Enter a non-integer for the default size." << endl;
-  // cout<<"SIZE : ";
-  // cin >> size;
-  // if (cin.fail())
-  // {
-  //   cin.clear();
-  //   size = 15;
-  //   cin >> random_garbage;
-  //   cout<< "Default capacity set to 15." << endl << endl;
-
   linkedTree<dataType> myTree;
   maxHeapTree<dataType> myHeapTree;
   avlTree<dataType> myAvlTree;
 
-//  myAvlTree.insert("20");
-//  myAvlTree.insert("10");
-//  myAvlTree.insert("13");
-//  myAvlTree.insert("03");
-//  myAvlTree.insert("5");
-//  myAvlTree.clear();
-
   char option; //Used to select between General 'g', Heaps 'h' or AVL 'a'
   int run_menu = 1;
+  bool notice = false;
   cout << "Welcome!\nPlease select from the following options which type of";
   cout << " tree you would like to create:" << endl << endl;
 
@@ -71,11 +53,6 @@ int main()
 //===================BLOCK THAT HANDLES GENERAL TREES=========================//
 //****************************************************************************//
 
-
-//==============================================================================
-//Most of the cases below are being used to test functions from LinkedTree class
-//They don't reflect what menu needs to be doing. Testing purposes only.
-//==============================================================================
   if (option == 'g')
   {
     int num_select; //Used to select from the menu options below
@@ -234,7 +211,19 @@ int main()
           break;
         case 13:
           {
-            cout << "Please enter a data value to enter into the tree: ";
+            if(typeid(dataType) == typeid(string) && notice == false)
+            {
+              cout << endl;
+              cout << "====================== NOTE ==========================" << endl;
+              cout << "Please note that using the STRING data type will cause" << endl;
+              cout << "numerical values to order themselves based on their" << endl;
+              cout << "respective ASCII codes instead of numerical order." << endl;
+              cout << "======================================================" << endl;
+              cout << endl;
+              notice = true;
+            }
+
+            cout << "Please enter a data value to enter into the tree: " << endl;
             dataType data;
             cin >> data;
             myTree.insert(data);
@@ -260,23 +249,6 @@ int main()
         case 15:
           cout << "\nExiting program" << endl;
           run_menu = 0; //Successful termination of program
-          break;
-        case 16:
-          {
-            dataType data;
-            cout << "Print info for? ";
-            cin >> data;
-            treeNode<dataType> * found;
-            try
-            {
-              found = myTree.findNode(data);
-              myTree.printing(found);
-            }
-            catch(const runtime_error& notFound)
-            {
-              cerr << notFound.what() << endl;
-            }
-          }
           break;
         default:
           cout << "This is an invalid option. Please restart the program";
@@ -592,6 +564,7 @@ else if (option == 'a')
         try
         {
           myAvlTree.clear();
+          cout << "Tree cleared" << endl;
         }
         catch(const runtime_error& notFound)
         {
@@ -600,15 +573,21 @@ else if (option == 'a')
         break;
       case 13:
         {
+          if(typeid(dataType) == typeid(string) && notice == false)
+          {
+            cout << endl;
+            cout << "====================== NOTE ==========================" << endl;
+            cout << "Please note that using the STRING data type will cause" << endl;
+            cout << "numerical values to order themselves based on their" << endl;
+            cout << "respective ASCII codes instead of numerical order." << endl;
+            cout << "======================================================" << endl;
+            cout << endl;
+            notice = true;
+          }
+
           cout << "Please enter a data value to enter into the tree: ";
           dataType data;
           cin >> data;
-          /*
-          if(data.compare("01") > 0 && data.compare("09") < 0)
-          {
-            cout << "Data is between 1 - 9" << endl;
-          }
-          */
           myAvlTree.insert(data);
           cout << "Value: " << data << " inserted" << endl;
         }
@@ -658,6 +637,6 @@ else if (option == 'a')
   }
 }
 
-  cout << "\nSuccessful termination of program" << endl;
+  cout << "\nSuccessful termination of program2" << endl;
   return 0;
 }

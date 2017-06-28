@@ -85,7 +85,7 @@ class treeNode
     //Default destructor
     ~treeNode()
     {
-
+      cout << "Destructor treeNode OK" << endl;
     }
 
     //Friend class to have access to all private members
