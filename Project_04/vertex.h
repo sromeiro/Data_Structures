@@ -3,6 +3,7 @@
 #include<stdexcept>
 #include<iostream>
 #include<list>
+#include "edge.h"
 
 using namespace std;
 
@@ -19,7 +20,7 @@ template <class Type>
 class Vertex
 {
   private:
-    Type data; //Holds data information for one vertex
+    char data;                                                                   //Holds data information for one vertex
 
     /*
     * A list where each node holds an integer value that points to the next vertex.
@@ -27,9 +28,33 @@ class Vertex
     * Vertices are held in an array/vector. These integers represent the index numbers.
     * The list contains only outgoing edges. See lecture slides 33 & 92.
     */
-    list <int> adjacencyList;
+    //list <int> adjacencyList;
+    Edge<Type> * outgoing;                                                       //store the list of edges
+    int adj_count;
   public:
-
+    Vertex() : data(0) {};                                                                //empty contructor to create list in classes
+    Vertex(char the_data)
+    {
+        data = the_data;                                                         //since our data is the vertex itself ( A , B , C , D etc...)
+        adj_count = 0;                                                           //when created has zero adjacent edges (must be added)
+        outgoing = new Edge<Type>[10];                                           //create a list of 10 edges
+    }
+    char getData()
+    {
+        return data;
+    }
+    void add_edge(Edge<Type> the_edge)
+    {
+        if(adj_count != 10)                //10 cna later be changed since i just made this a base case of # of edges
+        {
+            outgoing[adj_count] = the_edge;
+            adj_count++;
+        }
+    }
+    int getNumEdges()
+    {
+        return adj_count;
+    }
 
   friend class Graph<Type>;
   friend class DirGraph<Type>;
