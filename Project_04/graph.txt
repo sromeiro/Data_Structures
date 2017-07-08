@@ -1,0 +1,22 @@
+A B C D E F
+
+A B 3
+B A 4.1
+
+A C 4
+
+B C 1
+
+B E 5
+
+B D 2
+
+C D 7
+
+D E 9
+
+D F 3
+
+E F 6
+
+C F 8
