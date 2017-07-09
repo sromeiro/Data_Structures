@@ -120,6 +120,40 @@ class Vertex
             return 1;     //return our lowest adjacent vertex
         }
     }
+    Edge<Type> lowestWeightNotVisited() {
+        Edge<Type> temp;
+        Edge<Type> temp2;
+        if (edgeCount >= 1) //atleast one edge in list
+        {
+            temp = outgoing[0];       //temp is first edge in list
+        }
+        for(int i = 1; i < edgeCount; i++)             //start our loop from second edge in list
+        {
+            temp2 = outgoing[i];
+            if(temp.weight < temp2.weight)
+            {
+                if(temp.vertex_two->visisted == 1)          //already been visisted
+                {
+                    temp = temp2;
+                }
+            }
+            else
+            {
+                if(temp.vertex_two->visisted == 1)          //already been visisted
+                {
+                    temp = temp2;
+                }
+            }
+        }
+        if(temp.vertex_two->visisted==1) //went through all and lowest has been visisted
+        {
+            //return  0;
+        }
+        else
+        {
+            return temp;     //return our lowest adjacent vertex
+        }
+    }
   friend class Graph<Type>;
   friend class DirGraph<Type>;
   friend class Edge<Type>;

@@ -204,6 +204,7 @@ class DirGraph
             }
         }
     }
+
     void buildGraph(string file_name) //pass our file to build graph
     {
         string text;
@@ -346,6 +347,115 @@ class DirGraph
         //return NULL; //THIS IS JUST A TEST FUCNTION (NEED CATCH/THROW)
         throw runtime_error("Vertex not found!"); //Fixes the warning
     }
+    double MST(char v) {
+        queue<Vertex<Type> *> the_queue;
+        queue<Vertex<Type> *> the_queue2;
+        Vertex<Type> *found_vertex;
+        Vertex<Type> *temp1;
+        Vertex<Type> *temp2;
+        int run = 1, j = 0, num_in_queue = 0;
+        double total_to_return = 0, lowest_weight = 0;
+        //FIND THE VERTEX FOR STARTING POINT HERE
+        while (run) {
+            if (hash_list[(v + j * j) % updated_size].getData() == v) //found our vertex
+            {
+                found_vertex = &hash_list[(v + j * j) % updated_size];
+                run = 0; //end loop
+            }
+            j++;
+            if (j == 10) //a base case of 10 loops and cant find the node
+            {
+                cout << "CANT FIND VERTEX 1" << endl;
+                break;
+            }
+        }
+        found_vertex->visisted = 1;     //node has been visisted
+        the_queue.push(found_vertex);
+        num_in_queue++;
+        int run2 = 1;
+        Vertex<Type> *temp;
+        Edge<Type> the_edge;
+        Edge<Type> lowest_edge;
+        temp = found_vertex;
+        int checker = 0,g=0;
+        int fail_checker = 0;
+        while (run2) {
+            //THIS WILL DEQUEUE THEN ENQUE AFTER GOING THROUGH ALL AND ENDING WITH SAME VERTEXS IN QUEUE
+            fail_checker = 0;
+            g=the_queue.size();
+            for (int k = 0; k < g; k++) //LOOP THROUGH ARE VERTEX IN STORED IN QUEUE TO FIND LOWEST WEIGHT
+            {
+                temp = the_queue.front(); //get our front
+                the_queue.pop();          //pop it
+                the_queue2.push(temp);     //PUSH IT TO OUR SPARE QUEUE!
+                checker = temp->BoolVisted();               //checker returns a bool if there is unvisited edges in vertex
+                if (checker)
+                {
+                    the_edge = temp->lowestWeightNotVisited();  //get the vertex with the lowest weight
+                    if (k == 0) //FIRST PASS NOTHING TO COMPARE (the found lowest should be set for base)
+                    {
+                        if(the_edge.vertex_two->visisted == 1)
+                        {
+                            lowest_weight == 10000;
+                        }
+                        else {
+                            lowest_weight = the_edge.weight;
+                            lowest_edge = the_edge;
+                        }
+                    }
+                    else {
+
+                        if(the_edge.weight < lowest_weight)
+                        {
+                            lowest_edge = the_edge;
+                            lowest_weight = the_edge.weight;
+                        }
+                    }
+                }
+                else {
+                    fail_checker++;
+                    if(fail_checker==g)
+                    {
+                        return total_to_return;
+                    }
+                }if(the_queue.empty())
+                {
+
+                        the_queue2.push(lowest_edge.vertex_two); //push our new lowest weighted edge / vertex into queue
+                        lowest_edge.vertex_two->visisted = 1;   //set its visisted to 1
+                        total_to_return += lowest_weight;        //add our weights at end of each for loop
+                        lowest_weight = 100000; //reset lowest weight here
+                        int z = the_queue2.size();
+                        for(int v = 0; v < z;v++)
+                        {
+                            the_queue.push(the_queue2.front());  //PUSH EVERYTHING BACK TO OUR ORIGINAL QUE
+                            the_queue2.pop();                    //EMPTY SECOND QUEUE
+                        }
+                }
+            }
+        }
+    }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 };
 

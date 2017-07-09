@@ -39,18 +39,20 @@ int main()
     cout<<"C TO F TEST FOR WEIGHT : "<<my_dir.adjacent('C','F')<<endl;
     cout<<"B TO B TEST FOR WEIGHT (SHOULD RETURN 0): "<<my_dir.adjacent('B','B')<<endl;
     cout<<"B TO Z TEST FOR WEIGHT (SHOULD RETURN -1): "<<my_dir.adjacent('B','Z')<<endl;
-    cout<<endl;
 
 //    cout<<"TEST LOWEST VERTEX FOR D : "<<my_dir.getVertex('D').lowestEdgeVertexNotVisited().getData()<<endl;
 //    cout<<"TEST LOWEST VERTEX FOR A : "<<my_dir.getVertex('A').lowestEdgeVertexNotVisited().getData()<<endl;
 //    cout<<"TEST LOWEST VERTEX FOR C : "<<my_dir.getVertex('C').lowestEdgeVertexNotVisited().getData()<<endl;
-    cout<<endl;
     cout<<"TEST DFS BELOW"<<endl;
     my_dir.DFS('A');
+    cout<<"RESETING"<<endl;
     my_dir.reset();
     cout<<"TEST BFS BELOW"<<endl;
     my_dir.BFS('A');
-//
+    cout<<"RESETING"<<endl;
+    my_dir.reset();
+////
+      cout<<"RUNNING MST : "<<my_dir.MST('A')<<endl;
 //    my_dir.DFS('A');
 //    cout<<"RESETING VISITED VERTICES"<<endl;
 //    my_dir.reset();
