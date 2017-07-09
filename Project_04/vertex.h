@@ -32,8 +32,10 @@ class Vertex
     Edge<Type> * outgoing;     //store the list of edges
     int edgeCount;
     int visisted;              //keep track of vertex being visited
+
   public:
     Vertex() : data(0) {};     //empty contructor to create list in classes
+
     Vertex(char the_data)
     {
         data = the_data;       //since our data is the vertex itself ( A , B , C , D etc...)
@@ -41,10 +43,12 @@ class Vertex
         outgoing = new Edge<Type>[10];  //create a list of 10 edges
         visisted = 0;
     }
+
     char getData()
     {
         return data;
     }
+
     void add_edge(Edge<Type> the_edge)
     {
         if(edgeCount != 10)    //10 can later be changed since i just made this a base case of # of edges
@@ -53,11 +57,14 @@ class Vertex
             edgeCount++;
         }
     }
+
     int getNumEdges()
     {
         return edgeCount;
     }
-    Vertex<Type> * lowestEdgeVertexNotVisited() {
+
+    Vertex<Type> * lowestEdgeVertexNotVisited()
+    {
         Vertex<Type> * temp;
         Vertex<Type> * temp2;
         if (edgeCount >= 1) //atleast one edge in list
@@ -88,7 +95,9 @@ class Vertex
             return temp;     //return our lowest adjacent vertex
         }
     }
-    bool BoolVisted() {
+
+    bool BoolVisted()
+    {
         Vertex<Type> * temp;
         Vertex<Type> * temp2;
         if (edgeCount >= 1) //atleast one edge in list
@@ -120,7 +129,9 @@ class Vertex
             return 1;     //return our lowest adjacent vertex
         }
     }
-    Edge<Type> lowestWeightNotVisited() {
+
+    Edge<Type> lowestWeightNotVisited()
+    {
         Edge<Type> temp;
         Edge<Type> temp2;
         if (edgeCount >= 1) //atleast one edge in list
@@ -153,7 +164,10 @@ class Vertex
         {
             return temp;     //return our lowest adjacent vertex
         }
+
+        return temp; //Fixes warnings of reaching end of control. Should never reach this level.
     }
+
   friend class Graph<Type>;
   friend class DirGraph<Type>;
   friend class Edge<Type>;

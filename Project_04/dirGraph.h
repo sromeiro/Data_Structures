@@ -35,7 +35,8 @@ class DirGraph
     int degree(char v)
     {
         int run = 1,j=0;
-        while (run) {
+        while (run)
+        {
             if (hash_list[(v + j * j) % updated_size].getData()==v) //make sure we found our correct vertex
             {
                 return hash_list[(v+j*j)% updated_size].getNumEdges();
@@ -43,10 +44,12 @@ class DirGraph
             j++;
             if(j==10) //a base case of 10 loops and cant find the node
             {
-                return 0;
+                run = 0;
             }
         }
+        return 0;
     }
+
     double adjacent(char v1 , char v2)
     {
        if(v1 == v2) //check if same vertices
@@ -98,7 +101,7 @@ class DirGraph
     {
         stack<Vertex<Type> *> the_stack;
         Vertex<Type> * found_vertex;
-        Vertex<Type> * temp1;
+        //Vertex<Type> * temp1; Not needed?
         int run = 1,j = 0,num_in_stack = 0;
         while (run)
         {
@@ -154,7 +157,7 @@ class DirGraph
     void BFS(char v) {
         queue<Vertex<Type> *> the_queue;
         Vertex<Type> * found_vertex;
-        Vertex<Type> * temp1;
+        //Vertex<Type> * temp1; Not needed?
         int run = 1, j = 0, num_in_queue = 0;
         while (run) {
             if (hash_list[(v + j * j) % updated_size].getData() == v) //found our vertex
@@ -259,7 +262,7 @@ class DirGraph
                 Vertex<Type> new_vertex = Vertex<Type>(vertex); //create a new vertex
                 int run = 1; //reset our run
                 int j = 0;   //reset our j for algorithm
-                int k = 0;
+                //int k = 0; Not needed or used?
                 while(run)
                 {
                     if (!hash_list[(vertex + j * j) % updated_size].getData()) //check for empty spot in the array
@@ -347,16 +350,19 @@ class DirGraph
         //return NULL; //THIS IS JUST A TEST FUCNTION (NEED CATCH/THROW)
         throw runtime_error("Vertex not found!"); //Fixes the warning
     }
-    double MST(char v) {
+
+    double MST(char v)
+    {
         queue<Vertex<Type> *> the_queue;
         queue<Vertex<Type> *> the_queue2;
         Vertex<Type> *found_vertex;
-        Vertex<Type> *temp1;
-        Vertex<Type> *temp2;
+        //Vertex<Type> *temp1; Not needed?
+        //Vertex<Type> *temp2; Not needed?
         int run = 1, j = 0, num_in_queue = 0;
         double total_to_return = 0, lowest_weight = 0;
         //FIND THE VERTEX FOR STARTING POINT HERE
-        while (run) {
+        while (run)
+        {
             if (hash_list[(v + j * j) % updated_size].getData() == v) //found our vertex
             {
                 found_vertex = &hash_list[(v + j * j) % updated_size];
@@ -396,14 +402,16 @@ class DirGraph
                     {
                         if(the_edge.vertex_two->visisted == 1)
                         {
-                            lowest_weight == 10000;
+                            lowest_weight = 10000;
                         }
-                        else {
+                        else
+                        {
                             lowest_weight = the_edge.weight;
                             lowest_edge = the_edge;
                         }
                     }
-                    else {
+                    else
+                    {
 
                         if(the_edge.weight < lowest_weight)
                         {
@@ -412,13 +420,18 @@ class DirGraph
                         }
                     }
                 }
-                else {
+                else
+                {
                     fail_checker++;
+
                     if(fail_checker==g)
                     {
                         return total_to_return;
                     }
-                }if(the_queue.empty())
+
+                }
+
+                if(the_queue.empty())
                 {
 
                         the_queue2.push(lowest_edge.vertex_two); //push our new lowest weighted edge / vertex into queue
@@ -434,6 +447,7 @@ class DirGraph
                 }
             }
         }
+        return 0; //Fixing end of control warning. Should never reach this level.
     }
 
 
