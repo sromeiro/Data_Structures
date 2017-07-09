@@ -31,6 +31,7 @@ class Vertex
     //list <int> adjacencyList;
     Edge<Type> * outgoing;     //store the list of edges
     int edgeCount;
+    int visisted;              //keep track of vertex being visited
   public:
     Vertex() : data(0) {};     //empty contructor to create list in classes
     Vertex(char the_data)
@@ -38,6 +39,7 @@ class Vertex
         data = the_data;       //since our data is the vertex itself ( A , B , C , D etc...)
         edgeCount = 0;         //when created has zero adjacent edges (must be added)
         outgoing = new Edge<Type>[10];  //create a list of 10 edges
+        visisted = 0;
     }
     char getData()
     {
@@ -55,7 +57,69 @@ class Vertex
     {
         return edgeCount;
     }
-
+    Vertex<Type> * lowestEdgeVertexNotVisited() {
+        Vertex<Type> * temp;
+        Vertex<Type> * temp2;
+        if (edgeCount >= 1) //atleast one edge in list
+        {
+            temp = outgoing[0].vertex_two;       //temp is first edge in list
+        }
+        for(int i = 1; i < edgeCount; i++)             //start our loop from second edge in list
+        {
+            temp2 = outgoing[i].vertex_two;
+            if(temp->data < temp2->data)
+            {
+                if(temp->visisted == 1)          //already been visisted
+                {
+                    temp = temp2;
+                }
+            }
+            else
+            {
+                temp = temp2;
+            }
+        }
+        if(temp->visisted==1) //went through all and lowest has been visisted
+        {
+            return  NULL;
+        }
+        else
+        {
+            return temp;     //return our lowest adjacent vertex
+        }
+    }
+    bool BoolVisted() {
+        Vertex<Type> * temp;
+        Vertex<Type> * temp2;
+        if (edgeCount >= 1) //atleast one edge in list
+        {
+            temp = outgoing[0].vertex_two;       //temp is first edge in list
+        }
+        else{ return 0; }//VERY IMPORTANT TO RETURN 0 HERE
+        for(int i = 1; i < edgeCount; i++)             //start our loop from second edge in list
+        {
+            temp2 = outgoing[i].vertex_two;
+            if(temp->data < temp2->data)
+            {
+                if(temp->visisted == 1)          //already been visisted
+                {
+                    temp = temp2;
+                }
+            }
+            else
+            {
+                temp = temp2;
+            }
+        }
+        if(temp->visisted==1) //went through all and lowest has been visisted
+        {
+            return  0;
+        }
+        else
+        {
+            return 1;     //return our lowest adjacent vertex
+        }
+    }
   friend class Graph<Type>;
   friend class DirGraph<Type>;
   friend class Edge<Type>;

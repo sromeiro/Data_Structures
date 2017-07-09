@@ -1,22 +1,22 @@
-A B C D E F
+A B C S D E F G H
 
-A B 3
-B A 4.1
+A B 1
 
-A C 4
+A S 1
 
-B C 1
+S C 1
 
-B E 5
+C D 1
 
-B D 2
+C E 1
 
-C D 7
+C F 1
 
-D E 9
+F G 1
 
-D F 3
+S G 1
 
-E F 6
+G H 1
 
-C F 8
+E H 1
+
