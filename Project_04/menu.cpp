@@ -92,9 +92,16 @@ int main()
 
   try
   {
-    //Vertex<int> *testVertex = new Vertex<int>();
-    //testVertex = myGraph.findVertex('S');
-    //cout << "Found vertex: " << testVertex->getData() << endl;
+    Vertex<int> *testVertex = new Vertex<int>();
+    testVertex = myGraph.findVertex('A');
+    cout << "Found vertex: " << testVertex->getData() << endl;
+    cout << "This vertex has: " << testVertex->getNumEdges() << " edges" << endl;
+
+    myGraph.insert('A', 'B', 16);
+
+    cout << "This vertex NOW has: " << testVertex->getNumEdges() << " edges" << endl;
+
+
   }
   catch(const runtime_error& notFound)
   {

@@ -5,6 +5,7 @@
 #include<stack>
 #include<queue>
 #include<fstream>
+#include<limits>
 #include"vertex.h"
 
 #define PRIMENUMBER 31
@@ -213,7 +214,7 @@ class Graph
             if (!hash_list[(vertex + j * j) % updated_size].getData()) //check for empty spot in the array
             {
               hash_list[(vertex + j * j) % updated_size] = new_vertex; //place the new vertex in empty spot
-              cout << vertex << " HAS BEEN PLACED IN HASH AT : " << (vertex + j * j) % updated_size << endl;
+              //cout << vertex << " HAS BEEN PLACED IN HASH AT : " << (vertex + j * j) % updated_size << endl;
               vertices[total_vertex_count] = new_vertex.data;                                                                //place our vertex in seperate array to reset visisted
               total_vertex_count++; // +1 to total vertex count
               run = 0; //break our while loop since we placed our vertex in our array
@@ -255,11 +256,11 @@ class Graph
                   Edge<Type> new_edge2 = Edge<Type>(&hash_list[two_loc],&hash_list[one_loc],weight);        //create new edge from TWO to ONE
                   hash_list[one_loc].add_edge(new_edge);                                                    //add new edge to vertex ONE
                   hash_list[two_loc].add_edge(new_edge2);                                                   //add new edge to vertex TWO
-                  cout << "NEW EDGE CREATED FOR " << hash_list[one_loc].data;
-                  cout << " ---TO---> " << hash_list[two_loc].data;
-                  cout << ", AND FROM " << hash_list[two_loc].data;
-                  cout << " ---TO---> " << hash_list[one_loc].data;
-                  cout << " WITH WEIGHT OF : "<<new_edge.getWeight()<<endl;
+                  //cout << "NEW EDGE CREATED FOR " << hash_list[one_loc].data;
+                  //cout << " ---TO---> " << hash_list[two_loc].data;
+                  //cout << ", AND FROM " << hash_list[two_loc].data;
+                  //cout << " ---TO---> " << hash_list[one_loc].data;
+                  //cout << " WITH WEIGHT OF : "<<new_edge.getWeight()<<endl;
                   j=11; //edge has been set and we can break our two for loops
                   i=11;
                   total_edge_count++; //add one to our total edge count
@@ -298,6 +299,39 @@ class Graph
       }
     }
 
+
+/******************************************************************************/
+    //Adds an edge between existing vertices. If weight = 0, remove that edge
+    void insert(char v1, char v2, double weight)
+    {
+      if(weight < 0 || weight >= numeric_limits<double>::max())
+      {
+        throw runtime_error("Invalid weight entered!");
+      }
+
+      cout << "Called INSERT" << endl;
+
+      Vertex<Type> * fromVertex;
+      Vertex<Type> * toVertex;
+
+      fromVertex = findVertex(v1);
+      toVertex = findVertex(v2);
+      cout << "Passed" << endl;
+      if(weight == 0)
+      {
+        //Remove the edge between the listed VERTICES
+        fromVertex->remove_edge(toVertex->getData());
+        cout << "Weight was zero so edge was removed" << endl;
+        return;
+      }
+
+      //cout << "fromVertex received \'" << fromVertex->getData() << "\'" << endl;
+      //cout << "toVertex received \'" << toVertex->getData() << "\'" << endl;
+
+
+
+      cout << "Ending INSERT" << endl;
+    }
 
 /******************************************************************************/
     //Default Destructor
