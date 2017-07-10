@@ -30,7 +30,7 @@ class Vertex
     */
     //list <int> adjacencyList;
     Edge<Type> * outgoing;     //store the list of edges
-    int edgeCount;
+    int edgeCount;             //Keeps a count of how many Edges this vertex has
     int visisted;              //keep track of vertex being visited
 
   public:

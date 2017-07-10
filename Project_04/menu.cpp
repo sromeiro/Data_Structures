@@ -2,16 +2,18 @@
 #include"vertex.h"
 #include"edge.h"
 #include"dirGraph.h"
-#include <fstream>
-#include <iostream>
 
-//#define FILENAME "graph.txt" //Change file name here if needed.
-#define FILENAME "C:\\Users\\Brett\\ClionProjects\\Project3_sub\\Project_04\\graph.txt"
+#define FILENAME "graph.txt" //Change file name here if needed.
+//#define FILENAME "C:\\Users\\Brett\\ClionProjects\\Project3_sub\\Project_04\\graph.txt"
 
 using namespace std;
 int main()
 {
   DirGraph<int> my_dir;
+  Graph<int> myGraph;
+
+//-------------------------BUILDS DirGraph------------------------------------//
+/*
   try
   {
     //Try to build the graph with requested file name
@@ -23,8 +25,22 @@ int main()
     cerr << notFound.what() << endl;
     return 1; //Early termination of program
   }
+*/
+//-------------------------BUILDS Graph---------------------------------------//
+  try
+  {
+    //Try to build the graph with requested file name
+    myGraph.buildGraph(FILENAME);
+  }
+  catch(const runtime_error& notFound)
+  {
+    //Terminate if file fails to open
+    cerr << notFound.what() << endl;
+    return 1; //Early termination of program
+  }
 
-
+//-------------------------Test Block for DirGraph----------------------------//
+/*
   try
   {
     //Try getting information for the requested vertex
@@ -68,7 +84,20 @@ int main()
     //Failed getting information for requested vertex
     cerr << notFound.what() << endl;
   }
+*/
 
+
+//-------------------------Test Block for Graph-------------------------------//
+
+  try
+  {
+
+  }
+  catch(const runtime_error& notFound)
+  {
+    //Failed getting information for requested vertex
+    cerr << notFound.what() << endl;
+  }
 
   cout << "\nSuccesfull Termination of program" << endl;
   return 0;
