@@ -27,6 +27,7 @@ int main()
   }
 */
 //-------------------------BUILDS Graph---------------------------------------//
+
   try
   {
     //Try to build the graph with requested file name
@@ -91,7 +92,9 @@ int main()
 
   try
   {
-
+    //Vertex<int> *testVertex = new Vertex<int>();
+    //testVertex = myGraph.findVertex('S');
+    //cout << "Found vertex: " << testVertex->getData() << endl;
   }
   catch(const runtime_error& notFound)
   {
@@ -99,6 +102,192 @@ int main()
     cerr << notFound.what() << endl;
   }
 
+
+
+//============================================================================//
+//                         MENU SECTION                                       //
+//============================================================================//
+/*//      <----------REMOVE THIS COMMENT FOR PROPER MENU
+  char option; //Used to select between Undirected 'u' and Directed 'd' graphs
+  int run_menu = 1;
+  cout << "Welcome!\nPlease select from the following options which type of";
+  cout << " graph you would like to create:" << endl << endl;
+
+  cout << "********************************************" << endl;
+  cout << "*                                          *" << endl;
+  cout << "*    Enter the desired character           *" << endl;
+  cout << "*    (u). Undirected graph - Prim's        *" << endl;
+  cout << "*    (d). Directed graph  -  Dijkstra's    *" << endl;
+  cout << "*                                          *" << endl;
+  cout << "********************************************" << endl;
+  cout << endl;
+  cout << "Selection: ";
+  cin >> option;
+
+  switch (option)
+  {
+    case 'u':
+      break;
+    case 'd':
+      break;
+    default:
+      cout << "This is an invalid option. Please restart the program";
+      cout << " and try again." << endl;
+      return 1; //Early termination of program
+  }
+*///      <----------REMOVE THIS COMMENT FOR PROPER MENU
+//****************************************************************************//
+//=================BLOCK THAT HANDLES UNDIRECTED GRAPHS=======================//
+//****************************************************************************//
+/*//      <----------REMOVE THIS COMMENT FOR PROPER MENU
+  if (option == 'u')
+  {
+    int num_select; //Used to select from the menu options below
+    cout << "For your new Undirected Graph, please select from the following options\n" << endl;
+
+    cout << "**********************************************" << endl;
+    cout << "*                                            *" << endl;
+    cout << "*    Enter the desired number                *" << endl;
+    cout << "*    1.  Empty?                              *" << endl;
+    cout << "*    2.  Degree (v)                          *" << endl;
+    cout << "*    3.  Edge Count                          *" << endl;
+    cout << "*    4.  Connected?                          *" << endl;
+    cout << "*    5.  Adjacent (u, v)?                    *" << endl;
+    cout << "*    6.  DFS (v)                             *" << endl;
+    cout << "*    7.  BFS (v)                             *" << endl;
+    cout << "*    8.  Print MST (v)                       *" << endl;
+    cout << "*    9.  Clear                               *" << endl;
+    cout << "*    10. Insert (u, v, w)                    *" << endl;
+    cout << "*    11. Exit                                *" << endl;
+    cout << "*                                            *" << endl;
+    cout << "**********************************************" << endl;
+    cout << endl;
+    while (run_menu)
+    {
+      cout << "\nSelection: ";
+      cin >> num_select;
+      cout << endl;
+
+      switch (num_select)
+      {
+        case 1:
+          //Code
+          break;
+        case 2:
+          //Code
+          break;
+        case 3:
+          //Code
+          break;
+        case 4:
+          //Code
+          break;
+        case 5:
+          //Code
+          break;
+        case 6:
+          //Code
+          break;
+        case 7:
+          //Code
+          break;
+        case 8:
+          //Code
+          break;
+        case 9:
+          //Code
+          break;
+        case 10:
+          //Code
+          break;
+        case 11:
+          cout << "\nExiting program" << endl;
+          run_menu = 0; //Successful termination of program
+          break;
+        default:
+          cout << "This is an invalid option. Please restart the program";
+          cout << " and try again." << endl;
+          return 1; //Early termination of program
+      }
+    }
+  }
+*///      <----------REMOVE THIS COMMENT FOR PROPER MENU
+//****************************************************************************//
+//=====================BLOCK THAT DIRECTED GRAPHS=============================//
+//****************************************************************************//
+/*//      <----------REMOVE THIS COMMENT FOR PROPER MENU
+  else
+  {
+    int num_select; //Used to select from the menu options below
+    cout << "For your new Directed Graph, please select from the following options\n" << endl;
+
+    cout << "**********************************************" << endl;
+    cout << "*                                            *" << endl;
+    cout << "*    Enter the desired number                *" << endl;
+    cout << "*    1.  Empty?                              *" << endl;
+    cout << "*    2.  InDegree (v)                        *" << endl;
+    cout << "*    3.  OutDegree (v)                       *" << endl;
+    cout << "*    4.  Edge Count                          *" << endl;
+    cout << "*    5.  Adjacent (u, v)?                    *" << endl;
+    cout << "*    6.  DFS (v)                             *" << endl;
+    cout << "*    7.  BFS (v)                             *" << endl;
+    cout << "*    8.  Print Short Path (v)                *" << endl;
+    cout << "*    9.  Clear                               *" << endl;
+    cout << "*    10. Insert (u, v, w)                    *" << endl;
+    cout << "*    11. Exit                                *" << endl;
+    cout << "*                                            *" << endl;
+    cout << "**********************************************" << endl;
+    cout << endl;
+    while (run_menu)
+    {
+      cout << "\nSelection: ";
+      cin >> num_select;
+      cout << endl;
+
+      switch (num_select)
+      {
+        case 1:
+          //Code
+          break;
+        case 2:
+          //Code
+          break;
+        case 3:
+          //Code
+          break;
+        case 4:
+          //Code
+          break;
+        case 5:
+          //Code
+          break;
+        case 6:
+          //Code
+          break;
+        case 7:
+          //Code
+          break;
+        case 8:
+          //Code
+          break;
+        case 9:
+          //Code
+          break;
+        case 10:
+          //Code
+          break;
+        case 11:
+          cout << "\nExiting program" << endl;
+          run_menu = 0; //Successful termination of program
+          break;
+        default:
+          cout << "This is an invalid option. Please restart the program";
+          cout << " and try again." << endl;
+          return 1; //Early termination of program
+      }
+    }
+  }
+*///      <----------REMOVE THIS COMMENT FOR PROPER MENU
   cout << "\nSuccesfull Termination of program" << endl;
   return 0;
 }
