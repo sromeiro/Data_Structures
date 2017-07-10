@@ -80,6 +80,9 @@ class Vertex
                 {
                     temp = temp2;
                 }
+            }else if(temp2->visisted == 1)
+            {
+                //do nothing dont, dont change our temp
             }
             else
             {
@@ -114,6 +117,10 @@ class Vertex
                 {
                     temp = temp2;
                 }
+            }
+            else if(temp2->visisted == 1)
+            {
+                //do nothing dont, dont change our temp
             }
             else
             {

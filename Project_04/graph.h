@@ -21,6 +21,7 @@ class Graph
     int total_vertex_count;
     Vertex<Type> * hash_list;             //used to store our vertex
     char vertices[100];                   //used to store vertices characters for reset visited
+    char start;
 
   public:
     //Default Constructor
@@ -66,7 +67,16 @@ class Graph
     //Determines if the graph is Connected
     bool isConnected()
     {
-      return false; //NEEDS WORK
+        if(total_vertex_count <= 1)
+        {
+            return 0;
+        }
+        int total = ConnectHelp(start);
+        if(total == total_vertex_count)
+        {
+            return 1;
+        }
+        return 0;
     }
 
 /******************************************************************************/
@@ -127,20 +137,219 @@ class Graph
     //Performs Depth First Search on requested Vertex and prints the order visited
     void DFS(char v)
     {
-
+        stack<Vertex<Type> *> the_stack;
+        Vertex<Type> * found_vertex;
+        //Vertex<Type> * temp1; Not needed?
+        int run = 1,j = 0,num_in_stack = 0;
+        while (run)
+        {
+            if (hash_list[(v + j * j) % updated_size].getData()==v) //found our vertex
+            {
+                found_vertex = &hash_list[(v+j*j)% updated_size];
+                run = 0; //end loop
+            }
+            j++;
+            if(j==10) //a base case of 10 loops and cant find the node
+            {
+                cout<<"CANT FIND VERTEX 1"<<endl;
+                break;
+            }
+        }
+        cout<<"["<<found_vertex->getData()<<"] ";  //output first node visited
+        found_vertex->visisted = 1;     //node has been visisted
+        the_stack.push(found_vertex);
+        num_in_stack++;
+        int run2 = 1;
+        int checker = 0;
+        while(run2)
+        {
+            //if(found_vertex.data != NULL)
+//            found_vertex = found_vertex->lowestEdgeVertexNotVisited();  //find adjacent lowest
+            checker = found_vertex->BoolVisted();
+            if(checker)
+            {
+                found_vertex = found_vertex->lowestEdgeVertexNotVisited();  //find adjacent lowest
+                cout <<"["<<found_vertex->getData()<<"] ";                    //print vertex
+                found_vertex->visisted = 1;                                 //make as visited
+                the_stack.push(found_vertex);                              //push vertex onto stack
+                found_vertex = the_stack.top();
+            }
+            else
+            {
+                if(!the_stack.empty())
+                {
+                    found_vertex = the_stack.top();                            //vertex is now top of stack since previous node had no other adjacent
+                }
+                checker = found_vertex->BoolVisted();
+                if(!checker) {
+                    the_stack.pop();                                           //pop it off
+                }
+            }
+            if(the_stack.empty())                                          //empty stack so we have goen through all vertexs possible
+            {
+                cout<<endl;
+                run2 = 0;
+            }
+        }
     }
 
 /******************************************************************************/
     //Performs a Breadth First Search on requested Vertex and prints order visited
     void BFS(char v)
     {
-
+        queue<Vertex<Type> *> the_queue;
+        Vertex<Type> * found_vertex;
+        //Vertex<Type> * temp1; Not needed?
+        int run = 1, j = 0, num_in_queue = 0;
+        while (run) {
+            if (hash_list[(v + j * j) % updated_size].getData() == v) //found our vertex
+            {
+                found_vertex = &hash_list[(v + j * j) % updated_size];
+                run = 0; //end loop
+            }
+            j++;
+            if (j == 10) //a base case of 10 loops and cant find the node
+            {
+                cout << "CANT FIND VERTEX 1" << endl;
+                break;
+            }
+        }
+        if (found_vertex->visisted == 0)
+        {
+            cout << "[" << found_vertex->getData() << "] ";  //output first node visited
+        }
+        found_vertex->visisted = 1;     //node has been visisted
+        the_queue.push(found_vertex);
+        num_in_queue++;
+        int run2 = 1;
+        Vertex<Type> * temp;
+        temp = found_vertex;
+        int checker = 0;
+        while(run2)
+        {
+            //if(found_vertex.data != NULL)
+            //found_vertex = temp->lowestEdgeVertexNotVisited();  //find adjacent lowest
+            checker = temp->BoolVisted();
+            if(checker)
+            {
+                found_vertex = temp->lowestEdgeVertexNotVisited();  //find adjacent lowest
+                cout <<"["<<found_vertex->getData()<<"] ";                    //print vertex
+                found_vertex->visisted = 1;                                   //make as visited
+                the_queue.push(found_vertex);                              //push vertex into queue
+            }
+            else
+            {
+                the_queue.pop();                                           //pop it off
+                temp = the_queue.front();                                  //vertex is now front of queue
+            }
+            if(the_queue.empty())                                          //empty stack so we have goen through all vertexs possible
+            {
+                cout<<endl;
+                run2 = 0;
+            }
+        }
     }
 
 /******************************************************************************/
     //Returns the Minimum Spanning Tree using Prim's Alogrithm
-    void MST(char v)
+    double MST(char v)
     {
+        queue<Vertex<Type> *> the_queue;
+        queue<Vertex<Type> *> the_queue2;
+        Vertex<Type> *found_vertex;
+        //Vertex<Type> *temp1; Not needed?
+        //Vertex<Type> *temp2; Not needed?
+        int run = 1, j = 0, num_in_queue = 0;
+        double total_to_return = 0, lowest_weight = 0;
+        //FIND THE VERTEX FOR STARTING POINT HERE
+        while (run)
+        {
+            if (hash_list[(v + j * j) % updated_size].getData() == v) //found our vertex
+            {
+                found_vertex = &hash_list[(v + j * j) % updated_size];
+                run = 0; //end loop
+            }
+            j++;
+            if (j == 10) //a base case of 10 loops and cant find the node
+            {
+                cout << "CANT FIND VERTEX 1" << endl;
+                break;
+            }
+        }
+        found_vertex->visisted = 1;     //node has been visisted
+        the_queue.push(found_vertex);
+        num_in_queue++;
+        int run2 = 1;
+        Vertex<Type> *temp;
+        Edge<Type> the_edge;
+        Edge<Type> lowest_edge;
+        temp = found_vertex;
+        int checker = 0,g=0;
+        int fail_checker = 0;
+        while (run2) {
+            //THIS WILL DEQUEUE THEN ENQUE AFTER GOING THROUGH ALL AND ENDING WITH SAME VERTEXS IN QUEUE
+            fail_checker = 0;
+            g=the_queue.size();
+            for (int k = 0; k < g; k++) //LOOP THROUGH ARE VERTEX IN STORED IN QUEUE TO FIND LOWEST WEIGHT
+            {
+                temp = the_queue.front(); //get our front
+                the_queue.pop();          //pop it
+                the_queue2.push(temp);     //PUSH IT TO OUR SPARE QUEUE!
+                checker = temp->BoolVisted();               //checker returns a bool if there is unvisited edges in vertex
+                if (checker)
+                {
+                    the_edge = temp->lowestWeightNotVisited();  //get the vertex with the lowest weight
+                    if (k == 0) //FIRST PASS NOTHING TO COMPARE (the found lowest should be set for base)
+                    {
+                        if(the_edge.vertex_two->visisted == 1)
+                        {
+                            lowest_weight = 10000;
+                        }
+                        else
+                        {
+                            lowest_weight = the_edge.weight;
+                            lowest_edge = the_edge;
+                        }
+                    }
+                    else
+                    {
+
+                        if(the_edge.weight < lowest_weight)
+                        {
+                            lowest_edge = the_edge;
+                            lowest_weight = the_edge.weight;
+                        }
+                    }
+                }
+                else
+                {
+                    fail_checker++;
+
+                    if(fail_checker==g)
+                    {
+                        return total_to_return;
+                    }
+
+                }
+
+                if(the_queue.empty())
+                {
+
+                    the_queue2.push(lowest_edge.vertex_two); //push our new lowest weighted edge / vertex into queue
+                    lowest_edge.vertex_two->visisted = 1;   //set its visisted to 1
+                    cout<<"["<<lowest_edge.vertex_one->data<<"] "<<"["<<lowest_edge.vertex_two->data<<"] "<<lowest_weight<<endl;
+                    total_to_return += lowest_weight;        //add our weights at end of each for loop
+                    lowest_weight = 100000; //reset lowest weight here
+                    int z = the_queue2.size();
+                    for(int v = 0; v < z;v++)
+                    {
+                        the_queue.push(the_queue2.front());  //PUSH EVERYTHING BACK TO OUR ORIGINAL QUE
+                        the_queue2.pop();                    //EMPTY SECOND QUEUE
+                    }
+                }
+            }
+        }
+        return 0; //Fixing end of control warning. Should never reach this level.
 
     }
 
@@ -215,6 +424,7 @@ class Graph
               hash_list[(vertex + j * j) % updated_size] = new_vertex; //place the new vertex in empty spot
               cout << vertex << " HAS BEEN PLACED IN HASH AT : " << (vertex + j * j) % updated_size << endl;
               vertices[total_vertex_count] = new_vertex.data;                                                                //place our vertex in seperate array to reset visisted
+              start = new_vertex.data;                                                                                       //using this for is connected so we know atleast one vertex to start from
               total_vertex_count++; // +1 to total vertex count
               run = 0; //break our while loop since we placed our vertex in our array
             }
@@ -319,6 +529,66 @@ class Graph
         }
       }
       throw runtime_error("Vertex requested not found!");
+    }
+    int ConnectHelp(char v)
+    {
+        stack<Vertex<Type> *> the_stack;
+        Vertex<Type> * found_vertex;
+        int total_to_return = 0;
+        //Vertex<Type> * temp1; Not needed?
+        int run = 1,j = 0,num_in_stack = 0;
+        while (run)
+        {
+            if (hash_list[(v + j * j) % updated_size].getData()==v) //found our vertex
+            {
+                found_vertex = &hash_list[(v+j*j)% updated_size];
+                total_to_return++;
+                run = 0; //end loop
+            }
+            j++;
+            if(j==10) //a base case of 10 loops and cant find the node
+            {
+                cout<<"CANT FIND VERTEX 1"<<endl;
+                break;
+            }
+        }
+        found_vertex->visisted = 1;     //node has been visisted
+        the_stack.push(found_vertex);
+        num_in_stack++;
+        int run2 = 1;
+        int checker = 0;
+        while(run2)
+        {
+            //if(found_vertex.data != NULL)
+//            found_vertex = found_vertex->lowestEdgeVertexNotVisited();  //find adjacent lowest
+            checker = found_vertex->BoolVisted();
+            if(checker)
+            {
+                found_vertex = found_vertex->lowestEdgeVertexNotVisited();  //find adjacent lowest
+                found_vertex->visisted = 1;                                 //make as visited
+                the_stack.push(found_vertex);                              //push vertex onto stack
+                found_vertex = the_stack.top();
+                total_to_return++;
+            }
+            else
+            {
+                if(!the_stack.empty())
+                {
+                    found_vertex = the_stack.top();                            //vertex is now top of stack since previous node had no other adjacent
+                }
+                checker = found_vertex->BoolVisted();
+                if(!checker) {
+                    the_stack.pop();                                           //pop it off
+                }
+            }
+            if(the_stack.empty())                                          //empty stack so we have goen through all vertexs possible
+            {
+                cout<<endl;
+                reset(); // reset our visited
+                return total_to_return;
+                run2 = 0;
+            }
+        }
     }
 
 };
