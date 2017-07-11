@@ -498,108 +498,293 @@ class DirGraph
     }
 
 
-//    void shortPath(char v1 ,char v2)
-//    {
-//        int num_connected= 0;
-//        num_connected = NumberConnected(v1);   //get total number of connected vertex's
-//        double distance = 0;
-//        int finished[num_connected];           //ZERO IS OUR STARTING VERTEX
-//        double tot_distance[num_connected];    //keep track of total distance
-//        char the_vertex[num_connected];        //to store our correct vertices
-//        finished[0] = 1;                       //its finished with total distance of 0
-//        tot_distance[0] = 0;
-//        for(int i = 1 ; i < num_connected;i++) //start at 1 since first node is itself
-//        {
-//            tot_distance[i] = 100000;          //SETTING ALL TO "INFINITY"
-//            finished[i] = 0;                   //NONE FINISHED, ALL SET TO ZERO
-//        }
-//
-//        stack<Vertex<Type> *> the_stack;
-//        Vertex<Type> * found_vertex;
-//        //Vertex<Type> * temp1; Not needed?
-//        int run = 1,j = 0,num_in_stack = 0;
-//        while (run)
-//        {
-//            if (hash_list[(v1 + j * j) % updated_size].getData()==v1) //found our vertex
+    void shortPath(char v1 ,char v2)
+    {
+        int size = NumberConnected(v1); //get total size of of vertices for array
+        char vertex_array[size];
+        int size_tracker=1;
+        stack<Vertex<Type> *> the_stack;
+        Vertex<Type> * found_vertex;
+        //Vertex<Type> * temp1; Not needed?
+        int run = 1,j = 0,num_in_stack = 0;
+        while (run)
+        {
+            if (hash_list[(v1 + j * j) % updated_size].getData()==v1) //found our vertex
+            {
+                found_vertex = &hash_list[(v1+j*j)% updated_size];
+                run = 0; //end loop
+            }
+            j++;
+            if(j==10) //a base case of 10 loops and cant find the node
+            {
+                cout<<"CANT FIND VERTEX 1"<<endl;
+                break;
+            }
+        }
+        vertex_array[0] = found_vertex->getData();
+        found_vertex->visisted = 1;     //node has been visisted
+        the_stack.push(found_vertex);
+        num_in_stack++;
+        int run2 = 1;
+        int checker = 0;
+        while(run2)
+        {
+            //if(found_vertex.data != NULL)
+//            found_vertex = found_vertex->lowestEdgeVertexNotVisited();  //find adjacent lowest
+            checker = found_vertex->BoolVisted();
+            if(checker)
+            {
+                found_vertex = found_vertex->lowestEdgeVertexNotVisited();  //find adjacent lowest
+                vertex_array[size_tracker++] = found_vertex->getData();
+                found_vertex->visisted = 1;                                 //make as visited
+                the_stack.push(found_vertex);                              //push vertex onto stack
+                found_vertex = the_stack.top();
+            }
+            else
+            {
+                if(!the_stack.empty())
+                {
+                    found_vertex = the_stack.top();                            //vertex is now top of stack since previous node had no other adjacent
+                }
+                checker = found_vertex->BoolVisted();
+                if(!checker) {
+                    the_stack.pop();                                           //pop it off
+                }
+            }
+            if(the_stack.empty())                                          //empty stack so we have goen through all vertexs possible
+            {
+                cout<<endl;
+                run2 = 0;
+            }
+        }
+
+
+
+        int final[size];                //final array signals 0 or 1 for final distance or not
+        double tot_distance[size];      //array to track the min total distance of the vertices
+        int prev[size];             //array to track the previous vertex to follow back to root (v1) to show path
+
+        for(int i = 0;i<size;i++)       //preset all to defaults
+        {
+            final[i] = 0;               //set all to 0 since not final
+            tot_distance[i] = 1000000;  //set all total disnances to "infinity"
+            prev[i] = 0;        //all previous vertex set to root
+        }
+        Vertex<Type> * temp = findVertex(v1); //first find our original
+        tot_distance[0] = 0;                  //first is total distance of zero
+        int run3 = 1;
+        int first_run = 1;
+        int vertex_count = 1;
+        int lowest = 0 ;
+        int previousChar;
+        int last_vert;
+        while(run3)
+        {
+//            for(int y = 0;y<size;y++)
 //            {
-//                found_vertex = &hash_list[(v1+j*j)% updated_size];
-//                run = 0; //end loop
-//            }
-//            j++;
-//            if(j==10) //a base case of 10 loops and cant find the node
-//            {
-//                cout<<"CANT FIND VERTEX 1"<<endl;
-//                break;
-//            }
-//        }
-//        found_vertex->visisted = 1;     //node has been visisted
-//        the_stack.push(found_vertex);
-//        num_in_stack++;
-//        int run2 = 1;
-//        int checker = 0;
-//        int main_count = 0 ;
-//        int reset_minus = 1;
-//        int temp_count = 0;
-//        while(run2)
-//        {
-//
-//            //if(found_vertex.data != NULL)
-////            found_vertex = found_vertex->lowestEdgeVertexNotVisited();  //find adjacent lowest
-//            checker = found_vertex->BoolVisted();
-//            if(checker)
-//            {
-//                Edge<Type> the_edge;
-//                the_edge = found_vertex->lowestWeightNotVisited();
-//                main_count++;
-//                the_vertex[main_count] = found_vertex->data;
-//                temp_count = main_count;
-////                distance = tot_distance[main_count-1] + the_edge.weight;
-//                if(main_count==1)
+//                if(temp->data == vertex_array[y])
 //                {
-//                    distance = the_edge.weight;
-//                }
-//                tot_distance[main_count] = distance;
-//                found_vertex = found_vertex->lowestEdgeVertexNotVisited();  //find adjacent lowest
-//                the_vertex[main_count] = found_vertex->data;
-//                found_vertex->visisted = 1;                                 //make as visited
-//                the_stack.push(found_vertex);                              //push vertex onto stack
-//                found_vertex = the_stack.top();
-//                int reset_minus = 1;
-//
-//                if(main_count == num_connected-1)
-//                {
-//                    for(int p = 0;p<num_connected;p++)
-//                    {
-//                        cout<<"["<<the_vertex[p]<<"] total distance : "<<tot_distance[p]<<endl;
-//                        if(the_vertex[p]==v2)
-//                        {
-//                            //break;
-//                        }
-//
-//                    }
+//                    last_vert = y;
 //                }
 //            }
-//            else
+            for(int p = 0; p<size ;p++)
+            {
+                if(tot_distance[p] <= lowest && final[p]==0)   //total distance is less and final marker is 0
+                {
+                    lowest = p ;                               //lowest is p in array
+                }
+            }
+            temp = findVertex(vertex_array[lowest]);
+            for(int y = 0;y<size;y++)
+            {
+                if(temp->data == vertex_array[y])
+                {
+                    last_vert = y;
+                }
+            }
+            final[lowest] = 1;
+            for(int j = 0; j < temp->edgeCount;j++) //go through all edges of the current vertex and update our arrays
+            {
+                for(int z = 0; z<size ; z++)
+                {
+                    if(vertex_array[z] == temp->outgoing[j].vertex_two->data && final[z]!=1)
+                    {
+                        if((tot_distance[last_vert] + temp->outgoing[j].weight) < tot_distance[z] )
+                        {
+                            tot_distance[z] = (tot_distance[last_vert] + temp->outgoing[j].weight); //if it has a lower weight
+                            prev[z] = last_vert;                                                  //set the previous
+                        }
+                    }
+                }
+            }
+            int to_break=0;
+            for(int a=0;a<size;a++)
+            {
+                if(final[a]==1)
+                {
+                    to_break++;
+                }
+            }
+            if(to_break==size)
+            {
+                run3 = 0;
+            }
+            lowest = 100000000;
+        }
+        reset();
+        for(int s = 0;s<size;s++)
+        {
+            cout<<vertex_array[s]<<" "<<tot_distance[s]<<endl;
+            if(vertex_array[s]==v2)
+            {
+                return;
+            }
+        }
+    }
+    double distance(char v1 ,char v2)
+    {
+        int size = NumberConnected(v1); //get total size of of vertices for array
+        char vertex_array[size];
+        int size_tracker=1;
+        stack<Vertex<Type> *> the_stack;
+        Vertex<Type> * found_vertex;
+        //Vertex<Type> * temp1; Not needed?
+        int run = 1,j = 0,num_in_stack = 0;
+        while (run)
+        {
+            if (hash_list[(v1 + j * j) % updated_size].getData()==v1) //found our vertex
+            {
+                found_vertex = &hash_list[(v1+j*j)% updated_size];
+                run = 0; //end loop
+            }
+            j++;
+            if(j==10) //a base case of 10 loops and cant find the node
+            {
+                cout<<"CANT FIND VERTEX 1"<<endl;
+                break;
+            }
+        }
+        vertex_array[0] = found_vertex->getData();
+        found_vertex->visisted = 1;     //node has been visisted
+        the_stack.push(found_vertex);
+        num_in_stack++;
+        int run2 = 1;
+        int checker = 0;
+        while(run2)
+        {
+            //if(found_vertex.data != NULL)
+//            found_vertex = found_vertex->lowestEdgeVertexNotVisited();  //find adjacent lowest
+            checker = found_vertex->BoolVisted();
+            if(checker)
+            {
+                found_vertex = found_vertex->lowestEdgeVertexNotVisited();  //find adjacent lowest
+                vertex_array[size_tracker++] = found_vertex->getData();
+                found_vertex->visisted = 1;                                 //make as visited
+                the_stack.push(found_vertex);                              //push vertex onto stack
+                found_vertex = the_stack.top();
+            }
+            else
+            {
+                if(!the_stack.empty())
+                {
+                    found_vertex = the_stack.top();                            //vertex is now top of stack since previous node had no other adjacent
+                }
+                checker = found_vertex->BoolVisted();
+                if(!checker) {
+                    the_stack.pop();                                           //pop it off
+                }
+            }
+            if(the_stack.empty())                                          //empty stack so we have goen through all vertexs possible
+            {
+                cout<<endl;
+                run2 = 0;
+            }
+        }
+
+
+
+        int final[size];                //final array signals 0 or 1 for final distance or not
+        double tot_distance[size];      //array to track the min total distance of the vertices
+        int prev[size];             //array to track the previous vertex to follow back to root (v1) to show path
+
+        for(int i = 0;i<size;i++)       //preset all to defaults
+        {
+            final[i] = 0;               //set all to 0 since not final
+            tot_distance[i] = 1000000;  //set all total disnances to "infinity"
+            prev[i] = 0;        //all previous vertex set to root
+        }
+        Vertex<Type> * temp = findVertex(v1); //first find our original
+        tot_distance[0] = 0;                  //first is total distance of zero
+        int run3 = 1;
+        int first_run = 1;
+        int vertex_count = 1;
+        int lowest = 0 ;
+        int previousChar;
+        int last_vert;
+        while(run3)
+        {
+//            for(int y = 0;y<size;y++)
 //            {
-//                    distance -= tot_distance[temp_count];
-//                    temp_count--;
-//                //distance-=tot_distance[main_count];
-//                if(!the_stack.empty())
+//                if(temp->data == vertex_array[y])
 //                {
-//                    found_vertex = the_stack.top();                            //vertex is now top of stack since previous node had no other adjacent
-//                }
-//                checker = found_vertex->BoolVisted();
-//                if(!checker) {
-//                    the_stack.pop();                                           //pop it off
+//                    last_vert = y;
 //                }
 //            }
-//            if(the_stack.empty())                                          //empty stack so we have goen through all vertexs possible
-//            {
-//                cout<<endl;
-//                run2 = 0;
-//            }
-//        }
-//    }
+            for(int p = 0; p<size ;p++)
+            {
+                if(tot_distance[p] <= lowest && final[p]==0)   //total distance is less and final marker is 0
+                {
+                    lowest = p ;                               //lowest is p in array
+                }
+            }
+            temp = findVertex(vertex_array[lowest]);
+            for(int y = 0;y<size;y++)
+            {
+                if(temp->data == vertex_array[y])
+                {
+                    last_vert = y;
+                }
+            }
+            final[lowest] = 1;
+            for(int j = 0; j < temp->edgeCount;j++) //go through all edges of the current vertex and update our arrays
+            {
+                for(int z = 0; z<size ; z++)
+                {
+                    if(vertex_array[z] == temp->outgoing[j].vertex_two->data && final[z]!=1)
+                    {
+                        if((tot_distance[last_vert] + temp->outgoing[j].weight) < tot_distance[z] )
+                        {
+                            tot_distance[z] = (tot_distance[last_vert] + temp->outgoing[j].weight); //if it has a lower weight
+                            prev[z] = last_vert;                                                  //set the previous
+                        }
+                    }
+                }
+            }
+            int to_break=0;
+            for(int a=0;a<size;a++)
+            {
+                if(final[a]==1)
+                {
+                    to_break++;
+                }
+            }
+            if(to_break==size)
+            {
+                run3 = 0;
+            }
+            lowest = 100000000;
+        }
+        reset();
+        char start = vertex_array[0];
+        for(int s = 0;s<size;s++)
+        {
+            if(vertex_array[s]==v2)
+            {
+                cout<<"["<<start<<"] ---> ["<<vertex_array[s]<<"] "<<tot_distance[s]<<endl;
+                return tot_distance[s];
+            }
+        }
+    }
     int NumberConnected(char v)
     {
         stack<Vertex<Type> *> the_stack;

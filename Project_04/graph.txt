@@ -8,7 +8,7 @@ S C 1
 
 C D 3
 
-C E 5
+C E 5.75
 
 C F 4
 
