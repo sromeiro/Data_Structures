@@ -42,6 +42,7 @@ class Edge
     {
         return weight;
     }
+    ~Edge(){}
   friend class Graph<Type>;
   friend class DirGraph<Type>;
   friend class Vertex<Type>;

@@ -258,6 +258,9 @@ class Vertex
     {
         incoming++;
     }
+    ~Vertex(){
+        delete []outgoing;
+    }
 
   friend class Graph<Type>;
   friend class DirGraph<Type>;

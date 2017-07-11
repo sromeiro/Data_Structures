@@ -8,6 +8,8 @@
 #include<limits>
 #include "vertex.h"
 
+#define PRIMENUMBER 31
+
 using namespace std;
 
 template <class Type>
@@ -19,13 +21,13 @@ class DirGraph
     int total_edge_count;
     int total_vertex_count;
     Vertex<Type> * hash_list;             //used to store our vertex
-    char vertices[100];                   //used to store vertices characters for reset visited
+    char vertices[PRIMENUMBER];                   //used to store vertices characters for reset visited
   public:
     DirGraph(int n = 31)
     {
-        hash_list = new Vertex<Type>[n]; //size of 31 (prime number better for hash table)
-        orig_size = n;                   //set our original size
-        updated_size = n;
+        hash_list = new Vertex<Type>[PRIMENUMBER]; //size of 31 (prime number better for hash table)
+        orig_size = PRIMENUMBER;                   //set our original size
+        updated_size = PRIMENUMBER;
         total_edge_count = 0;
         total_vertex_count = 0;
     }
@@ -846,23 +848,24 @@ class DirGraph
         }
     }
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-//===========================HELPER FUNCTIONS BELOW===========================//
+    void clear()
+    {
+        if(total_vertex_count == 0)
+        {
+            //PUT THROW HERE
+        }
+        delete [] hash_list;
+        hash_list = new Vertex<Type>[PRIMENUMBER]; //size of 31 (prime number better for hash table)
+        total_edge_count = 0;
+        total_vertex_count = 0;
+    }
+    /******************************************************************************/
+    //Default Destructor
+    ~Graph()
+    {
+        clear();
+    }
+    //===========================HELPER FUNCTIONS BELOW===========================//
     //Finds the requested Vertex
     Vertex<Type> * findVertex(char v)
     {

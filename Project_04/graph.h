@@ -505,7 +505,14 @@ class Graph
     //Removes all the elements in the undirected Graph
     void clear()
     {
-
+        if(total_vertex_count == 0)
+        {
+            //PUT THROW HERE
+        }
+        delete [] hash_list;
+        hash_list = new Vertex<Type>[PRIMENUMBER]; //size of 31 (prime number better for hash table)
+        total_edge_count = 0;
+        total_vertex_count = 0;
     }
 
 /******************************************************************************/
@@ -580,7 +587,7 @@ class Graph
     //Default Destructor
     ~Graph()
     {
-
+        clear();
     }
 
 //===========================HELPER FUNCTIONS BELOW===========================//
