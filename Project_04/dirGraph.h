@@ -139,7 +139,7 @@ class DirGraph
             }
         }
         cout<<"["<<found_vertex->getData()<<"] ";  //output first node visited
-        found_vertex->visisted = 1;     //node has been visisted
+        found_vertex->visited = 1;     //node has been visited
         the_stack.push(found_vertex);
         num_in_stack++;
         int run2 = 1;
@@ -153,7 +153,7 @@ class DirGraph
             {
                 found_vertex = found_vertex->lowestEdgeVertexNotVisited();  //find adjacent lowest
                 cout <<"["<<found_vertex->getData()<<"] ";                    //print vertex
-                found_vertex->visisted = 1;                                 //make as visited
+                found_vertex->visited = 1;                                 //make as visited
                 the_stack.push(found_vertex);                              //push vertex onto stack
                 found_vertex = the_stack.top();
             }
@@ -193,11 +193,11 @@ class DirGraph
                 break;
             }
         }
-        if (found_vertex->visisted == 0)
+        if (found_vertex->visited == 0)
         {
         cout << "[" << found_vertex->getData() << "] ";  //output first node visited
         }
-        found_vertex->visisted = 1;     //node has been visisted
+        found_vertex->visited = 1;     //node has been visited
         the_queue.push(found_vertex);
         num_in_queue++;
         int run2 = 1;
@@ -213,7 +213,7 @@ class DirGraph
             {
                 found_vertex = temp->lowestEdgeVertexNotVisited();  //find adjacent lowest
                 cout <<"["<<found_vertex->getData()<<"] ";                    //print vertex
-                found_vertex->visisted = 1;                                   //make as visited
+                found_vertex->visited = 1;                                   //make as visited
                 the_queue.push(found_vertex);                              //push vertex into queue
             }
             else
@@ -290,7 +290,7 @@ class DirGraph
                     {
                         hash_list[(vertex + j * j) % updated_size] = new_vertex; //place the new vertex in empty spot
                         //cout << " HAS BEEN PLACED IN HASH AT : "<<(vertex + j * j) % updated_size<< endl;
-                        vertices[total_vertex_count] = new_vertex.data;                                                                //place our vertex in seperate array to reset visisted
+                        vertices[total_vertex_count] = new_vertex.data;                                                                //place our vertex in seperate array to reset visited
                         total_vertex_count++; // +1 to total vertex count
                         run = 0; //break our while loop since we placed our vertex in our array
                     }
@@ -352,7 +352,7 @@ class DirGraph
             {
                 if(hash_list[(temp+j*j)%updated_size].data==temp) //found are vertex in hash table
                 {
-                    hash_list[(temp+j*j)%updated_size].visisted = 0; //reset visited to zero
+                    hash_list[(temp+j*j)%updated_size].visited = 0; //reset visited to zero
                 }
             }
         }
@@ -421,7 +421,7 @@ class DirGraph
                 break;
             }
         }
-        found_vertex->visisted = 1;     //node has been visisted
+        found_vertex->visited = 1;     //node has been visited
         the_queue.push(found_vertex);
         num_in_queue++;
         int run2 = 1;
@@ -446,7 +446,7 @@ class DirGraph
                     the_edge = temp->lowestWeightNotVisited();  //get the vertex with the lowest weight
                     if (k == 0) //FIRST PASS NOTHING TO COMPARE (the found lowest should be set for base)
                     {
-                        if(the_edge.vertex_two->visisted == 1)
+                        if(the_edge.vertex_two->visited == 1)
                         {
                             lowest_weight = 10000;
                         }
@@ -481,7 +481,7 @@ class DirGraph
                 {
 
                         the_queue2.push(lowest_edge.vertex_two); //push our new lowest weighted edge / vertex into queue
-                        lowest_edge.vertex_two->visisted = 1;   //set its visisted to 1
+                        lowest_edge.vertex_two->visited = 1;   //set its visited to 1
                     cout<<"["<<lowest_edge.vertex_one->data<<"] "<<"["<<lowest_edge.vertex_two->data<<"] "<<lowest_weight<<endl;
                         total_to_return += lowest_weight;        //add our weights at end of each for loop
                         lowest_weight = 100000; //reset lowest weight here
@@ -522,7 +522,7 @@ class DirGraph
             }
         }
         vertex_array[0] = found_vertex->getData();
-        found_vertex->visisted = 1;     //node has been visisted
+        found_vertex->visited = 1;     //node has been visited
         the_stack.push(found_vertex);
         num_in_stack++;
         int run2 = 1;
@@ -536,7 +536,7 @@ class DirGraph
             {
                 found_vertex = found_vertex->lowestEdgeVertexNotVisited();  //find adjacent lowest
                 vertex_array[size_tracker++] = found_vertex->getData();
-                found_vertex->visisted = 1;                                 //make as visited
+                found_vertex->visited = 1;                                 //make as visited
                 the_stack.push(found_vertex);                              //push vertex onto stack
                 found_vertex = the_stack.top();
             }
@@ -665,7 +665,7 @@ class DirGraph
             }
         }
         vertex_array[0] = found_vertex->getData();
-        found_vertex->visisted = 1;     //node has been visisted
+        found_vertex->visited = 1;     //node has been visited
         the_stack.push(found_vertex);
         num_in_stack++;
         int run2 = 1;
@@ -679,7 +679,7 @@ class DirGraph
             {
                 found_vertex = found_vertex->lowestEdgeVertexNotVisited();  //find adjacent lowest
                 vertex_array[size_tracker++] = found_vertex->getData();
-                found_vertex->visisted = 1;                                 //make as visited
+                found_vertex->visited = 1;                                 //make as visited
                 the_stack.push(found_vertex);                              //push vertex onto stack
                 found_vertex = the_stack.top();
             }
@@ -807,7 +807,7 @@ class DirGraph
                 break;
             }
         }
-        found_vertex->visisted = 1;     //node has been visisted
+        found_vertex->visited = 1;     //node has been visited
         the_stack.push(found_vertex);
         num_in_stack++;
         int run2 = 1;
@@ -820,7 +820,7 @@ class DirGraph
             if(checker)
             {
                 found_vertex = found_vertex->lowestEdgeVertexNotVisited();  //find adjacent lowest
-                found_vertex->visisted = 1;                                 //make as visited
+                found_vertex->visited = 1;                                 //make as visited
                 the_stack.push(found_vertex);                              //push vertex onto stack
                 found_vertex = the_stack.top();
                 total_to_return++;
