@@ -4,7 +4,8 @@
 #include<iostream>
 #include<stack>
 #include<queue>
-#include <fstream>
+#include<fstream>
+#include<limits>
 #include "vertex.h"
 
 using namespace std;
@@ -336,19 +337,43 @@ class DirGraph
         }
     }
 
-    Vertex<Type> getVertex(char vertex)
+    //Adds an edge between existing vertices. If weight = 0, remove that edge
+    void insert(char v1, char v2, double weight)
     {
-        int ver_loc;
-        for(int i = 0 ; i <10 ; i++)
-        {
-            ver_loc = (vertex + i * i) % updated_size;
-            if(hash_list[ver_loc].data == vertex)
-            {
-                return hash_list[ver_loc];
-            }
-        }
-        //return NULL; //THIS IS JUST A TEST FUCNTION (NEED CATCH/THROW)
-        throw runtime_error("Vertex not found!"); //Fixes the warning
+      if(weight <= 0 || weight >= numeric_limits<double>::max())
+      {
+        throw runtime_error("Invalid weight entered!");
+      }
+
+      cout << "Called INSERT" << endl;
+
+      Vertex<Type> * fromVertex;
+      Vertex<Type> * toVertex;
+      cout << "Before findVertex1" << endl;
+      fromVertex = findVertex(v1);
+      cout << "Before findVertex2" << endl;
+      toVertex = findVertex(v2);
+      cout << "Before Not exists test" << endl;
+
+      if(!fromVertex->findEdge(toVertex->getData()))
+      {
+        //Edge between FROM ---> TO does NOT exist. Create one.
+        Edge<Type> new_edge = Edge<Type>(fromVertex, toVertex, weight);
+        fromVertex->add_edge(new_edge);
+        cout << "Edge didn't exist so I created one for you" << endl;
+      }
+
+      else if(fromVertex->findEdge(toVertex->getData()))
+      {
+        //Edge between FROM ---> TO exists. Update its weight.
+        Edge<Type> * changeWeight = fromVertex->returnEdge(toVertex->getData());
+        cout << "Weight of this edge is currently: " << changeWeight->weight << endl;
+        changeWeight->weight = weight;
+        cout << "Weight has now been changed to: " << changeWeight->weight << endl;
+
+        //Do the same for the other edge
+      }
+      cout << "Ending INSERT" << endl;
     }
 
     double MST(char v)
@@ -468,7 +493,37 @@ class DirGraph
 
 
 
+//===========================HELPER FUNCTIONS BELOW===========================//
+    //Finds the requested Vertex
+    Vertex<Type> * findVertex(char v)
+    {
+      //Performs 10 iterations searching for requested Vertex before quitting
+      for(int j = 0; j < 10; j++)
+      {
+        if (hash_list[(v + j * j) % updated_size].getData() == v) //make sure we found our correct vertex
+        {
+          return &hash_list[(v + j * j) % updated_size];
+        }
+      }
+      throw runtime_error("Vertex requested not found!");
+    }
 
+/*
+    Vertex<Type> getVertex(char vertex)
+    {
+        int ver_loc;
+        for(int i = 0 ; i <10 ; i++)
+        {
+            ver_loc = (vertex + i * i) % updated_size;
+            if(hash_list[ver_loc].data == vertex)
+            {
+                return hash_list[ver_loc];
+            }
+        }
+        //return NULL; //THIS IS JUST A TEST FUCNTION (NEED CATCH/THROW)
+        throw runtime_error("Vertex not found!"); //Fixes the warning
+    }
+*/
 
 
 };

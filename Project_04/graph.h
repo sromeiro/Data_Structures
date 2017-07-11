@@ -526,7 +526,6 @@ class Graph
 
       fromVertex = findVertex(v1);
       toVertex = findVertex(v2);
-      cout << "Passed" << endl;
       if(weight == 0)
       {
         //Remove the edge between the listed VERTICES
@@ -535,11 +534,28 @@ class Graph
         return;
       }
 
-      //cout << "fromVertex received \'" << fromVertex->getData() << "\'" << endl;
-      //cout << "toVertex received \'" << toVertex->getData() << "\'" << endl;
+      if(!fromVertex->findEdge(toVertex->getData()))
+      {
+        //Edge between FROM ---> TO does NOT exist. Create one.
+        Edge<Type> new_edge = Edge<Type>(fromVertex, toVertex, weight);
+        Edge<Type> new_edge2 = Edge<Type>(toVertex, fromVertex, weight);
+        fromVertex->add_edge(new_edge);
+        toVertex->add_edge(new_edge2);
+        cout << "Edge didn't exist so I created one for you" << endl;
+      }
 
+      else if(fromVertex->findEdge(toVertex->getData()))
+      {
+        //Edge between FROM ---> TO exists. Update its weight.
+        Edge<Type> * changeWeight = fromVertex->returnEdge(toVertex->getData());
+        Edge<Type> * changeWeight2 = toVertex->returnEdge(fromVertex->getData());
+        cout << "Weight of this edge is currently: " << changeWeight->weight << endl;
+        changeWeight->weight = weight;
+        changeWeight2->weight = weight;
+        cout << "Weight has now been changed to: " << changeWeight->weight << endl;
 
-
+        //Do the same for the other edge
+      }
       cout << "Ending INSERT" << endl;
     }
 
@@ -564,6 +580,9 @@ class Graph
       }
       throw runtime_error("Vertex requested not found!");
     }
+
+/******************************************************************************/
+    //Helper function for isConnected()
     int ConnectHelp(char v)
     {
         stack<Vertex<Type> *> the_stack;
@@ -623,7 +642,10 @@ class Graph
                 run2 = 0;
             }
         }
+        return 0; //Fixes warning but should never reach this level
     }
+
+/******************************************************************************/
 
 };
 

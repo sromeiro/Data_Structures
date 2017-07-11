@@ -96,6 +96,34 @@ class Vertex
       cout << "Ending remove_edge" << endl;
     }
 
+    bool findEdge(char v)
+    {
+      for(int i = 0; i < edgeCount; i++)
+      {
+        if(outgoing[i].vertex_two->data == v) //Found the edge that connects FROM ---> TO vertices
+        {
+          //Found an edge that connect these vertices.
+          return true;
+        }
+      }
+      //Edge was not found
+      return false;
+    }
+
+    Edge<Type> * returnEdge(char v)
+    {
+      int i;
+      for(i = 0; i < edgeCount; i++)
+      {
+        if(outgoing[i].vertex_two->data == v) //Found the edge that connects FROM ---> TO vertices
+        {
+          //Found an edge that connect these vertices. Update that weight
+          return &outgoing[i];
+        }
+      }
+      //Edge was not found
+      throw runtime_error("There is no edge to the requested Vertex");
+    }
 
     int getNumEdges()
     {
