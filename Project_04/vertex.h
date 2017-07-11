@@ -258,8 +258,12 @@ class Vertex
     {
         incoming++;
     }
-    ~Vertex(){
-        delete []outgoing;
+    ~Vertex()
+    {
+      if(edgeCount >= 1)
+      {
+          delete []outgoing;
+      }
     }
 
   friend class Graph<Type>;

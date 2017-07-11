@@ -3,8 +3,8 @@
 #include"edge.h"
 #include"dirGraph.h"
 
-//#define FILENAME "graph.txt" //Change file name here if needed.
-#define FILENAME "C:\\Users\\Brett\\ClionProjects\\Project3_sub\\Project_04\\graph.txt"
+#define FILENAME "graph.txt" //Change file name here if needed.
+//#define FILENAME "C:\\Users\\Brett\\ClionProjects\\Project3_sub\\Project_04\\graph.txt"
 
 using namespace std;
 int main()
@@ -12,35 +12,7 @@ int main()
   DirGraph<int> my_dir;
   Graph<int> myGraph;
 
-//-------------------------BUILDS DirGraph------------------------------------//
 
-  try
-  {
-    //Try to build the graph with requested file name
-    my_dir.buildGraph(FILENAME);
-  }
-  catch(const runtime_error& notFound)
-  {
-    //Terminate if file fails to open
-    cerr << notFound.what() << endl;
-    return 1; //Early termination of program
-  }
-
-//-------------------------BUILDS Graph---------------------------------------//
-
-  try
-  {
-    //Try to build the graph with requested file name
-    myGraph.buildGraph(FILENAME);
-  }
-  catch(const runtime_error& notFound)
-  {
-    //Terminate if file fails to open
-    cerr << notFound.what() << endl;
-    return 1; //Early termination of program
-  }
-
-//-------------------------Test Block for DirGraph----------------------------//
 
   try
   {
@@ -165,6 +137,52 @@ int main()
   cout << "Selection: ";
   cin >> option;
 
+//-------------------------BUILDS DirGraph------------------------------------//
+
+  string changeName;
+  cout << "\nDefault File Name is \"graph.txt\". Would you like to change that?" << endl;
+  cout << "(Y)es or (N)o: ";
+  cin >> changeName;
+  if(changeName.compare("Y") == 0)
+  {
+    cout << "Please enter your new File Name. Include the extension .txt" << endl;
+    cout << "File Name: ";
+    cin >> changeName;
+  }
+  else
+  {
+    changeName = FILENAME;
+  }
+  cout << endl;
+
+  try
+  {
+    //Try to build the graph with requested file name
+    my_dir.buildGraph(changeName);
+  }
+  catch(const runtime_error& notFound)
+  {
+    //Terminate if file fails to open
+    cerr << notFound.what() << endl;
+    return 1; //Early termination of program
+  }
+
+//-------------------------BUILDS Graph---------------------------------------//
+
+  try
+  {
+    //Try to build the graph with requested file name
+    myGraph.buildGraph(changeName);
+  }
+  catch(const runtime_error& notFound)
+  {
+    //Terminate if file fails to open
+    cerr << notFound.what() << endl;
+    return 1; //Early termination of program
+  }
+
+//----------------------------------------------------------------------------//
+
   switch (option)
   {
     case 'u':
@@ -264,6 +282,7 @@ int main()
           }
           catch(const runtime_error& notFound)
           {
+            myGraph.reset();
             cerr << notFound.what() << endl;
           }
           break;
@@ -279,6 +298,7 @@ int main()
           }
           catch(const runtime_error& notFound)
           {
+            myGraph.reset();
             cerr << notFound.what() << endl;
           }
           break;
@@ -294,6 +314,7 @@ int main()
           }
           catch(const runtime_error& notFound)
           {
+            myGraph.reset();
             cerr << notFound.what() << endl;
           }
           break;
@@ -316,7 +337,7 @@ int main()
             cout << "Inserting a new edge. ";
             cout << "Please enter the Starting Vertex, ";
             cout << "the Ending Vertex and the weight of the Edge to be added" << endl;
-            cout << "NOTE: Negative weights are not accepted" << endl;
+            cout << "NOTE: Negative weights are not accepted" << endl << endl;
             cout << "Starting Vertex: ";
             cin >> fromVertex;
             cout << "Ending Vertex: ";
@@ -377,34 +398,144 @@ int main()
       switch (num_select)
       {
         case 1:
-          //Code
+          my_dir.empty() ? cout << "Empty!" << endl : cout << "Not empty!" << endl;
           break;
         case 2:
-          //Code
+          try
+          {
+            char data;
+            cout << "What vertex would you like the inDegree for?" << endl;
+            cout << "Vertex: ";
+            cin >> data;
+            int inDegree = my_dir.inDegree(data);
+            cout << "inDegree: " << inDegree << endl;
+          }
+          catch(const runtime_error& notFound)
+          {
+            cerr << notFound.what() << endl;
+          }
           break;
         case 3:
-          //Code
+          try
+          {
+            char data;
+            cout << "What vertex would you like the outDegree for?" << endl;
+            cout << "Vertex: ";
+            cin >> data;
+            int outDegree = my_dir.outDegree(data);
+            cout << "outDegree: " << outDegree << endl;
+          }
+          catch(const runtime_error& notFound)
+          {
+            cerr << notFound.what() << endl;
+          }
           break;
         case 4:
-          //Code
+          int edges;
+          edges = my_dir.edgeCount();
+          cout << "Number of edges: " << edges << endl;
           break;
         case 5:
-          //Code
+          try
+          {
+            char fromVertex, toVertex;
+            cout << "Please enter the Vertices you would like adjacency for" << endl;
+            cout << "Starting Vertex: ";
+            cin >> fromVertex;
+            cout << "Ending Vertex: ";
+            cin >> toVertex;
+            double weight = my_dir.adjacent(fromVertex, toVertex);
+            weight == -1 ? cout << "Not adjacent!" << endl : cout << "They are adjacent with an edge of weight " << weight << endl;
+          }
+          catch(const runtime_error& notFound)
+          {
+            cerr << notFound.what() << endl;
+          }
           break;
         case 6:
-          //Code
+          try
+          {
+            char data;
+            cout << "Enter the starting vertex for Depth First Search" << endl;
+            cout << "Starting Vertex: ";
+            cin >> data;
+            my_dir.DFS(data);
+            my_dir.reset();
+          }
+          catch(const runtime_error& notFound)
+          {
+            my_dir.reset();
+            cerr << notFound.what() << endl;
+          }
           break;
         case 7:
-          //Code
+          try
+          {
+            char data;
+            cout << "Enter the starting vertex for Breadth First Search" << endl;
+            cout << "Starting Vertex: ";
+            cin >> data;
+            my_dir.BFS(data);
+            my_dir.reset();
+          }
+          catch(const runtime_error& notFound)
+          {
+            my_dir.reset();
+            cerr << notFound.what() << endl;
+          }
           break;
         case 8:
-          //Code
+          try
+          {
+            char fromVertex, toVertex;
+            cout << "Enter the starting and ending vertex you would like the shortest path to" << endl;
+            cout << "Starting Vertex: ";
+            cin >> fromVertex;
+            cout << "Ending Vertex: ";
+            cin >> toVertex;
+            my_dir.shortPath(fromVertex, toVertex);
+            my_dir.reset();
+          }
+          catch(const runtime_error& notFound)
+          {
+            my_dir.reset();
+            cerr << notFound.what() << endl;
+          }
           break;
         case 9:
-          //Code
+          try
+          {
+            my_dir.clear();
+            cout << "Cleared!" << endl;
+          }
+          catch(const runtime_error& empty)
+          {
+            cerr << empty.what() << endl;
+          }
           break;
         case 10:
-          //Code
+          try
+          {
+            char fromVertex, toVertex;
+            double weight;
+            cout << "Inserting a new edge. ";
+            cout << "Please enter the Starting Vertex, ";
+            cout << "the Ending Vertex and the weight of the Edge to be added" << endl;
+            cout << "NOTE: Negative weights are not accepted" << endl << endl;
+            cout << "Starting Vertex: ";
+            cin >> fromVertex;
+            cout << "Ending Vertex: ";
+            cin >> toVertex;
+            cout << "Weight: ";
+            cin >> weight;
+
+            my_dir.insert(fromVertex, toVertex, weight);
+
+          }
+          catch(const runtime_error& notFound)
+          {
+            cerr << notFound.what() << endl;
+          }
           break;
         case 11:
           cout << "\nExiting program" << endl;

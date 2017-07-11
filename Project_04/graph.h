@@ -65,7 +65,7 @@ class Graph
               run = 0; //Breaks out of this while loop
           }
       }
-      throw runtime_error("Vertex requested not found!");
+      throw runtime_error("Requested Vertex was not found!");
     }
 
 /******************************************************************************/
@@ -88,6 +88,11 @@ class Graph
     //Returns the weight of the edge connecting two Vertices.
     double adjacent(char v1 , char v2)
     {
+       if(empty())
+       {
+          throw runtime_error("Graph is empty. Please restart the program to build a fresh graph.");
+       }
+
        if(v1 == v2) //check if same vertices
        {
           throw runtime_error("Vertices entered were the same. Not adjacent.");
@@ -107,7 +112,7 @@ class Graph
            j++;
            if(j == 10) //a base case of 10 loops and cant find the node
            {
-               throw runtime_error("One of your vertices do not exist!");
+             throw runtime_error("One of your vertices do not exist!");
            }
        }
 
@@ -286,8 +291,7 @@ class Graph
             j++;
             if (j == 10) //a base case of 10 loops and cant find the node
             {
-                cout << "CANT FIND VERTEX 1" << endl;
-                break;
+              throw runtime_error("Vertex requested was not found!");
             }
         }
         found_vertex->visited = 1;     //node has been visited
@@ -505,10 +509,10 @@ class Graph
     //Removes all the elements in the undirected Graph
     void clear()
     {
-        if(total_vertex_count == 0)
-        {
-            //PUT THROW HERE
-        }
+      if(empty())
+      {
+        throw runtime_error("Can't clear an empty graph. Please restart the program to build a fresh graph.");
+      }
         delete [] hash_list;
         hash_list = new Vertex<Type>[PRIMENUMBER]; //size of 31 (prime number better for hash table)
         total_edge_count = 0;
@@ -543,7 +547,7 @@ class Graph
         throw runtime_error("Invalid weight entered!");
       }
 
-      cout << "Called INSERT" << endl;
+      //cout << "Called INSERT" << endl;
 
       Vertex<Type> * fromVertex;
       Vertex<Type> * toVertex;
@@ -580,14 +584,17 @@ class Graph
 
         //Do the same for the other edge
       }
-      cout << "Ending INSERT" << endl;
+      //cout << "Ending INSERT" << endl;
     }
 
 /******************************************************************************/
     //Default Destructor
     ~Graph()
     {
+      if(!empty())
+      {
         clear();
+      }
     }
 
 //===========================HELPER FUNCTIONS BELOW===========================//
@@ -602,7 +609,7 @@ class Graph
           return &hash_list[(v + j * j) % updated_size];
         }
       }
-      throw runtime_error("Vertex requested not found!");
+      throw runtime_error("Requested Vertex was not found!");
     }
 
 /******************************************************************************/
@@ -625,8 +632,7 @@ class Graph
             j++;
             if(j==10) //a base case of 10 loops and cant find the node
             {
-                cout<<"CANT FIND VERTEX 1"<<endl;
-                break;
+              throw runtime_error("Vertex requested was not found!");
             }
         }
         found_vertex->visited = 1;     //node has been visited

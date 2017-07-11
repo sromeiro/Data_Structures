@@ -47,7 +47,7 @@ class DirGraph
             j++;
             if(j==10) //a base case of 10 loops and cant find the node
             {
-                run = 0;
+              throw runtime_error("Requested Vertex was not found!");
             }
         }
         return 0;
@@ -64,7 +64,7 @@ class DirGraph
             j++;
             if(j==10) //a base case of 10 loops and cant find the node
             {
-                run = 0;
+              throw runtime_error("Requested Vertex was not found!");
             }
         }
         return 0;
@@ -75,24 +75,31 @@ class DirGraph
     }
     double adjacent(char v1 , char v2)
     {
+       if(empty())
+       {
+        throw runtime_error("Graph is empty. Please restart the program to build a fresh graph.");
+       }
+
        if(v1 == v2) //check if same vertices
        {
-           return 0;
+           throw runtime_error("Vertices entered were the same. Not adjacent.");
        }
+
        Vertex<Type> temp1;
        Vertex<Type> temp2;
-       int run = 1,run2 = 1,i=0, j = 0;
-       while (run) {
+       int run = 1, run2 = 1, i = 0, j = 0;
+
+       while (run)
+       {
            if (hash_list[(v1 + j * j) % updated_size].getData()==v1) //found first vertex
            {
                temp1 = hash_list[(v1+j*j)% updated_size];
                run = 0; //end loop
            }
            j++;
-           if(j==10) //a base case of 10 loops and cant find the node
+           if(j == 10) //a base case of 10 loops and cant find the node
            {
-               cout<<"CANT FIND VERTEX 1"<<endl;
-               return -1;
+             throw runtime_error("Requested Vertex was not found!");
            }
        }
        while (run2)
@@ -105,8 +112,7 @@ class DirGraph
            i++;
            if(i==10) //a base case of 10 loops and cant find the node
            {
-               cout<<"CANT FIND VERTEX 2"<<endl;
-               return -1;
+              throw runtime_error("Requested Vertex was not found!");
            }
        }
        //FOUND BOTH VERTEX IN HASH TABLE
@@ -136,8 +142,7 @@ class DirGraph
             j++;
             if(j==10) //a base case of 10 loops and cant find the node
             {
-                cout<<"CANT FIND VERTEX 1"<<endl;
-                break;
+              throw runtime_error("Requested Vertex was not found!");
             }
         }
         cout<<"["<<found_vertex->getData()<<"] ";  //output first node visited
@@ -191,8 +196,7 @@ class DirGraph
             j++;
             if (j == 10) //a base case of 10 loops and cant find the node
             {
-                cout << "CANT FIND VERTEX 1" << endl;
-                break;
+              throw runtime_error("Requested Vertex was not found!");
             }
         }
         if (found_vertex->visited == 0)
@@ -360,6 +364,7 @@ class DirGraph
         }
     }
 
+
     //Adds an edge between existing vertices. If weight = 0, remove that edge
     void insert(char v1, char v2, double weight)
     {
@@ -368,15 +373,15 @@ class DirGraph
         throw runtime_error("Invalid weight entered!");
       }
 
-      cout << "Called INSERT" << endl;
+      //cout << "Called INSERT" << endl;
 
       Vertex<Type> * fromVertex;
       Vertex<Type> * toVertex;
-      cout << "Before findVertex1" << endl;
+      //cout << "Before findVertex1" << endl;
       fromVertex = findVertex(v1);
-      cout << "Before findVertex2" << endl;
+      //cout << "Before findVertex2" << endl;
       toVertex = findVertex(v2);
-      cout << "Before Not exists test" << endl;
+      //cout << "Before Not exists test" << endl;
 
       if(!fromVertex->findEdge(toVertex->getData()))
       {
@@ -396,9 +401,10 @@ class DirGraph
 
         //Do the same for the other edge
       }
-      cout << "Ending INSERT" << endl;
+      //cout << "Ending INSERT" << endl;
     }
 
+/*
     double MST(char v)
     {
         queue<Vertex<Type> *> the_queue;
@@ -419,8 +425,7 @@ class DirGraph
             j++;
             if (j == 10) //a base case of 10 loops and cant find the node
             {
-                cout << "CANT FIND VERTEX 1" << endl;
-                break;
+              throw runtime_error("Requested Vertex was not found!");
             }
         }
         found_vertex->visited = 1;     //node has been visited
@@ -498,7 +503,7 @@ class DirGraph
         }
         return 0; //Fixing end of control warning. Should never reach this level.
     }
-
+*/
 
     void shortPath(char v1 ,char v2)
     {
@@ -519,8 +524,7 @@ class DirGraph
             j++;
             if(j==10) //a base case of 10 loops and cant find the node
             {
-                cout<<"CANT FIND VERTEX 1"<<endl;
-                break;
+              throw runtime_error("Requested Vertex was not found!");
             }
         }
         vertex_array[0] = found_vertex->getData();
@@ -564,21 +568,21 @@ class DirGraph
 
         int final[size];                //final array signals 0 or 1 for final distance or not
         double tot_distance[size];      //array to track the min total distance of the vertices
-        int prev[size];             //array to track the previous vertex to follow back to root (v1) to show path
+//Not Used?        int prev[size];             //array to track the previous vertex to follow back to root (v1) to show path
 
         for(int i = 0;i<size;i++)       //preset all to defaults
         {
             final[i] = 0;               //set all to 0 since not final
             tot_distance[i] = 1000000;  //set all total disnances to "infinity"
-            prev[i] = 0;        //all previous vertex set to root
+//Not Used?            prev[i] = 0;        //all previous vertex set to root
         }
         Vertex<Type> * temp = findVertex(v1); //first find our original
         tot_distance[0] = 0;                  //first is total distance of zero
         int run3 = 1;
-        int first_run = 1;
-        int vertex_count = 1;
+//Not Used?        int first_run = 1;
+//Not Used?        int vertex_count = 1;
         int lowest = 0 ;
-        int previousChar;
+//Not Used?        int previousChar;
         int last_vert;
         while(run3)
         {
@@ -614,7 +618,7 @@ class DirGraph
                         if((tot_distance[last_vert] + temp->outgoing[j].weight) < tot_distance[z] )
                         {
                             tot_distance[z] = (tot_distance[last_vert] + temp->outgoing[j].weight); //if it has a lower weight
-                            prev[z] = last_vert;                                                  //set the previous
+//Not Used?                            prev[z] = last_vert;                                                  //set the previous
                         }
                     }
                 }
@@ -662,8 +666,7 @@ class DirGraph
             j++;
             if(j==10) //a base case of 10 loops and cant find the node
             {
-                cout<<"CANT FIND VERTEX 1"<<endl;
-                break;
+              throw runtime_error("Requested Vertex was not found!");
             }
         }
         vertex_array[0] = found_vertex->getData();
@@ -805,8 +808,7 @@ class DirGraph
             j++;
             if(j==10) //a base case of 10 loops and cant find the node
             {
-                cout<<"CANT FIND VERTEX 1"<<endl;
-                break;
+                throw runtime_error("Requested Vertex was not found!");
             }
         }
         found_vertex->visited = 1;     //node has been visited
@@ -846,13 +848,14 @@ class DirGraph
                 run2 = 0;
             }
         }
+        return total_to_return; //Fixes warnings. Should never reach this level
     }
 
     void clear()
     {
-        if(total_vertex_count == 0)
+        if(empty())
         {
-            //PUT THROW HERE
+          throw runtime_error("Can't clear an empty graph. Please restart the program to build a fresh graph.");
         }
         delete [] hash_list;
         hash_list = new Vertex<Type>[PRIMENUMBER]; //size of 31 (prime number better for hash table)
@@ -863,7 +866,10 @@ class DirGraph
     //Default Destructor
     ~DirGraph()
     {
+      if(!empty())
+      {
         clear();
+      }
     }
     //===========================HELPER FUNCTIONS BELOW===========================//
     //Finds the requested Vertex
@@ -877,7 +883,7 @@ class DirGraph
           return &hash_list[(v + j * j) % updated_size];
         }
       }
-      throw runtime_error("Vertex requested not found!");
+      throw runtime_error("Requested Vertex was not found!");
     }
 
 /*
