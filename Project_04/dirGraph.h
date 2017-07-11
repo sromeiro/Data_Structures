@@ -384,7 +384,7 @@ class DirGraph
         //Do the same for the other edge
       }
     }
-    void shortPath(char v1 ,char v2)
+    void shortPath(char v1)
     {
         int size = NumberConnected(v1); //get total size of of vertices for array
         char vertex_array[size];
@@ -500,10 +500,6 @@ class DirGraph
         for(int s = 0;s<size;s++)
         {
             cout<<vertex_array[s]<<" "<<tot_distance[s]<<endl;
-            if(vertex_array[s]==v2)
-            {
-                return;
-            }
         }
     }
 

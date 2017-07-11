@@ -381,13 +381,11 @@ int main()
         case 8:
           try
           {
-            char fromVertex, toVertex;
+            char fromVertex;
             cout << "Enter the starting and ending vertex you would like the shortest path to" << endl;
             cout << "Starting Vertex: ";
             cin >> fromVertex;
-            cout << "Ending Vertex: ";
-            cin >> toVertex;
-            my_dir.shortPath(fromVertex, toVertex);
+            my_dir.shortPath(fromVertex);
             my_dir.reset();
           }
           catch(const runtime_error& notFound)
