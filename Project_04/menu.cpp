@@ -3,8 +3,8 @@
 #include"edge.h"
 #include"dirGraph.h"
 
-#define FILENAME "graph.txt" //Change file name here if needed.
-//#define FILENAME "C:\\Users\\Brett\\ClionProjects\\Project3_sub\\Project_04\\graph.txt"
+//#define FILENAME "graph.txt" //Change file name here if needed.
+#define FILENAME "C:\\Users\\Brett\\ClionProjects\\Project3_sub\\Project_04\\graph.txt"
 
 using namespace std;
 int main()
@@ -41,12 +41,9 @@ int main()
   }
 
 //-------------------------Test Block for DirGraph----------------------------//
-
+/*
   try
   {
-    cout << endl;
-    my_dir.insert('A', 'B', 16);
-    /*
     //Try getting information for the requested vertex
     cout<<my_dir.getVertex('B').getData()<<": number of edges "<<my_dir.getVertex('B').getNumEdges()<<endl;
     cout<<"Check for D : "<<my_dir.getVertex('D').getData()<<" and degree: "<<my_dir.degree('D')<<endl;
@@ -82,42 +79,28 @@ int main()
 //    my_dir.reset();
 //    cout<<"TESTING BFS"<<endl;
 //    my_dir.BFS('A');
-*/
   }
   catch(const runtime_error& notFound)
   {
     //Failed getting information for requested vertex
     cerr << notFound.what() << endl;
   }
-
-
-
+*/
 
 
 //-------------------------Test Block for Graph-------------------------------//
 
   try
   {
-    cout << "\nRunning BFS, DFS and MST BEFORE insertions" << endl;
-    cout<<"RUNNNING BFS"<<endl;
-    myGraph.BFS('A');
-    myGraph.reset();
-    cout<<"RUNNNING DFS"<<endl;
-    myGraph.DFS('C');
-    myGraph.reset();
-    cout<<"RUNNIN MST (PRIM'S ALGORITHM)"<<endl;
-    cout<<"TOTAL : "<<myGraph.MST('A')<<endl;
-    myGraph.reset();
-    cout<<"IS CONNECTED : "<<myGraph.isConnected()<<endl<<endl;
+//    Vertex<int> *testVertex = new Vertex<int>();
+//    testVertex = myGraph.findVertex('A');
+//    cout << "Found vertex: " << testVertex->getData() << endl;
+//    cout << "This vertex has: " << testVertex->getNumEdges() << " edges" << endl;
+//
+//    myGraph.insert('A', 'B', 16);
+//
+//    cout << "This vertex NOW has: " << testVertex->getNumEdges() << " edges" << endl;
 
-    Vertex<int> *testVertex = new Vertex<int>();
-    testVertex = myGraph.findVertex('A');
-    cout << "Found vertex: " << testVertex->getData() << endl;
-    cout << "This vertex has: " << testVertex->getNumEdges() << " edges" << endl;
-
-    myGraph.insert('A', 'B', 16);
-
-    cout << "This vertex NOW has: " << testVertex->getNumEdges() << " edges" << endl << endl;
     //Vertex<int> *testVertex = new Vertex<int>();
     //testVertex = myGraph.findVertex('S');
     //cout << "Found vertex: " << testVertex->getData() << endl;
@@ -129,18 +112,25 @@ int main()
 //    my_dir.BFS('A');
 //    my_dir.reset();
 //    cout<<"RUNNING BFS"<<endl;
-    cout << "Running BFS, DFS and MST AFTER insertions" << endl;
-    myGraph.BFS('A');
-    myGraph.reset();
-    cout<<"RUNNNING DFS"<<endl;
-    myGraph.DFS('C');
-    myGraph.reset();
-    cout<<"RUNNIN MST (PRIM'S ALGORITHM)"<<endl;
-    cout<<"TOTAL : "<<myGraph.MST('A')<<endl;
-    myGraph.reset();
-    cout<<"IS CONNECTED : "<<myGraph.isConnected()<<endl;
+//    myGraph.BFS('A');
+//    myGraph.reset();
+//    cout<<"RUNNNING DFS"<<endl;
+//    myGraph.DFS('C');
+//    myGraph.reset();
+//    cout<<"RUNNIN MST (PRIM'S ALGORITHM)"<<endl;
+//    cout<<"TOTAL : "<<myGraph.MST('A')<<endl;
+//    myGraph.reset();
+//    cout<<"IS CONNECTED : "<<myGraph.isConnected()<<endl;
+//    cout<<"INCOMING : "<<my_dir.inDegree('S')<<endl;
+//    cout<<"OUTGOING : "<<my_dir.outDegree('S')<<endl;
+
+      //my_dir.shortPath('A','E');
 
 
+//      myGraph.insert('A','B',16);
+//      myGraph.MST('A');
+
+      my_dir.MST('A');
   }
   catch(const runtime_error& notFound)
   {

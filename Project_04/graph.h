@@ -41,6 +41,10 @@ class Graph
     {
       return total_vertex_count == 0;
     }
+    int edgeCount()
+    {
+        return total_edge_count;
+    }
 
 /******************************************************************************/
     //Returns the number of edges a particular Vertex has if Vertex is found
@@ -337,7 +341,11 @@ class Graph
                 {
 
                     the_queue2.push(lowest_edge.vertex_two); //push our new lowest weighted edge / vertex into queue
-                    lowest_edge.vertex_two->visisted = 1;   //set its visisted to 1
+//                    if(lowest_edge)
+//                    {
+                        lowest_edge.vertex_two->visisted = 1;   //set its visisted to 1
+//                    }
+                    //lowest_edge.vertex_two->visisted = 1;   //set its visisted to 1
                     cout<<"["<<lowest_edge.vertex_one->data<<"] "<<"["<<lowest_edge.vertex_two->data<<"] "<<lowest_weight<<endl;
                     total_to_return += lowest_weight;        //add our weights at end of each for loop
                     lowest_weight = 100000; //reset lowest weight here
