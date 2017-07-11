@@ -153,8 +153,6 @@ class DirGraph
         int checker = 0;
         while(run2)
         {
-            //if(found_vertex.data != NULL)
-//            found_vertex = found_vertex->lowestEdgeVertexNotVisited();  //find adjacent lowest
             checker = found_vertex->BoolVisted();
             if(checker)
             {
@@ -185,7 +183,6 @@ class DirGraph
     void BFS(char v) {
         queue<Vertex<Type> *> the_queue;
         Vertex<Type> * found_vertex;
-        //Vertex<Type> * temp1; Not needed?
         int run = 1, j = 0, num_in_queue = 0;
         while (run) {
             if (hash_list[(v + j * j) % updated_size].getData() == v) //found our vertex
@@ -212,8 +209,6 @@ class DirGraph
         int checker = 0;
         while(run2)
         {
-            //if(found_vertex.data != NULL)
-            //found_vertex = temp->lowestEdgeVertexNotVisited();  //find adjacent lowest
             checker = temp->BoolVisted();
             if(checker)
             {
@@ -285,17 +280,14 @@ class DirGraph
             for(int i=0; vertexCount> i; i++)
             {
                 file>>vertex;
-                //cout<<vertex;
                 Vertex<Type> new_vertex = Vertex<Type>(vertex); //create a new vertex
                 int run = 1; //reset our run
                 int j = 0;   //reset our j for algorithm
-                //int k = 0; Not needed or used?
                 while(run)
                 {
                     if (!hash_list[(vertex + j * j) % updated_size].getData()) //check for empty spot in the array
                     {
                         hash_list[(vertex + j * j) % updated_size] = new_vertex; //place the new vertex in empty spot
-                        //cout << " HAS BEEN PLACED IN HASH AT : "<<(vertex + j * j) % updated_size<< endl;
                         vertices[total_vertex_count] = new_vertex.data;                                                                //place our vertex in seperate array to reset visited
                         total_vertex_count++; // +1 to total vertex count
                         run = 0; //break our while loop since we placed our vertex in our array
@@ -335,7 +327,6 @@ class DirGraph
                                 Edge<Type> new_edge = Edge<Type>(&hash_list[one_loc],&hash_list[two_loc],weight);         //create new edge
                                 hash_list[one_loc].add_edge(new_edge);
                                 hash_list[two_loc].incomingInc();//add new edge to the adj list
-                                //cout<<"NEW EDGE CREATED FOR "<<hash_list[one_loc].data<<" ---TO---> "<<hash_list[two_loc].data<<" WITH WEIGHT OF : "<<new_edge.getWeight()<<endl;
                                 j=11; //edge has been set and we can break our two for loops
                                 i=11;
                                 total_edge_count++; //add one to our total edge count
@@ -363,8 +354,6 @@ class DirGraph
             }
         }
     }
-
-
     //Adds an edge between existing vertices. If weight = 0, remove that edge
     void insert(char v1, char v2, double weight)
     {
@@ -372,17 +361,10 @@ class DirGraph
       {
         throw runtime_error("Invalid weight entered!");
       }
-
-      //cout << "Called INSERT" << endl;
-
       Vertex<Type> * fromVertex;
       Vertex<Type> * toVertex;
-      //cout << "Before findVertex1" << endl;
       fromVertex = findVertex(v1);
-      //cout << "Before findVertex2" << endl;
       toVertex = findVertex(v2);
-      //cout << "Before Not exists test" << endl;
-
       if(!fromVertex->findEdge(toVertex->getData()))
       {
         //Edge between FROM ---> TO does NOT exist. Create one.
@@ -401,110 +383,7 @@ class DirGraph
 
         //Do the same for the other edge
       }
-      //cout << "Ending INSERT" << endl;
     }
-
-/*
-    double MST(char v)
-    {
-        queue<Vertex<Type> *> the_queue;
-        queue<Vertex<Type> *> the_queue2;
-        Vertex<Type> *found_vertex;
-        //Vertex<Type> *temp1; Not needed?
-        //Vertex<Type> *temp2; Not needed?
-        int run = 1, j = 0, num_in_queue = 0;
-        double total_to_return = 0, lowest_weight = 0;
-        //FIND THE VERTEX FOR STARTING POINT HERE
-        while (run)
-        {
-            if (hash_list[(v + j * j) % updated_size].getData() == v) //found our vertex
-            {
-                found_vertex = &hash_list[(v + j * j) % updated_size];
-                run = 0; //end loop
-            }
-            j++;
-            if (j == 10) //a base case of 10 loops and cant find the node
-            {
-              throw runtime_error("Requested Vertex was not found!");
-            }
-        }
-        found_vertex->visited = 1;     //node has been visited
-        the_queue.push(found_vertex);
-        num_in_queue++;
-        int run2 = 1;
-        Vertex<Type> *temp;
-        Edge<Type> the_edge;
-        Edge<Type> lowest_edge;
-        temp = found_vertex;
-        int checker = 0,g=0;
-        int fail_checker = 0;
-        while (run2) {
-            //THIS WILL DEQUEUE THEN ENQUE AFTER GOING THROUGH ALL AND ENDING WITH SAME VERTEXS IN QUEUE
-            fail_checker = 0;
-            g=the_queue.size();
-            for (int k = 0; k < g; k++) //LOOP THROUGH ARE VERTEX IN STORED IN QUEUE TO FIND LOWEST WEIGHT
-            {
-                temp = the_queue.front(); //get our front
-                the_queue.pop();          //pop it
-                the_queue2.push(temp);     //PUSH IT TO OUR SPARE QUEUE!
-                checker = temp->BoolVisted();               //checker returns a bool if there is unvisited edges in vertex
-                if (checker)
-                {
-                    the_edge = temp->lowestWeightNotVisited();  //get the vertex with the lowest weight
-                    if (k == 0) //FIRST PASS NOTHING TO COMPARE (the found lowest should be set for base)
-                    {
-                        if(the_edge.vertex_two->visited == 1)
-                        {
-                            lowest_weight = 10000;
-                        }
-                        else
-                        {
-                            lowest_weight = the_edge.weight;
-                            lowest_edge = the_edge;
-                        }
-                    }
-                    else
-                    {
-
-                        if(the_edge.weight < lowest_weight)
-                        {
-                            lowest_edge = the_edge;
-                            lowest_weight = the_edge.weight;
-                        }
-                    }
-                }
-                else
-                {
-                    fail_checker++;
-
-                    if(fail_checker==g)
-                    {
-                        return total_to_return;
-                    }
-
-                }
-
-                if(the_queue.empty())
-                {
-
-                        the_queue2.push(lowest_edge.vertex_two); //push our new lowest weighted edge / vertex into queue
-                        lowest_edge.vertex_two->visited = 1;   //set its visited to 1
-                    cout<<"["<<lowest_edge.vertex_one->data<<"] "<<"["<<lowest_edge.vertex_two->data<<"] "<<lowest_weight<<endl;
-                        total_to_return += lowest_weight;        //add our weights at end of each for loop
-                        lowest_weight = 100000; //reset lowest weight here
-                        int z = the_queue2.size();
-                        for(int v = 0; v < z;v++)
-                        {
-                            the_queue.push(the_queue2.front());  //PUSH EVERYTHING BACK TO OUR ORIGINAL QUE
-                            the_queue2.pop();                    //EMPTY SECOND QUEUE
-                        }
-                }
-            }
-        }
-        return 0; //Fixing end of control warning. Should never reach this level.
-    }
-*/
-
     void shortPath(char v1 ,char v2)
     {
         int size = NumberConnected(v1); //get total size of of vertices for array
@@ -512,7 +391,6 @@ class DirGraph
         int size_tracker=1;
         stack<Vertex<Type> *> the_stack;
         Vertex<Type> * found_vertex;
-        //Vertex<Type> * temp1; Not needed?
         int run = 1,j = 0,num_in_stack = 0;
         while (run)
         {
@@ -535,8 +413,6 @@ class DirGraph
         int checker = 0;
         while(run2)
         {
-            //if(found_vertex.data != NULL)
-//            found_vertex = found_vertex->lowestEdgeVertexNotVisited();  //find adjacent lowest
             checker = found_vertex->BoolVisted();
             if(checker)
             {
@@ -563,36 +439,20 @@ class DirGraph
                 run2 = 0;
             }
         }
-
-
-
         int final[size];                //final array signals 0 or 1 for final distance or not
         double tot_distance[size];      //array to track the min total distance of the vertices
-//Not Used?        int prev[size];             //array to track the previous vertex to follow back to root (v1) to show path
-
         for(int i = 0;i<size;i++)       //preset all to defaults
         {
             final[i] = 0;               //set all to 0 since not final
             tot_distance[i] = 1000000;  //set all total disnances to "infinity"
-//Not Used?            prev[i] = 0;        //all previous vertex set to root
         }
         Vertex<Type> * temp = findVertex(v1); //first find our original
         tot_distance[0] = 0;                  //first is total distance of zero
         int run3 = 1;
-//Not Used?        int first_run = 1;
-//Not Used?        int vertex_count = 1;
         int lowest = 0 ;
-//Not Used?        int previousChar;
         int last_vert;
         while(run3)
         {
-//            for(int y = 0;y<size;y++)
-//            {
-//                if(temp->data == vertex_array[y])
-//                {
-//                    last_vert = y;
-//                }
-//            }
             for(int p = 0; p<size ;p++)
             {
                 if(tot_distance[p] <= lowest && final[p]==0)   //total distance is less and final marker is 0
@@ -618,7 +478,6 @@ class DirGraph
                         if((tot_distance[last_vert] + temp->outgoing[j].weight) < tot_distance[z] )
                         {
                             tot_distance[z] = (tot_distance[last_vert] + temp->outgoing[j].weight); //if it has a lower weight
-//Not Used?                            prev[z] = last_vert;                                                  //set the previous
                         }
                     }
                 }
@@ -715,7 +574,7 @@ class DirGraph
         {
           throw runtime_error("Can't clear an empty graph. Please restart the program to build a fresh graph.");
         }
-        delete [] hash_list;
+        delete[] hash_list;
         hash_list = new Vertex<Type>[PRIMENUMBER]; //size of 31 (prime number better for hash table)
         total_edge_count = 0;
         total_vertex_count = 0;
@@ -743,169 +602,6 @@ class DirGraph
       }
       throw runtime_error("Requested Vertex was not found!");
     }
-
-/*
-    Vertex<Type> getVertex(char vertex)
-    {
-        int ver_loc;
-        for(int i = 0 ; i <10 ; i++)
-        {
-            ver_loc = (vertex + i * i) % updated_size;
-            if(hash_list[ver_loc].data == vertex)
-            {
-                return hash_list[ver_loc];
-            }
-        }
-        //return NULL; //THIS IS JUST A TEST FUCNTION (NEED CATCH/THROW)
-        throw runtime_error("Vertex not found!"); //Fixes the warning
-    }
-
-    double distance(char v1 ,char v2)
-    {
-        int size = NumberConnected(v1); //get total size of of vertices for array
-        char vertex_array[size];
-        int size_tracker=1;
-        stack<Vertex<Type> *> the_stack;
-        Vertex<Type> * found_vertex;
-        //Vertex<Type> * temp1; Not needed?
-        int run = 1,j = 0,num_in_stack = 0;
-        while (run)
-        {
-            if (hash_list[(v1 + j * j) % updated_size].getData()==v1) //found our vertex
-            {
-                found_vertex = &hash_list[(v1+j*j)% updated_size];
-                run = 0; //end loop
-            }
-            j++;
-            if(j==10) //a base case of 10 loops and cant find the node
-            {
-              throw runtime_error("Requested Vertex was not found!");
-            }
-        }
-        vertex_array[0] = found_vertex->getData();
-        found_vertex->visited = 1;     //node has been visited
-        the_stack.push(found_vertex);
-        num_in_stack++;
-        int run2 = 1;
-        int checker = 0;
-        while(run2)
-        {
-            //if(found_vertex.data != NULL)
-//            found_vertex = found_vertex->lowestEdgeVertexNotVisited();  //find adjacent lowest
-            checker = found_vertex->BoolVisted();
-            if(checker)
-            {
-                found_vertex = found_vertex->lowestEdgeVertexNotVisited();  //find adjacent lowest
-                vertex_array[size_tracker++] = found_vertex->getData();
-                found_vertex->visited = 1;                                 //make as visited
-                the_stack.push(found_vertex);                              //push vertex onto stack
-                found_vertex = the_stack.top();
-            }
-            else
-            {
-                if(!the_stack.empty())
-                {
-                    found_vertex = the_stack.top();                            //vertex is now top of stack since previous node had no other adjacent
-                }
-                checker = found_vertex->BoolVisted();
-                if(!checker) {
-                    the_stack.pop();                                           //pop it off
-                }
-            }
-            if(the_stack.empty())                                          //empty stack so we have goen through all vertexs possible
-            {
-                cout<<endl;
-                run2 = 0;
-            }
-        }
-
-
-
-        int final[size];                //final array signals 0 or 1 for final distance or not
-        double tot_distance[size];      //array to track the min total distance of the vertices
-        int prev[size];             //array to track the previous vertex to follow back to root (v1) to show path
-
-        for(int i = 0;i<size;i++)       //preset all to defaults
-        {
-            final[i] = 0;               //set all to 0 since not final
-            tot_distance[i] = 1000000;  //set all total disnances to "infinity"
-            prev[i] = 0;        //all previous vertex set to root
-        }
-        Vertex<Type> * temp = findVertex(v1); //first find our original
-        tot_distance[0] = 0;                  //first is total distance of zero
-        int run3 = 1;
-        int first_run = 1;
-        int vertex_count = 1;
-        int lowest = 0 ;
-        int previousChar;
-        int last_vert;
-        while(run3)
-        {
-//            for(int y = 0;y<size;y++)
-//            {
-//                if(temp->data == vertex_array[y])
-//                {
-//                    last_vert = y;
-//                }
-//            }
-            for(int p = 0; p<size ;p++)
-            {
-                if(tot_distance[p] <= lowest && final[p]==0)   //total distance is less and final marker is 0
-                {
-                    lowest = p ;                               //lowest is p in array
-                }
-            }
-            temp = findVertex(vertex_array[lowest]);
-            for(int y = 0;y<size;y++)
-            {
-                if(temp->data == vertex_array[y])
-                {
-                    last_vert = y;
-                }
-            }
-            final[lowest] = 1;
-            for(int j = 0; j < temp->edgeCount;j++) //go through all edges of the current vertex and update our arrays
-            {
-                for(int z = 0; z<size ; z++)
-                {
-                    if(vertex_array[z] == temp->outgoing[j].vertex_two->data && final[z]!=1)
-                    {
-                        if((tot_distance[last_vert] + temp->outgoing[j].weight) < tot_distance[z] )
-                        {
-                            tot_distance[z] = (tot_distance[last_vert] + temp->outgoing[j].weight); //if it has a lower weight
-                            prev[z] = last_vert;                                                  //set the previous
-                        }
-                    }
-                }
-            }
-            int to_break=0;
-            for(int a=0;a<size;a++)
-            {
-                if(final[a]==1)
-                {
-                    to_break++;
-                }
-            }
-            if(to_break==size)
-            {
-                run3 = 0;
-            }
-            lowest = 100000000;
-        }
-        reset();
-        char start = vertex_array[0];
-        for(int s = 0;s<size;s++)
-        {
-            if(vertex_array[s]==v2)
-            {
-                cout<<"["<<start<<"] ---> ["<<vertex_array[s]<<"] "<<tot_distance[s]<<endl;
-                return tot_distance[s];
-            }
-        }
-    }
-*/
-
-
 };
 
 #endif

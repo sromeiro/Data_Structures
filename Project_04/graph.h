@@ -149,7 +149,6 @@ class Graph
     {
         stack<Vertex<Type> *> the_stack;
         Vertex<Type> * found_vertex;
-        //Vertex<Type> * temp1; Not needed?
         int run = 1,j = 0,num_in_stack = 0;
         while (run)
         {
@@ -177,8 +176,6 @@ class Graph
         int checker = 0;
         while(run2)
         {
-            //if(found_vertex.data != NULL)
-//            found_vertex = found_vertex->lowestEdgeVertexNotVisited();  //find adjacent lowest
             checker = found_vertex->BoolVisted();
             if(checker)
             {
@@ -276,8 +273,6 @@ class Graph
         queue<Vertex<Type> *> the_queue;
         queue<Vertex<Type> *> the_queue2;
         Vertex<Type> *found_vertex;
-        //Vertex<Type> *temp1; Not needed?
-        //Vertex<Type> *temp2; Not needed?
         int run = 1, j = 0, num_in_queue = 0;
         double total_to_return = 0, lowest_weight = 0;
         //FIND THE VERTEX FOR STARTING POINT HERE
@@ -354,11 +349,7 @@ class Graph
                 {
 
                     the_queue2.push(lowest_edge.vertex_two); //push our new lowest weighted edge / vertex into queue
-//                    if(lowest_edge)
-//                    {
-                        lowest_edge.vertex_two->visited = 1;   //set its visited to 1
-//                    }
-                    //lowest_edge.vertex_two->visited = 1;   //set its visited to 1
+                    lowest_edge.vertex_two->visited = 1;   //set its visited to 1
                     cout<<"["<<lowest_edge.vertex_one->data<<"] "<<"["<<lowest_edge.vertex_two->data<<"] "<<lowest_weight<<endl;
                     total_to_return += lowest_weight;        //add our weights at end of each for loop
                     lowest_weight = 100000; //reset lowest weight here
@@ -413,12 +404,10 @@ class Graph
       if(vertexCount%2 == 0) //even count
       {
           vertexCount = (vertexCount/2);
-          //cout << "Vertex Count was EVEN and is now: " << vertexCount << endl;
       }
       else
       {
           vertexCount = (vertexCount/2)+1;
-          //cout << "Vertex Count was ODD and is now: " << vertexCount << endl;
       }
 
       //--------------Initialization section below----------------------------//
@@ -431,10 +420,6 @@ class Graph
         for(int i=0; vertexCount> i; i++)
         {
           file >> vertex;
-          //int vertexNumber = vertex;
-          //cout << "Vertex " << vertex << " number is: " << vertexNumber << endl;
-          //cout << vertexNumber << " % " << updated_size << " = " << vertex % updated_size << endl;
-          //cout << vertex;
           Vertex<Type> new_vertex = Vertex<Type>(vertex); //create a new vertex
           int run = 1; //reset our run
           int j = 0;   //reset our j for algorithm
@@ -444,7 +429,6 @@ class Graph
             if (!hash_list[(vertex + j * j) % updated_size].getData()) //check for empty spot in the array
             {
               hash_list[(vertex + j * j) % updated_size] = new_vertex; //place the new vertex in empty spot
-              //cout << vertex << " HAS BEEN PLACED IN HASH AT : " << (vertex + j * j) % updated_size << endl;
               vertices[total_vertex_count] = new_vertex.data;                                                                //place our vertex in seperate array to reset visited
               start = new_vertex.data;                                                                                       //using this for is connected so we know atleast one vertex to start from
               total_vertex_count++; // +1 to total vertex count
@@ -487,11 +471,6 @@ class Graph
                   Edge<Type> new_edge2 = Edge<Type>(&hash_list[two_loc],&hash_list[one_loc],weight);        //create new edge from TWO to ONE
                   hash_list[one_loc].add_edge(new_edge);                                                    //add new edge to vertex ONE
                   hash_list[two_loc].add_edge(new_edge2);                                                   //add new edge to vertex TWO
-                  //cout << "NEW EDGE CREATED FOR " << hash_list[one_loc].data;
-                  //cout << " ---TO---> " << hash_list[two_loc].data;
-                  //cout << ", AND FROM " << hash_list[two_loc].data;
-                  //cout << " ---TO---> " << hash_list[one_loc].data;
-                  //cout << " WITH WEIGHT OF : "<<new_edge.getWeight()<<endl;
                   j=11; //edge has been set and we can break our two for loops
                   i=11;
                   total_edge_count++; //add one to our total edge count
@@ -502,7 +481,6 @@ class Graph
         }
         file.close();
       }
-      //cout << "buildGraph ENDED" << endl;
     }
 
 /******************************************************************************/
@@ -584,7 +562,6 @@ class Graph
 
         //Do the same for the other edge
       }
-      //cout << "Ending INSERT" << endl;
     }
 
 /******************************************************************************/

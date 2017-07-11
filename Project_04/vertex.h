@@ -35,7 +35,7 @@ class Vertex
     int incoming;
 
   public:
-    Vertex() : data(0) {};     //empty contructor to create list in classes
+    Vertex() : data(0),edgeCount(0) {};     //empty contructor to create list in classes
 
     Vertex(char the_data)
     {
@@ -262,7 +262,7 @@ class Vertex
     {
       if(edgeCount >= 1)
       {
-          delete []outgoing;
+          delete[] outgoing;
       }
     }
 
