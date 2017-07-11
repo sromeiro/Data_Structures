@@ -283,13 +283,54 @@ int main()
           }
           break;
         case 8:
-          //Code
+          try
+          {
+            char data;
+            cout << "Enter the starting vertex for the Minimum Spanning Tree" << endl;
+            cout << "Starting Vertex: ";
+            cin >> data;
+            myGraph.MST(data);
+            myGraph.reset();
+          }
+          catch(const runtime_error& notFound)
+          {
+            cerr << notFound.what() << endl;
+          }
           break;
         case 9:
-          //Code
+          try
+          {
+            myGraph.clear();
+            cout << "Cleared!" << endl;
+          }
+          catch(const runtime_error& empty)
+          {
+            cerr << empty.what() << endl;
+          }
           break;
         case 10:
-          //Code
+          try
+          {
+            char fromVertex, toVertex;
+            double weight;
+            cout << "Inserting a new edge. ";
+            cout << "Please enter the Starting Vertex, ";
+            cout << "the Ending Vertex and the weight of the Edge to be added" << endl;
+            cout << "NOTE: Negative weights are not accepted" << endl;
+            cout << "Starting Vertex: ";
+            cin >> fromVertex;
+            cout << "Ending Vertex: ";
+            cin >> toVertex;
+            cout << "Weight: ";
+            cin >> weight;
+
+            myGraph.insert(fromVertex, toVertex, weight);
+
+          }
+          catch(const runtime_error& notFound)
+          {
+            cerr << notFound.what() << endl;
+          }
           break;
         case 11:
           cout << "\nExiting program" << endl;
