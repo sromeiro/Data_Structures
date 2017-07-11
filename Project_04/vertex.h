@@ -31,7 +31,7 @@ class Vertex
     //list <int> adjacencyList;
     Edge<Type> * outgoing;     //store the list of edges
     int edgeCount;             //Keeps a count of how many Edges this vertex has
-    int visisted;              //keep track of vertex being visited
+    int visited;              //keep track of vertex being visited
     int incoming;
 
   public:
@@ -42,7 +42,7 @@ class Vertex
         data = the_data;       //since our data is the vertex itself ( A , B , C , D etc...)
         edgeCount = 0;         //when created has zero adjacent edges (must be added)
         outgoing = new Edge<Type>[10];  //create a list of 10 edges
-        visisted = 0;
+        visited = 0;
         incoming = 0;
     }
 
@@ -145,11 +145,11 @@ class Vertex
             temp2 = outgoing[i].vertex_two;
             if(temp->data < temp2->data)
             {
-                if(temp->visisted == 1)          //already been visisted
+                if(temp->visited == 1)          //already been visited
                 {
                     temp = temp2;
                 }
-            }else if(temp2->visisted == 1)
+            }else if(temp2->visited == 1)
             {
                 //do nothing dont, dont change our temp
             }
@@ -158,7 +158,7 @@ class Vertex
                 temp = temp2;
             }
         }
-        if(temp->visisted==1) //went through all and lowest has been visisted
+        if(temp->visited==1) //went through all and lowest has been visited
         {
             return  NULL;
         }
@@ -182,12 +182,12 @@ class Vertex
             temp2 = outgoing[i].vertex_two;
             if(temp->data < temp2->data)
             {
-                if(temp->visisted == 1)          //already been visisted
+                if(temp->visited == 1)          //already been visited
                 {
                     temp = temp2;
                 }
             }
-            else if(temp2->visisted == 1)
+            else if(temp2->visited == 1)
             {
                 //do nothing dont, dont change our temp
             }
@@ -196,7 +196,7 @@ class Vertex
                 temp = temp2;
             }
         }
-        if(temp->visisted==1) //went through all and lowest has been visisted
+        if(temp->visited==1) //went through all and lowest has been visited
         {
             return  0;
         }
@@ -218,7 +218,7 @@ class Vertex
         }
         for(int i = 1; i < edgeCount; i++)             //start our loop from second edge in list
         {
-//            if(outgoing[i].vertex_one->visisted==1)
+//            if(outgoing[i].vertex_one->visited==1)
 //            {
 //
 //            }else {
@@ -226,7 +226,7 @@ class Vertex
 //            }
             if(temp.weight < temp2.weight)
             {
-                if(temp.vertex_two->visisted == 1)          //already been visisted
+                if(temp.vertex_two->visited == 1)          //already been visited
                 {
                     temp = temp2;
                 }
@@ -236,14 +236,14 @@ class Vertex
                 temp3= temp;
                 temp = temp2;
             }
-                if(temp.vertex_two->visisted == 1)          //already been visisted
+                if(temp.vertex_two->visited == 1)          //already been visited
                 {
                     temp = temp3;
                 }
 
 //            }
         }
-        if(temp.vertex_two->visisted==1) //went through all and lowest has been visisted
+        if(temp.vertex_two->visited==1) //went through all and lowest has been visited
         {
             //return  0;
         }

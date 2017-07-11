@@ -279,7 +279,7 @@ class DirGraph
             for(int i=0; vertexCount> i; i++)
             {
                 file>>vertex;
-                cout<<vertex;
+                //cout<<vertex;
                 Vertex<Type> new_vertex = Vertex<Type>(vertex); //create a new vertex
                 int run = 1; //reset our run
                 int j = 0;   //reset our j for algorithm
@@ -289,7 +289,7 @@ class DirGraph
                     if (!hash_list[(vertex + j * j) % updated_size].getData()) //check for empty spot in the array
                     {
                         hash_list[(vertex + j * j) % updated_size] = new_vertex; //place the new vertex in empty spot
-                        cout << " HAS BEEN PLACED IN HASH AT : "<<(vertex + j * j) % updated_size<< endl;
+                        //cout << " HAS BEEN PLACED IN HASH AT : "<<(vertex + j * j) % updated_size<< endl;
                         vertices[total_vertex_count] = new_vertex.data;                                                                //place our vertex in seperate array to reset visisted
                         total_vertex_count++; // +1 to total vertex count
                         run = 0; //break our while loop since we placed our vertex in our array
@@ -329,7 +329,7 @@ class DirGraph
                                 Edge<Type> new_edge = Edge<Type>(&hash_list[one_loc],&hash_list[two_loc],weight);         //create new edge
                                 hash_list[one_loc].add_edge(new_edge);
                                 hash_list[two_loc].incomingInc();//add new edge to the adj list
-                                cout<<"NEW EDGE CREATED FOR "<<hash_list[one_loc].data<<" ---TO---> "<<hash_list[two_loc].data<<" WITH WEIGHT OF : "<<new_edge.getWeight()<<endl;
+                                //cout<<"NEW EDGE CREATED FOR "<<hash_list[one_loc].data<<" ---TO---> "<<hash_list[two_loc].data<<" WITH WEIGHT OF : "<<new_edge.getWeight()<<endl;
                                 j=11; //edge has been set and we can break our two for loops
                                 i=11;
                                 total_edge_count++; //add one to our total edge count

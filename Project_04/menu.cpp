@@ -3,8 +3,8 @@
 #include"edge.h"
 #include"dirGraph.h"
 
-//#define FILENAME "graph.txt" //Change file name here if needed.
-#define FILENAME "C:\\Users\\Brett\\ClionProjects\\Project3_sub\\Project_04\\graph.txt"
+#define FILENAME "graph.txt" //Change file name here if needed.
+//#define FILENAME "C:\\Users\\Brett\\ClionProjects\\Project3_sub\\Project_04\\graph.txt"
 
 using namespace std;
 int main()
@@ -41,9 +41,10 @@ int main()
   }
 
 //-------------------------Test Block for DirGraph----------------------------//
-/*
+
   try
   {
+/*
     //Try getting information for the requested vertex
     cout<<my_dir.getVertex('B').getData()<<": number of edges "<<my_dir.getVertex('B').getNumEdges()<<endl;
     cout<<"Check for D : "<<my_dir.getVertex('D').getData()<<" and degree: "<<my_dir.degree('D')<<endl;
@@ -60,16 +61,20 @@ int main()
 //    cout<<"TEST LOWEST VERTEX FOR D : "<<my_dir.getVertex('D').lowestEdgeVertexNotVisited().getData()<<endl;
 //    cout<<"TEST LOWEST VERTEX FOR A : "<<my_dir.getVertex('A').lowestEdgeVertexNotVisited().getData()<<endl;
 //    cout<<"TEST LOWEST VERTEX FOR C : "<<my_dir.getVertex('C').lowestEdgeVertexNotVisited().getData()<<endl;
-    cout<<"TEST DFS BELOW"<<endl;
-    my_dir.DFS('A');
-    cout<<"RESETING"<<endl;
-    my_dir.reset();
-    cout<<"TEST BFS BELOW"<<endl;
-    my_dir.BFS('A');
-    cout<<"RESETING"<<endl;
-    my_dir.reset();
-////
+*/
+/*
+      my_dir.insert('A', 'B', 16);
+      cout<<"TEST DFS BELOW"<<endl;
+      my_dir.DFS('A');
+      cout<<"RESETING"<<endl;
+      my_dir.reset();
+      cout<<"TEST BFS BELOW"<<endl;
+      my_dir.BFS('A');
+      cout<<"RESETING"<<endl;
+      my_dir.reset();
       cout<<"RUNNING MST : "<<my_dir.MST('A')<<endl;
+      my_dir.reset();
+*/
 //    my_dir.DFS('A');
 //    cout<<"RESETING VISITED VERTICES"<<endl;
 //    my_dir.reset();
@@ -85,7 +90,6 @@ int main()
     //Failed getting information for requested vertex
     cerr << notFound.what() << endl;
   }
-*/
 
 
 //-------------------------Test Block for Graph-------------------------------//
@@ -130,7 +134,6 @@ int main()
 //      myGraph.insert('A','B',16);
 //      myGraph.MST('A');
 
-      my_dir.MST('A');
   }
   catch(const runtime_error& notFound)
   {
@@ -143,7 +146,6 @@ int main()
 //============================================================================//
 //                         MENU SECTION                                       //
 //============================================================================//
-/*//      <----------REMOVE THIS COMMENT FOR PROPER MENU
   char option; //Used to select between Undirected 'u' and Directed 'd' graphs
   int run_menu = 1;
   cout << "Welcome!\nPlease select from the following options which type of";
@@ -171,11 +173,9 @@ int main()
       cout << " and try again." << endl;
       return 1; //Early termination of program
   }
-*///      <----------REMOVE THIS COMMENT FOR PROPER MENU
 //****************************************************************************//
 //=================BLOCK THAT HANDLES UNDIRECTED GRAPHS=======================//
 //****************************************************************************//
-/*//      <----------REMOVE THIS COMMENT FOR PROPER MENU
   if (option == 'u')
   {
     int num_select; //Used to select from the menu options below
@@ -207,25 +207,77 @@ int main()
       switch (num_select)
       {
         case 1:
-          //Code
+          myGraph.empty() ? cout << "Empty!" << endl : cout << "Not empty!" << endl;
           break;
         case 2:
-          //Code
+          try
+          {
+            char data;
+            cout << "What vertex would you like the degree for?" << endl;
+            cout << "Vertex: ";
+            cin >> data;
+            int degree = myGraph.degree(data);
+            cout << "Degree: " << degree << endl;
+          }
+          catch(const runtime_error& notFound)
+          {
+            cerr << notFound.what() << endl;
+          }
           break;
         case 3:
-          //Code
+          int edges;
+          edges = myGraph.edgeCount();
+          cout << "Number of edges: " << edges << endl;
           break;
         case 4:
-          //Code
+          myGraph.isConnected() ? cout << "Connected!" << endl : cout << "Not connected!" << endl;
           break;
         case 5:
-          //Code
+          try
+          {
+            char fromVertex, toVertex;
+            cout << "Please enter the Vertices you would like adjacency for" << endl;
+            cout << "Starting Vertex: ";
+            cin >> fromVertex;
+            cout << "Ending Vertex: ";
+            cin >> toVertex;
+            double weight = myGraph.adjacent(fromVertex, toVertex);
+            weight == -1 ? cout << "Not adjacent!" << endl : cout << "They are adjacent with an edge of weight " << weight << endl;
+          }
+          catch(const runtime_error& notFound)
+          {
+            cerr << notFound.what() << endl;
+          }
           break;
         case 6:
-          //Code
+          try
+          {
+            char data;
+            cout << "Enter the starting vertex for Depth First Search" << endl;
+            cout << "Starting Vertex: ";
+            cin >> data;
+            myGraph.DFS(data);
+            myGraph.reset();
+          }
+          catch(const runtime_error& notFound)
+          {
+            cerr << notFound.what() << endl;
+          }
           break;
         case 7:
-          //Code
+          try
+          {
+            char data;
+            cout << "Enter the starting vertex for Breadth First Search" << endl;
+            cout << "Starting Vertex: ";
+            cin >> data;
+            myGraph.BFS(data);
+            myGraph.reset();
+          }
+          catch(const runtime_error& notFound)
+          {
+            cerr << notFound.what() << endl;
+          }
           break;
         case 8:
           //Code
@@ -247,11 +299,9 @@ int main()
       }
     }
   }
-*///      <----------REMOVE THIS COMMENT FOR PROPER MENU
 //****************************************************************************//
 //=====================BLOCK THAT DIRECTED GRAPHS=============================//
 //****************************************************************************//
-/*//      <----------REMOVE THIS COMMENT FOR PROPER MENU
   else
   {
     int num_select; //Used to select from the menu options below
@@ -323,7 +373,6 @@ int main()
       }
     }
   }
-*///      <----------REMOVE THIS COMMENT FOR PROPER MENU
   cout << "\nSuccesfull Termination of program" << endl;
   return 0;
 }
