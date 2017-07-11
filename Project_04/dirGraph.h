@@ -647,6 +647,119 @@ class DirGraph
             }
         }
     }
+
+    int NumberConnected(char v)
+    {
+        stack<Vertex<Type> *> the_stack;
+        Vertex<Type> * found_vertex;
+        int total_to_return = 0;
+        //Vertex<Type> * temp1; Not needed?
+        int run = 1,j = 0,num_in_stack = 0;
+        while (run)
+        {
+            if (hash_list[(v + j * j) % updated_size].getData()==v) //found our vertex
+            {
+                found_vertex = &hash_list[(v+j*j)% updated_size];
+                total_to_return++;
+                run = 0; //end loop
+            }
+            j++;
+            if(j==10) //a base case of 10 loops and cant find the node
+            {
+                throw runtime_error("Requested Vertex was not found!");
+            }
+        }
+        found_vertex->visited = 1;     //node has been visited
+        the_stack.push(found_vertex);
+        num_in_stack++;
+        int run2 = 1;
+        int checker = 0;
+        while(run2)
+        {
+            //if(found_vertex.data != NULL)
+//            found_vertex = found_vertex->lowestEdgeVertexNotVisited();  //find adjacent lowest
+            checker = found_vertex->BoolVisted();
+            if(checker)
+            {
+                found_vertex = found_vertex->lowestEdgeVertexNotVisited();  //find adjacent lowest
+                found_vertex->visited = 1;                                 //make as visited
+                the_stack.push(found_vertex);                              //push vertex onto stack
+                found_vertex = the_stack.top();
+                total_to_return++;
+            }
+            else
+            {
+                if(!the_stack.empty())
+                {
+                    found_vertex = the_stack.top();                            //vertex is now top of stack since previous node had no other adjacent
+                }
+                checker = found_vertex->BoolVisted();
+                if(!checker) {
+                    the_stack.pop();                                           //pop it off
+                }
+            }
+            if(the_stack.empty())                                          //empty stack so we have goen through all vertexs possible
+            {
+                cout<<endl;
+                reset(); // reset our visited
+                return total_to_return;
+                run2 = 0;
+            }
+        }
+        return total_to_return; //Fixes warnings. Should never reach this level
+    }
+
+    void clear()
+    {
+        if(empty())
+        {
+          throw runtime_error("Can't clear an empty graph. Please restart the program to build a fresh graph.");
+        }
+        delete [] hash_list;
+        hash_list = new Vertex<Type>[PRIMENUMBER]; //size of 31 (prime number better for hash table)
+        total_edge_count = 0;
+        total_vertex_count = 0;
+    }
+    /******************************************************************************/
+    //Default Destructor
+    ~DirGraph()
+    {
+      if(!empty())
+      {
+        clear();
+      }
+    }
+    //===========================HELPER FUNCTIONS BELOW===========================//
+    //Finds the requested Vertex
+    Vertex<Type> * findVertex(char v)
+    {
+      //Performs 10 iterations searching for requested Vertex before quitting
+      for(int j = 0; j < 10; j++)
+      {
+        if (hash_list[(v + j * j) % updated_size].getData() == v) //make sure we found our correct vertex
+        {
+          return &hash_list[(v + j * j) % updated_size];
+        }
+      }
+      throw runtime_error("Requested Vertex was not found!");
+    }
+
+/*
+    Vertex<Type> getVertex(char vertex)
+    {
+        int ver_loc;
+        for(int i = 0 ; i <10 ; i++)
+        {
+            ver_loc = (vertex + i * i) % updated_size;
+            if(hash_list[ver_loc].data == vertex)
+            {
+                return hash_list[ver_loc];
+            }
+        }
+        //return NULL; //THIS IS JUST A TEST FUCNTION (NEED CATCH/THROW)
+        throw runtime_error("Vertex not found!"); //Fixes the warning
+    }
+
     double distance(char v1 ,char v2)
     {
         int size = NumberConnected(v1); //get total size of of vertices for array
@@ -789,117 +902,6 @@ class DirGraph
                 return tot_distance[s];
             }
         }
-    }
-    int NumberConnected(char v)
-    {
-        stack<Vertex<Type> *> the_stack;
-        Vertex<Type> * found_vertex;
-        int total_to_return = 0;
-        //Vertex<Type> * temp1; Not needed?
-        int run = 1,j = 0,num_in_stack = 0;
-        while (run)
-        {
-            if (hash_list[(v + j * j) % updated_size].getData()==v) //found our vertex
-            {
-                found_vertex = &hash_list[(v+j*j)% updated_size];
-                total_to_return++;
-                run = 0; //end loop
-            }
-            j++;
-            if(j==10) //a base case of 10 loops and cant find the node
-            {
-                throw runtime_error("Requested Vertex was not found!");
-            }
-        }
-        found_vertex->visited = 1;     //node has been visited
-        the_stack.push(found_vertex);
-        num_in_stack++;
-        int run2 = 1;
-        int checker = 0;
-        while(run2)
-        {
-            //if(found_vertex.data != NULL)
-//            found_vertex = found_vertex->lowestEdgeVertexNotVisited();  //find adjacent lowest
-            checker = found_vertex->BoolVisted();
-            if(checker)
-            {
-                found_vertex = found_vertex->lowestEdgeVertexNotVisited();  //find adjacent lowest
-                found_vertex->visited = 1;                                 //make as visited
-                the_stack.push(found_vertex);                              //push vertex onto stack
-                found_vertex = the_stack.top();
-                total_to_return++;
-            }
-            else
-            {
-                if(!the_stack.empty())
-                {
-                    found_vertex = the_stack.top();                            //vertex is now top of stack since previous node had no other adjacent
-                }
-                checker = found_vertex->BoolVisted();
-                if(!checker) {
-                    the_stack.pop();                                           //pop it off
-                }
-            }
-            if(the_stack.empty())                                          //empty stack so we have goen through all vertexs possible
-            {
-                cout<<endl;
-                reset(); // reset our visited
-                return total_to_return;
-                run2 = 0;
-            }
-        }
-        return total_to_return; //Fixes warnings. Should never reach this level
-    }
-
-    void clear()
-    {
-        if(empty())
-        {
-          throw runtime_error("Can't clear an empty graph. Please restart the program to build a fresh graph.");
-        }
-        delete [] hash_list;
-        hash_list = new Vertex<Type>[PRIMENUMBER]; //size of 31 (prime number better for hash table)
-        total_edge_count = 0;
-        total_vertex_count = 0;
-    }
-    /******************************************************************************/
-    //Default Destructor
-    ~DirGraph()
-    {
-      if(!empty())
-      {
-        clear();
-      }
-    }
-    //===========================HELPER FUNCTIONS BELOW===========================//
-    //Finds the requested Vertex
-    Vertex<Type> * findVertex(char v)
-    {
-      //Performs 10 iterations searching for requested Vertex before quitting
-      for(int j = 0; j < 10; j++)
-      {
-        if (hash_list[(v + j * j) % updated_size].getData() == v) //make sure we found our correct vertex
-        {
-          return &hash_list[(v + j * j) % updated_size];
-        }
-      }
-      throw runtime_error("Requested Vertex was not found!");
-    }
-
-/*
-    Vertex<Type> getVertex(char vertex)
-    {
-        int ver_loc;
-        for(int i = 0 ; i <10 ; i++)
-        {
-            ver_loc = (vertex + i * i) % updated_size;
-            if(hash_list[ver_loc].data == vertex)
-            {
-                return hash_list[ver_loc];
-            }
-        }
-        //return NULL; //THIS IS JUST A TEST FUCNTION (NEED CATCH/THROW)
-        throw runtime_error("Vertex not found!"); //Fixes the warning
     }
 */
 
