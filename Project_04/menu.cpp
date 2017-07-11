@@ -134,6 +134,11 @@ int main()
 //      myGraph.insert('A','B',16);
 //      myGraph.MST('A');
 
+<<<<<<< HEAD
+=======
+      my_dir.shortPath('A','H');
+      my_dir.distance('A','H');
+>>>>>>> 8be918a949469b263a2e71162072836d722249e7
   }
   catch(const runtime_error& notFound)
   {
