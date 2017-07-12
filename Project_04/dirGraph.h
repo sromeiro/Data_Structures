@@ -324,12 +324,13 @@ class DirGraph
                             //FOUND BOTH ARE VERTEX IN HAS LIST (THIS SHOULD NEVER REALLY RUN MORE THAN JUST 2 TIMES
                             if(hash_list[two_loc].data == vertex_two)
                             {
-                                Edge<Type> new_edge = Edge<Type>(&hash_list[one_loc],&hash_list[two_loc],weight);         //create new edge
-                                hash_list[one_loc].add_edge(new_edge);
-                                hash_list[two_loc].incomingInc();//add new edge to the adj list
+//                                Edge<Type> new_edge = Edge<Type>(&hash_list[one_loc],&hash_list[two_loc],weight);         //create new edge
+//                                hash_list[one_loc].add_edge(new_edge);
+                                insert(hash_list[one_loc].data,hash_list[two_loc].data,weight);
+//                                hash_list[two_loc].incomingInc();//add new edge to the adj list
                                 j=11; //edge has been set and we can break our two for loops
                                 i=11;
-                                total_edge_count++; //add one to our total edge count
+//                                total_edge_count++; //add one to our total edge count
                             }
                         }
                     }
@@ -370,6 +371,8 @@ class DirGraph
         //Edge between FROM ---> TO does NOT exist. Create one.
         Edge<Type> new_edge = Edge<Type>(fromVertex, toVertex, weight);
         fromVertex->add_edge(new_edge);
+          toVertex->incomingInc();//add new edge to the adj list                <-----------------------------------------------------------------------------------
+          total_edge_count++; //add one to our total edge count                <------------------------------------------------------------
         cout << "Edge didn't exist so I created one for you" << endl;
       }
 
@@ -439,23 +442,29 @@ class DirGraph
                 run2 = 0;
             }
         }
+        int prev[size];
         int final[size];                //final array signals 0 or 1 for final distance or not
         double tot_distance[size];      //array to track the min total distance of the vertices
         for(int i = 0;i<size;i++)       //preset all to defaults
         {
             final[i] = 0;               //set all to 0 since not final
             tot_distance[i] = 1000000;  //set all total disnances to "infinity"
+            prev[i]=0;
         }
         Vertex<Type> * temp = findVertex(v1); //first find our original
         tot_distance[0] = 0;                  //first is total distance of zero
         int run3 = 1;
+        int first_run = 1;
+        int vertex_count = 1;
+        int previousChar;
         int lowest = 0 ;
         int last_vert;
         while(run3)
         {
+
             for(int p = 0; p<size ;p++)
             {
-                if(tot_distance[p] <= lowest && final[p]==0)   //total distance is less and final marker is 0
+                if(tot_distance[p]<=tot_distance[lowest] && final[p]==0)   //total distance is less and final marker is 0
                 {
                     lowest = p ;                               //lowest is p in array
                 }
@@ -471,13 +480,14 @@ class DirGraph
             final[lowest] = 1;
             for(int j = 0; j < temp->edgeCount;j++) //go through all edges of the current vertex and update our arrays
             {
-                for(int z = 0; z<size ; z++)
+                for(int z = 0; z<=size ; z++)
                 {
                     if(vertex_array[z] == temp->outgoing[j].vertex_two->data && final[z]!=1)
                     {
                         if((tot_distance[last_vert] + temp->outgoing[j].weight) < tot_distance[z] )
                         {
                             tot_distance[z] = (tot_distance[last_vert] + temp->outgoing[j].weight); //if it has a lower weight
+                            prev[z] = last_vert;
                         }
                     }
                 }
@@ -490,16 +500,22 @@ class DirGraph
                     to_break++;
                 }
             }
-            if(to_break==size)
+            for(int z= 0;z<size;z++)
+            {
+                if(final[z]==0)
+                {
+                    lowest = z;
+                }
+            }
+            if(to_break==size-1)
             {
                 run3 = 0;
             }
-            lowest = 100000000;
         }
         reset();
         for(int s = 0;s<size;s++)
         {
-            cout<<vertex_array[s]<<" "<<tot_distance[s]<<endl;
+            cout<<"["<<vertex_array[s]<<"] "<<tot_distance[s]<<endl;
         }
     }
 
