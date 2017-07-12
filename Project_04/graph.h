@@ -466,10 +466,12 @@ class Graph
                 //FOUND BOTH ARE VERTEX IN HAS LIST (THIS SHOULD NEVER REALLY RUN MORE THAN JUST 2 TIMES
                 if(hash_list[two_loc].data == vertex_two)
                 {
-                  Edge<Type> new_edge = Edge<Type>(&hash_list[one_loc],&hash_list[two_loc],weight);         //create new edge from ONE to TWO
-                  Edge<Type> new_edge2 = Edge<Type>(&hash_list[two_loc],&hash_list[one_loc],weight);        //create new edge from TWO to ONE
-                  hash_list[one_loc].add_edge(new_edge);                                                    //add new edge to vertex ONE
-                  hash_list[two_loc].add_edge(new_edge2);                                                   //add new edge to vertex TWO
+//                  Edge<Type> new_edge = Edge<Type>(&hash_list[one_loc],&hash_list[two_loc],weight);         //create new edge from ONE to TWO
+//                  Edge<Type> new_edge2 = Edge<Type>(&hash_list[two_loc],&hash_list[one_loc],weight);        //create new edge from TWO to ONE
+//                  hash_list[one_loc].add_edge(new_edge);                                                    //add new edge to vertex ONE
+//                  hash_list[two_loc].add_edge(new_edge2);                                                   //add new edge to vertex TWO
+                    insert(hash_list[one_loc].data, hash_list[two_loc].data,weight);
+                    insert(hash_list[two_loc].data, hash_list[one_loc].data,weight);
                   j=11; //edge has been set and we can break our two for loops
                   i=11;
                   total_edge_count++; //add one to our total edge count
