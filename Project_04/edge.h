@@ -19,8 +19,8 @@ template <class Type>
 class Edge
 {
   private:
-    Vertex<Type> * vertex_one; //Suggestion: Rename to fromVertex
-    Vertex<Type> * vertex_two; //Suggestion: Rename to toVertex
+    Vertex<Type> * vertex_one;
+    Vertex<Type> * vertex_two; 
     double weight;
   public:
     Edge() {}                        //needto create list of edges in the vertex class
@@ -30,11 +30,11 @@ class Edge
         vertex_two = the_vertex_two;
         weight = the_weight;
     }
-    Vertex<Type> * getOne() //Suggestion: Rename to getFrom
+    Vertex<Type> * getOne()
     {
         return vertex_one;
     }
-    Vertex<Type> * getTwo() //Suggestion: Rename to getTo
+    Vertex<Type> * getTwo()
     {
         return vertex_two;
     }

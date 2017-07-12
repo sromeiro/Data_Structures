@@ -137,7 +137,6 @@ class Vertex
                 }
             }else if(temp2->visited == 1)
             {
-                //do nothing dont, dont change our temp
             }
             else
             {
@@ -175,7 +174,6 @@ class Vertex
             }
             else if(temp2->visited == 1)
             {
-                //do nothing dont, dont change our temp
             }
             else
             {
@@ -226,7 +224,6 @@ class Vertex
         }
         if(temp.vertex_two->visited==1) //went through all and lowest has been visited
         {
-            //return  0;
         }
         else
         {
