@@ -66,26 +66,26 @@ class Vertex
       int i, found = 0;
       for(i = 0; i < edgeCount; i++) //Check every edge in this vertex for the one to remove
       {
-        cout << "Inside For loop. Found is: " << found << endl;
-        cout << "[i] is: " << i << endl;
-        cout << "edgeCount is: " << edgeCount << endl;
+//        cout << "Inside For loop. Found is: " << found << endl;
+//        cout << "[i] is: " << i << endl;
+//        cout << "edgeCount is: " << edgeCount << endl;
         if(outgoing[i].vertex_two->data == v) //Found the edge that connects FROM ---> TO vertices
         {
-          cout << "Found edge from " << data << " ---TO---> " << outgoing[i].vertex_two->data << " with weight of " << outgoing[i].weight << endl;
+          //cout << "Found edge from " << data << " ---TO---> " << outgoing[i].vertex_two->data << " with weight of " << outgoing[i].weight << endl;
 
           Edge<Type> * outgoing_new = new Edge<Type>[10];
 
-          cout << "Start copying" << endl;
+//          cout << "Start copying" << endl;
           for(int j = 0; j < edgeCount; j++)
           {
             if(outgoing[j].vertex_two == outgoing[i].vertex_two)
             {
               //While copying found the edge to remove. Skip it.
-              cout << "Found the edge to remove. Removing edge that points to " << outgoing[j].vertex_two->data << " with weight " << outgoing[j].weight << endl;
+             // cout << "Found the edge to remove. Removing edge that points to " << outgoing[j].vertex_two->data << " with weight " << outgoing[j].weight << endl;
               continue;
             }
 
-            cout << "Copying over edge that points to " << outgoing[j].vertex_two->data << " with weight " << outgoing[j].weight << endl;
+//            cout << "Copying over edge that points to " << outgoing[j].vertex_two->data << " with weight " << outgoing[j].weight << endl;
             outgoing_new[j-1] = outgoing[j]; //Copies over each edge to new list
           }
 
@@ -93,11 +93,11 @@ class Vertex
           edgeCount--;
           //delete [] outgoing_new;
           found++;
-          cout << "Found is now: " << found << endl;
+//          cout << "Found is now: " << found << endl;
         }
       }
 
-      cout << "Outside For loop. Find is: " << found << endl;
+//      cout << "Outside For loop. Find is: " << found << endl;
       if(found == 0)
       {
         throw runtime_error("There is no edge to the requested Vertex");

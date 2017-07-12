@@ -102,35 +102,6 @@ class Graph
        Vertex<Type> * temp2;
        temp1 = findVertex(v1);
        temp2 = findVertex(v2);
-/*       int run = 1, run2 = 1, i = 0, j = 0;
-
-       while (run)
-       {
-           if (hash_list[(v1 + j * j) % updated_size].getData()==v1) //found first vertex
-           {
-               temp1 = hash_list[(v1+j*j)% updated_size];
-               run = 0; //end loop
-           }
-           j++;
-           if(j == 10) //a base case of 10 loops and cant find the node
-           {
-             throw runtime_error("Requested Vertex was not found!");
-           }
-       }
-       while (run2)
-       {
-           if (hash_list[(v2 + i * i) % updated_size].getData()==v2) //found second vertex
-           {
-               temp2 = hash_list[(v2+i*i)% updated_size];
-               run2 = 0; //end loop
-           }
-           i++;
-           if(i==10) //a base case of 10 loops and cant find the node
-           {
-              throw runtime_error("Requested Vertex was not found!");
-           }
-       }
-*/
        //FOUND BOTH VERTEX IN HASH TABLE
        for(int k = 0; k < temp1->getNumEdges();k++) //loop all edges in first vertex
        {
@@ -537,13 +508,8 @@ class Graph
       toVertex = findVertex(v2);
       if(weight == 0)
       {
-        //Remove the edge between the listed VERTICES
-        //cout << "Entering fromVertex Remove Edge" << endl;
         fromVertex->remove_edge(toVertex->getData());
-        //cout << "Passed fromVertex Remove Edge" << endl;
         toVertex->remove_edge(fromVertex->getData());
-        //cout << "Passed toVertex Remove Edge" << endl;
-        cout << "Weight was zero so edge was removed" << endl;
         total_edge_count--;
         return;
       }
@@ -605,51 +571,43 @@ class Graph
     //Helper function for isConnected()
     int ConnectHelp(char v)
     {
-        cout << "Entered ConnectHelp" << endl;
         stack<Vertex<Type> *> the_stack;
-        cout << "Test 1" << endl;
         Vertex<Type> * found_vertex;
-        int total_to_return = 0;
-        found_vertex = findVertex(v);
-        cout << "Passed findVertex" << endl;
-        int num_in_stack = 0;
-        //Vertex<Type> * temp1; Not needed?
-        /*int run = 1,j = 0,
+        int run = 1,j = 0,num_in_stack = 0;
+        int to_return=1;
         while (run)
         {
             if (hash_list[(v + j * j) % updated_size].getData()==v) //found our vertex
             {
                 found_vertex = &hash_list[(v+j*j)% updated_size];
-                total_to_return++;
                 run = 0; //end loop
             }
             j++;
             if(j==10) //a base case of 10 loops and cant find the node
             {
-              throw runtime_error("Vertex requested was not found!");
+                throw runtime_error("The vertex requested does not exist!");
             }
         }
-        */
+        if(found_vertex->visited == 1)
+        {
+            throw runtime_error("Please reset before running again");
+        }
+
         found_vertex->visited = 1;     //node has been visited
         the_stack.push(found_vertex);
         num_in_stack++;
         int run2 = 1;
         int checker = 0;
-        cout << "Before run2" << endl;
         while(run2)
         {
-            //if(found_vertex.data != NULL)
-//            found_vertex = found_vertex->lowestEdgeVertexNotVisited();  //find adjacent lowest
-            cout << "Inside while loop" << endl;
             checker = found_vertex->BoolVisted();
-            cout << "Passed BoolVisited 1" << endl;
             if(checker)
             {
                 found_vertex = found_vertex->lowestEdgeVertexNotVisited();  //find adjacent lowest
                 found_vertex->visited = 1;                                 //make as visited
                 the_stack.push(found_vertex);                              //push vertex onto stack
                 found_vertex = the_stack.top();
-                total_to_return++;
+                to_return++;
             }
             else
             {
@@ -665,13 +623,11 @@ class Graph
             if(the_stack.empty())                                          //empty stack so we have goen through all vertexs possible
             {
                 cout<<endl;
-                reset(); // reset our visited
-                return total_to_return;
                 run2 = 0;
             }
         }
-        cout << "Outside of while loop" << endl;
-        return 0; //Fixes warning but should never reach this level
+        reset();
+        return to_return;
     }
 
 /******************************************************************************/
