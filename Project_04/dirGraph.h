@@ -21,7 +21,7 @@ class DirGraph
     int total_edge_count;
     int total_vertex_count;
     Vertex<Type> * hash_list;             //used to store our vertex
-    char vertices[PRIMENUMBER];                   //used to store vertices characters for reset visited
+    char vertices[PRIMENUMBER];           //used to store vertices characters for reset visited
   public:
     DirGraph(int n = 31)
     {
@@ -89,35 +89,7 @@ class DirGraph
        Vertex<Type> * temp2;
        temp1 = findVertex(v1);
        temp2 = findVertex(v2);
-/*       int run = 1, run2 = 1, i = 0, j = 0;
 
-       while (run)
-       {
-           if (hash_list[(v1 + j * j) % updated_size].getData()==v1) //found first vertex
-           {
-               temp1 = hash_list[(v1+j*j)% updated_size];
-               run = 0; //end loop
-           }
-           j++;
-           if(j == 10) //a base case of 10 loops and cant find the node
-           {
-             throw runtime_error("Requested Vertex was not found!");
-           }
-       }
-       while (run2)
-       {
-           if (hash_list[(v2 + i * i) % updated_size].getData()==v2) //found second vertex
-           {
-               temp2 = hash_list[(v2+i*i)% updated_size];
-               run2 = 0; //end loop
-           }
-           i++;
-           if(i==10) //a base case of 10 loops and cant find the node
-           {
-              throw runtime_error("Requested Vertex was not found!");
-           }
-       }
-*/
        //FOUND BOTH VERTEX IN HASH TABLE
        for(int k = 0; k < temp1->getNumEdges();k++) //loop all edges in first vertex
        {
@@ -133,7 +105,6 @@ class DirGraph
     {
         stack<Vertex<Type> *> the_stack;
         Vertex<Type> * found_vertex;
-        //Vertex<Type> * temp1; Not needed?
         int run = 1,j = 0,num_in_stack = 0;
         while (run)
         {
@@ -327,13 +298,9 @@ class DirGraph
                             //FOUND BOTH ARE VERTEX IN HAS LIST (THIS SHOULD NEVER REALLY RUN MORE THAN JUST 2 TIMES
                             if(hash_list[two_loc].data == vertex_two)
                             {
-//                                Edge<Type> new_edge = Edge<Type>(&hash_list[one_loc],&hash_list[two_loc],weight);         //create new edge
-//                                hash_list[one_loc].add_edge(new_edge);
                                 insert(hash_list[one_loc].data,hash_list[two_loc].data,weight);
-//                                hash_list[two_loc].incomingInc();//add new edge to the adj list
                                 j=11; //edge has been set and we can break our two for loops
                                 i=11;
-//                                total_edge_count++; //add one to our total edge count
                             }
                         }
                     }
@@ -374,20 +341,15 @@ class DirGraph
         //Edge between FROM ---> TO does NOT exist. Create one.
         Edge<Type> new_edge = Edge<Type>(fromVertex, toVertex, weight);
         fromVertex->add_edge(new_edge);
-          toVertex->incomingInc();//add new edge to the adj list                <-----------------------------------------------------------------------------------
-          total_edge_count++; //add one to our total edge count                <------------------------------------------------------------
-        cout << "Edge didn't exist so I created one for you" << endl;
+          toVertex->incomingInc();//add new edge to the adj list
+          total_edge_count++; //add one to our total edge count
       }
 
       else if(fromVertex->findEdge(toVertex->getData()))
       {
         //Edge between FROM ---> TO exists. Update its weight.
         Edge<Type> * changeWeight = fromVertex->returnEdge(toVertex->getData());
-        cout << "Weight of this edge is currently: " << changeWeight->weight << endl;
         changeWeight->weight = weight;
-        cout << "Weight has now been changed to: " << changeWeight->weight << endl;
-
-        //Do the same for the other edge
       }
     }
     void shortPath(char v1)
@@ -445,21 +407,16 @@ class DirGraph
                 run2 = 0;
             }
         }
-//Not Used?        int prev[size];
         int final[size];                //final array signals 0 or 1 for final distance or not
         double tot_distance[size];      //array to track the min total distance of the vertices
         for(int i = 0;i<size;i++)       //preset all to defaults
         {
             final[i] = 0;               //set all to 0 since not final
             tot_distance[i] = 1000000;  //set all total disnances to "infinity"
-//Not Used?            prev[i]=0;
         }
         Vertex<Type> * temp = findVertex(v1); //first find our original
         tot_distance[0] = 0;                  //first is total distance of zero
         int run3 = 1;
-//Not Used?        int first_run = 1;
-//Not Used?        int vertex_count = 1;
-//Not Used?        int previousChar;
         int lowest = 0 ;
         int last_vert;
         while(run3)
@@ -490,7 +447,6 @@ class DirGraph
                         if((tot_distance[last_vert] + temp->outgoing[j].weight) < tot_distance[z] )
                         {
                             tot_distance[z] = (tot_distance[last_vert] + temp->outgoing[j].weight); //if it has a lower weight
-//Not Used?                            prev[z] = last_vert;
                         }
                     }
                 }
@@ -527,7 +483,6 @@ class DirGraph
         stack<Vertex<Type> *> the_stack;
         Vertex<Type> * found_vertex;
         int total_to_return = 0;
-        //Vertex<Type> * temp1; Not needed?
         int run = 1,j = 0,num_in_stack = 0;
         while (run)
         {
@@ -550,8 +505,6 @@ class DirGraph
         int checker = 0;
         while(run2)
         {
-            //if(found_vertex.data != NULL)
-//            found_vertex = found_vertex->lowestEdgeVertexNotVisited();  //find adjacent lowest
             checker = found_vertex->BoolVisted();
             if(checker)
             {
@@ -603,7 +556,7 @@ class DirGraph
         clear();
       }
     }
-    //===========================HELPER FUNCTIONS BELOW===========================//
+//===========================HELPER FUNCTIONS BELOW===========================//
     //Finds the requested Vertex
     Vertex<Type> * findVertex(char v)
     {
@@ -616,7 +569,7 @@ class DirGraph
         }
       }
       throw runtime_error("Requested Vertex was not found!");
-    }
+      }
 };
 
 #endif

@@ -3,8 +3,8 @@
 #include"edge.h"
 #include"dirGraph.h"
 
-//#define FILENAME "graph.txt" //Change file name here if needed.
-#define FILENAME "C:\\Users\\Brett\\ClionProjects\\Project3_sub\\Project_04\\graph.txt"
+#define FILENAME "graph.txt" //Change file name here if needed.
+//#define FILENAME "C:\\Users\\Brett\\ClionProjects\\Project3_sub\\Project_04\\graph.txt"
 
 using namespace std;
 int main()
