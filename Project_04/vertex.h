@@ -21,14 +21,6 @@ class Vertex
 {
   private:
     char data;     //Holds data information for one vertex
-
-    /*
-    * A list where each node holds an integer value that points to the next vertex.
-    * This integer value represents an edge from the current vertex to the next vertex.
-    * Vertices are held in an array/vector. These integers represent the index numbers.
-    * The list contains only outgoing edges. See lecture slides 33 & 92.
-    */
-    //list <int> adjacencyList;
     Edge<Type> * outgoing;     //store the list of edges
     int edgeCount;             //Keeps a count of how many Edges this vertex has
     int visited;              //keep track of vertex being visited
@@ -62,47 +54,34 @@ class Vertex
 
     void remove_edge(char v)
     {
-      //cout << "Called remove_edge" << endl;
       int i, found = 0;
       for(i = 0; i < edgeCount; i++) //Check every edge in this vertex for the one to remove
       {
-//        cout << "Inside For loop. Found is: " << found << endl;
-//        cout << "[i] is: " << i << endl;
-//        cout << "edgeCount is: " << edgeCount << endl;
         if(outgoing[i].vertex_two->data == v) //Found the edge that connects FROM ---> TO vertices
         {
-          //cout << "Found edge from " << data << " ---TO---> " << outgoing[i].vertex_two->data << " with weight of " << outgoing[i].weight << endl;
 
           Edge<Type> * outgoing_new = new Edge<Type>[10];
-
-//          cout << "Start copying" << endl;
           for(int j = 0; j < edgeCount; j++)
           {
             if(outgoing[j].vertex_two == outgoing[i].vertex_two)
             {
               //While copying found the edge to remove. Skip it.
-             // cout << "Found the edge to remove. Removing edge that points to " << outgoing[j].vertex_two->data << " with weight " << outgoing[j].weight << endl;
               continue;
             }
-
-//            cout << "Copying over edge that points to " << outgoing[j].vertex_two->data << " with weight " << outgoing[j].weight << endl;
             outgoing_new[j-1] = outgoing[j]; //Copies over each edge to new list
           }
 
           outgoing = outgoing_new;
           edgeCount--;
-          //delete [] outgoing_new;
           found++;
-//          cout << "Found is now: " << found << endl;
+
         }
       }
 
-//      cout << "Outside For loop. Find is: " << found << endl;
       if(found == 0)
       {
         throw runtime_error("There is no edge to the requested Vertex");
       }
-      //cout << "Ending remove_edge" << endl;
     }
 
     bool findEdge(char v)
@@ -225,12 +204,7 @@ class Vertex
         }
         for(int i = 1; i < edgeCount; i++)             //start our loop from second edge in list
         {
-//            if(outgoing[i].vertex_one->visited==1)
-//            {
-//
-//            }else {
-                temp2 = outgoing[i];
-//            }
+            temp2 = outgoing[i];
             if(temp.weight < temp2.weight)
             {
                 if(temp.vertex_two->visited == 1)          //already been visited

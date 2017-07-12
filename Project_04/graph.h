@@ -340,7 +340,7 @@ class Graph
     //Builds an undirected weighted graph from a provided text file
     void buildGraph(string file_name)
     {
-      //cout << "buildGraph CALLED" << endl;
+
       ifstream file; //Create the input file object
       file.open(file_name.c_str()); //Open the file object
 
@@ -362,7 +362,6 @@ class Graph
           if(linecount==0) //If we're reading the first line of the text file
           {
             vertexCount = text.length(); //counts number of characters in first line of text read in text file
-            //cout << "Vertex Count is: " << vertexCount << endl;
           }
           linecount++; //counts how many lines read from the text file
         }
@@ -437,10 +436,6 @@ class Graph
                 //FOUND BOTH ARE VERTEX IN HAS LIST (THIS SHOULD NEVER REALLY RUN MORE THAN JUST 2 TIMES
                 if(hash_list[two_loc].data == vertex_two)
                 {
-//                  Edge<Type> new_edge = Edge<Type>(&hash_list[one_loc],&hash_list[two_loc],weight);         //create new edge from ONE to TWO
-//                  Edge<Type> new_edge2 = Edge<Type>(&hash_list[two_loc],&hash_list[one_loc],weight);        //create new edge from TWO to ONE
-//                  hash_list[one_loc].add_edge(new_edge);                                                    //add new edge to vertex ONE
-//                  hash_list[two_loc].add_edge(new_edge2);                                                   //add new edge to vertex TWO
                     insert(hash_list[one_loc].data, hash_list[two_loc].data,weight);
                     insert(hash_list[two_loc].data, hash_list[one_loc].data,weight);
                   j=11; //edge has been set and we can break our two for loops
@@ -493,14 +488,10 @@ class Graph
     //Adds an edge between existing vertices. If weight = 0, remove that edge
     void insert(char v1, char v2, double weight)
     {
-      //cout << "Entered INSERT" << endl;
       if(weight < 0 || weight >= numeric_limits<double>::max())
       {
         throw runtime_error("Invalid weight entered!");
       }
-
-      //cout << "Called INSERT" << endl;
-
       Vertex<Type> * fromVertex;
       Vertex<Type> * toVertex;
 
@@ -524,7 +515,6 @@ class Graph
         toVertex->incomingInc();
         fromVertex->incomingInc();
         total_edge_count++;
-        cout << "Edge didn't exist so I created one for you" << endl;
       }
 
       else if(fromVertex->findEdge(toVertex->getData()))
@@ -532,14 +522,10 @@ class Graph
         //Edge between FROM ---> TO exists. Update its weight.
         Edge<Type> * changeWeight = fromVertex->returnEdge(toVertex->getData());
         Edge<Type> * changeWeight2 = toVertex->returnEdge(fromVertex->getData());
-        cout << "Weight of this edge is currently: " << changeWeight->weight << endl;
         changeWeight->weight = weight;
         changeWeight2->weight = weight;
-        cout << "Weight has now been changed to: " << changeWeight->weight << endl;
 
-        //Do the same for the other edge
       }
-      //cout << "Ending INSERT" << endl;
     }
 
 /******************************************************************************/
@@ -632,12 +618,7 @@ class Graph
 
 /******************************************************************************/
 
-    bool isV(char v)
-    {
-      Vertex<Type> * temp;
-      temp = findVertex(v);
-      return temp->visited;
-    }
+
 
 };
 
