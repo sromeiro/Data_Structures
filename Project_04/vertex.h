@@ -135,8 +135,6 @@ class Vertex
                 {
                     temp = temp2;
                 }
-            }else if(temp2->visited == 1)
-            {
             }
             else
             {
@@ -172,9 +170,7 @@ class Vertex
                     temp = temp2;
                 }
             }
-            else if(temp2->visited == 1)
-            {
-            }
+
             else
             {
                 temp = temp2;
@@ -220,17 +216,10 @@ class Vertex
                     temp = temp3;
                 }
 
-//            }
-        }
-        if(temp.vertex_two->visited==1) //went through all and lowest has been visited
-        {
-        }
-        else
-        {
-            return temp;     //return our lowest adjacent vertex
         }
 
-        return temp; //Fixes warnings of reaching end of control. Should never reach this level.
+
+        return temp; 
     }
     void incomingInc()
     {

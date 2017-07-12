@@ -213,8 +213,6 @@ class Graph
         int checker = 0;
         while(run2)
         {
-            //if(found_vertex.data != NULL)
-            //found_vertex = temp->lowestEdgeVertexNotVisited();  //find adjacent lowest
             checker = temp->BoolVisted();
             if(checker)
             {
@@ -332,7 +330,7 @@ class Graph
                 }
             }
         }
-        return 0; //Fixing end of control warning. Should never reach this level.
+        return 0; 
 
     }
 
