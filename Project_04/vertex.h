@@ -88,6 +88,7 @@ class Vertex
 
           outgoing = outgoing_new;
           edgeCount--;
+          delete [] outgoing_new;
         }
 
         if(i >= edgeCount-1)

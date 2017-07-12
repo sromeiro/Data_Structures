@@ -98,9 +98,11 @@ class Graph
           throw runtime_error("Vertices entered were the same. Not adjacent.");
        }
 
-       Vertex<Type> temp1;
-       Vertex<Type> temp2;
-       int run = 1, run2 = 1, i = 0, j = 0;
+       Vertex<Type> * temp1;
+       Vertex<Type> * temp2;
+       temp1 = findVertex(v1);
+       temp2 = findVertex(v2);
+/*       int run = 1, run2 = 1, i = 0, j = 0;
 
        while (run)
        {
@@ -112,10 +114,9 @@ class Graph
            j++;
            if(j == 10) //a base case of 10 loops and cant find the node
            {
-             throw runtime_error("One of your vertices do not exist!");
+             throw runtime_error("Requested Vertex was not found!");
            }
        }
-
        while (run2)
        {
            if (hash_list[(v2 + i * i) % updated_size].getData()==v2) //found second vertex
@@ -124,21 +125,19 @@ class Graph
                run2 = 0; //end loop
            }
            i++;
-           if(i == 10) //a base case of 10 loops and cant find the node
+           if(i==10) //a base case of 10 loops and cant find the node
            {
-               throw runtime_error("One of your vertices do not exist!");
+              throw runtime_error("Requested Vertex was not found!");
            }
        }
-
+*/
        //FOUND BOTH VERTEX IN HASH TABLE
-       //Loop through all outgoing edges from Vertex1 and find the edge that connects to Vertex2
-       for(int k = 0; k < temp1.getNumEdges(); k++)
+       for(int k = 0; k < temp1->getNumEdges();k++) //loop all edges in first vertex
        {
-         //IF Vertex1 -> Vertex2 == Vertex2
-         if(temp1.outgoing[k].vertex_two->getData() == temp2.getData()) //FOUND AN OUTGOING EDGE
-         {
-           return temp1.outgoing[k].weight; //return the weight of the edge
-         }
+           if(temp1->outgoing[k].vertex_two->getData()==temp2->getData()) //FOUND AN OUTGOING EDGE
+           {
+               return temp1->outgoing[k].weight; //return the weight of the edge
+           }
        }
        return -1; //could not find edges and return weight therefore not adjacent and return -1
     }

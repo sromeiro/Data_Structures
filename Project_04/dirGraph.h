@@ -85,9 +85,11 @@ class DirGraph
            throw runtime_error("Vertices entered were the same. Not adjacent.");
        }
 
-       Vertex<Type> temp1;
-       Vertex<Type> temp2;
-       int run = 1, run2 = 1, i = 0, j = 0;
+       Vertex<Type> * temp1;
+       Vertex<Type> * temp2;
+       temp1 = findVertex(v1);
+       temp2 = findVertex(v2);
+/*       int run = 1, run2 = 1, i = 0, j = 0;
 
        while (run)
        {
@@ -115,12 +117,13 @@ class DirGraph
               throw runtime_error("Requested Vertex was not found!");
            }
        }
+*/
        //FOUND BOTH VERTEX IN HASH TABLE
-       for(int k = 0; k < temp1.getNumEdges();k++) //loop all edges in first vertex
+       for(int k = 0; k < temp1->getNumEdges();k++) //loop all edges in first vertex
        {
-           if(temp1.outgoing[k].vertex_two->getData()==temp2.getData()) //FOUND AN OUTGOING EDGE
+           if(temp1->outgoing[k].vertex_two->getData()==temp2->getData()) //FOUND AN OUTGOING EDGE
            {
-               return temp1.outgoing[k].weight; //return the weight of the edge
+               return temp1->outgoing[k].weight; //return the weight of the edge
            }
        }
        return -1;//could not find edges and return weight therefore not adjacent and return -1
