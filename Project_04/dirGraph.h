@@ -445,21 +445,21 @@ class DirGraph
                 run2 = 0;
             }
         }
-        int prev[size];
+//Not Used?        int prev[size];
         int final[size];                //final array signals 0 or 1 for final distance or not
         double tot_distance[size];      //array to track the min total distance of the vertices
         for(int i = 0;i<size;i++)       //preset all to defaults
         {
             final[i] = 0;               //set all to 0 since not final
             tot_distance[i] = 1000000;  //set all total disnances to "infinity"
-            prev[i]=0;
+//Not Used?            prev[i]=0;
         }
         Vertex<Type> * temp = findVertex(v1); //first find our original
         tot_distance[0] = 0;                  //first is total distance of zero
         int run3 = 1;
-        int first_run = 1;
-        int vertex_count = 1;
-        int previousChar;
+//Not Used?        int first_run = 1;
+//Not Used?        int vertex_count = 1;
+//Not Used?        int previousChar;
         int lowest = 0 ;
         int last_vert;
         while(run3)
@@ -490,7 +490,7 @@ class DirGraph
                         if((tot_distance[last_vert] + temp->outgoing[j].weight) < tot_distance[z] )
                         {
                             tot_distance[z] = (tot_distance[last_vert] + temp->outgoing[j].weight); //if it has a lower weight
-                            prev[z] = last_vert;
+//Not Used?                            prev[z] = last_vert;
                         }
                     }
                 }

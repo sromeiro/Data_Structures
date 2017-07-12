@@ -9,10 +9,6 @@ S C 1
 C D 3
 
 C E 5
-C E 5.75
-C E 3
-C E 9
-C E 1500
 
 C F 4
 

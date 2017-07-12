@@ -481,6 +481,7 @@ class Graph
           }
         }
         file.close();
+        total_edge_count /= 2;
       }
     }
 
@@ -521,6 +522,7 @@ class Graph
     //Adds an edge between existing vertices. If weight = 0, remove that edge
     void insert(char v1, char v2, double weight)
     {
+      //cout << "Entered INSERT" << endl;
       if(weight < 0 || weight >= numeric_limits<double>::max())
       {
         throw runtime_error("Invalid weight entered!");
@@ -536,8 +538,13 @@ class Graph
       if(weight == 0)
       {
         //Remove the edge between the listed VERTICES
+        //cout << "Entering fromVertex Remove Edge" << endl;
         fromVertex->remove_edge(toVertex->getData());
+        //cout << "Passed fromVertex Remove Edge" << endl;
+        toVertex->remove_edge(fromVertex->getData());
+        //cout << "Passed toVertex Remove Edge" << endl;
         cout << "Weight was zero so edge was removed" << endl;
+        total_edge_count--;
         return;
       }
 
@@ -548,6 +555,9 @@ class Graph
         Edge<Type> new_edge2 = Edge<Type>(toVertex, fromVertex, weight);
         fromVertex->add_edge(new_edge);
         toVertex->add_edge(new_edge2);
+        toVertex->incomingInc();
+        fromVertex->incomingInc();
+        total_edge_count++;
         cout << "Edge didn't exist so I created one for you" << endl;
       }
 
@@ -563,6 +573,7 @@ class Graph
 
         //Do the same for the other edge
       }
+      //cout << "Ending INSERT" << endl;
     }
 
 /******************************************************************************/
@@ -594,11 +605,16 @@ class Graph
     //Helper function for isConnected()
     int ConnectHelp(char v)
     {
+        cout << "Entered ConnectHelp" << endl;
         stack<Vertex<Type> *> the_stack;
+        cout << "Test 1" << endl;
         Vertex<Type> * found_vertex;
         int total_to_return = 0;
+        found_vertex = findVertex(v);
+        cout << "Passed findVertex" << endl;
+        int num_in_stack = 0;
         //Vertex<Type> * temp1; Not needed?
-        int run = 1,j = 0,num_in_stack = 0;
+        /*int run = 1,j = 0,
         while (run)
         {
             if (hash_list[(v + j * j) % updated_size].getData()==v) //found our vertex
@@ -613,16 +629,20 @@ class Graph
               throw runtime_error("Vertex requested was not found!");
             }
         }
+        */
         found_vertex->visited = 1;     //node has been visited
         the_stack.push(found_vertex);
         num_in_stack++;
         int run2 = 1;
         int checker = 0;
+        cout << "Before run2" << endl;
         while(run2)
         {
             //if(found_vertex.data != NULL)
 //            found_vertex = found_vertex->lowestEdgeVertexNotVisited();  //find adjacent lowest
+            cout << "Inside while loop" << endl;
             checker = found_vertex->BoolVisted();
+            cout << "Passed BoolVisited 1" << endl;
             if(checker)
             {
                 found_vertex = found_vertex->lowestEdgeVertexNotVisited();  //find adjacent lowest
@@ -650,10 +670,18 @@ class Graph
                 run2 = 0;
             }
         }
+        cout << "Outside of while loop" << endl;
         return 0; //Fixes warning but should never reach this level
     }
 
 /******************************************************************************/
+
+    bool isV(char v)
+    {
+      Vertex<Type> * temp;
+      temp = findVertex(v);
+      return temp->visited;
+    }
 
 };
 
